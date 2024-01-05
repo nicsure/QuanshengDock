@@ -1,0 +1,306 @@
+﻿<Window x:Class="QuanshengDock.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+        xmlns:local="clr-namespace:QuanshengDock"
+        xmlns:data="clr-namespace:QuanshengDock.Data"
+        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+        xmlns:view="clr-namespace:QuanshengDock.View"
+        xmlns:ui="clr-namespace:QuanshengDock.UI"
+        d:DataContext="{d:DesignInstance Type=data:Context, IsDesignTimeCreatable=True}"
+        mc:Ignorable="d"
+        x:Name="MyWindow"
+        ResizeMode="CanResizeWithGrip"
+        Title="MainWindow"
+        Height="442" Width="775"        
+        WindowStyle="None"        
+        Background="#01000000" Foreground="White" AllowsTransparency="True">
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="MouseLeftButtonDown">
+            <i:InvokeCommandAction Command="{Binding MouseCommand}" CommandParameter="LeftDown" />
+        </i:EventTrigger>
+        <i:EventTrigger EventName="MouseLeftButtonUp">
+            <i:InvokeCommandAction Command="{Binding MouseCommand}" CommandParameter="LeftUp" />
+        </i:EventTrigger>
+        <i:EventTrigger EventName="Closing">
+            <i:InvokeCommandAction Command="{Binding MouseCommand}" CommandParameter="Close" />
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+    <Window.Resources>
+        <Style TargetType="xctk:DoubleUpDown">
+            <Setter Property="ShowButtonSpinner" Value="False"/>
+            <Setter Property="BorderBrush" Value="{x:Null}"/>
+            <Setter Property="Background" Value="{x:Null}"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Foreground" Value="#ffaaaaaa"/>
+            <Setter Property="Width" Value="60"/>
+            <Setter Property="UpdateValueOnEnterKey" Value="True"/>
+        </Style>
+        <Style x:Key="TextLabel" TargetType="Frame">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Frame">
+                        <Viewbox Stretch="Fill">
+                            <TextBlock Width="30" Margin="2,2,2,2" Text="{TemplateBinding Content}" FontSize="5" FontFamily="Calibri" Foreground="#FF939393" TextAlignment="Center"/>
+                        </Viewbox>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style x:Key="RaisedBorder" TargetType="Frame">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Frame">
+                        <Border>
+                            <Border.Effect>
+                                <DropShadowEffect BlurRadius="2" ShadowDepth="2" Direction="135" Color="#FF838383"/>
+                            </Border.Effect>
+                            <Border Background="#ff202020" CornerRadius="10" BorderThickness="1" Margin="2,2,2,2">
+                                <Border.Effect>
+                                    <DropShadowEffect BlurRadius="2" ShadowDepth="2"/>
+                                </Border.Effect>                                
+                            </Border>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style x:Key="ControlButton" TargetType="Frame">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Frame">
+                        <Border>
+                            <Border.Effect>
+                                <DropShadowEffect BlurRadius="2" ShadowDepth="2" Direction="135" Color="#FF838383"/>
+                            </Border.Effect>
+                            <ui:ButtonBorder Tag="{TemplateBinding Tag}" Background="#ff202020" CornerRadius="10" BorderThickness="1" Margin="2,2,2,2">
+                                <ui:ButtonBorder.Effect>
+                                    <DropShadowEffect BlurRadius="2" ShadowDepth="2"/>
+                                </ui:ButtonBorder.Effect>
+                                <Viewbox Stretch="Fill">
+                                    <TextBlock IsHitTestVisible="False" Width="19" Margin="2,2,2,2" Text="{TemplateBinding Content}" FontSize="5" FontFamily="Calibri" Foreground="#FFC3C3C3" TextAlignment="Center"/>
+                                </Viewbox>
+                            </ui:ButtonBorder>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+    <Border CornerRadius="20" BorderBrush="#FF878787" BorderThickness="1" Padding="6,6,6,6">
+        <Border.Background>
+            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                <GradientStop Color="#FF262626" Offset="0.113"/>
+                <GradientStop Color="#FF191919" Offset="0.113"/>
+            </LinearGradientBrush>
+        </Border.Background>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="5"/>
+                <ColumnDefinition Width="1*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="40"/>
+                <RowDefinition Height="1*"/>
+            </Grid.RowDefinitions>
+            <CheckBox Name="Defocusser" Width="0" Height="0"/>
+            <Grid Grid.ColumnSpan="3">
+                <Rectangle Stroke="Gray" Margin="10,0,0,0" Fill="{Binding LEDBrush.Value}" Width="30" Height="15" HorizontalAlignment="Left"/>
+                <Frame Tag="Close" Width="30" Height="30" Style="{StaticResource ControlButton}" Content="❌" HorizontalAlignment="Right" />
+            </Grid>
+            <Grid Name="RadioGrid" Grid.Column="0" Grid.Row="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="6*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="1*" />
+                </Grid.ColumnDefinitions>
+                <Border Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="6" Background="{Binding LCDBackBrush.Value}" Margin="0,0,0,8" CornerRadius="10">
+                    <Image Margin="5,5,5,5" Stretch="Fill" Source="{Binding LcdImage.Value}"/>
+                </Border>
+                <Frame Tag="ChannelEdit" Grid.Column="0" Grid.Row="1" Style="{StaticResource ControlButton}" Content="CHAN&#10;EDIT" />
+                <Frame Tag="10" Grid.Column="1" Grid.Row="1" Style="{StaticResource ControlButton}" Content="M  🅐" />
+                <Frame Tag="11" Grid.Column="2" Grid.Row="1" Style="{StaticResource ControlButton}" Content="↑  🅑" />
+                <Frame Tag="12" Grid.Column="3" Grid.Row="1" Style="{StaticResource ControlButton}" Content="↓  🅒" />
+                <Frame Tag="13" Grid.Column="4" Grid.Row="1" Style="{StaticResource ControlButton}" Content="EXIT 🅓" />
+                <Frame Tag="TxLock" Grid.Column="5" Grid.Row="1" Style="{StaticResource ControlButton}" Content="{Binding TxLockButtonText.Value}" />
+
+                <Frame Tag="18" Grid.Column="0" Grid.Row="2" Style="{StaticResource ControlButton}" Content="SQL" />
+                <Frame Tag="1" Grid.Column="1" Grid.Row="2" Style="{StaticResource ControlButton}" Content="1&#10;BAND" />
+                <Frame Tag="2" Grid.Column="2" Grid.Row="2" Style="{StaticResource ControlButton}" Content="2&#10;A/B" />
+                <Frame Tag="3" Grid.Column="3" Grid.Row="2" Style="{StaticResource ControlButton}" Content="3&#10;VFO/MR" />
+                <Frame Tag="14" Grid.Column="4" Grid.Row="2" Style="{StaticResource ControlButton}" Content="*&#10;SCAN" />
+                <Frame Grid.Column="5" Grid.Row="2" Style="{StaticResource ControlButton}" Content="SPECT" />
+
+                <Frame Tag="17" Grid.Column="0" Grid.Row="3" Style="{StaticResource ControlButton}" Content="💡" />
+                <Frame Tag="4" Grid.Column="1" Grid.Row="3" Style="{StaticResource ControlButton}" Content="4&#10;FC" />
+                <Frame Tag="5" Grid.Column="2" Grid.Row="3" Style="{StaticResource ControlButton}" Content="5&#10;SL/SR" />
+                <Frame Tag="6" Grid.Column="3" Grid.Row="3" Style="{StaticResource ControlButton}" Content="6&#10; TX PWR" />
+                <Frame Tag="0" Grid.Column="4" Grid.Row="3" Style="{StaticResource ControlButton}" Content="0&#10;FM" />
+                <Frame Tag="16" Grid.Column="5" Grid.Row="3" Grid.RowSpan="2" Style="{StaticResource ControlButton}" Content="P T T" />
+
+                <Frame Tag="Settings" Grid.Column="0" Grid.Row="4" Style="{StaticResource ControlButton}" Content="⚙" />
+                <Frame Tag="7" Grid.Column="1" Grid.Row="4" Style="{StaticResource ControlButton}" Content="7&#10;VOX" />
+                <Frame Tag="8" Grid.Column="2" Grid.Row="4" Style="{StaticResource ControlButton}" Content="8&#10;R" />
+                <Frame Tag="9" Grid.Column="3" Grid.Row="4" Style="{StaticResource ControlButton}" Content="9&#10;CALL" />
+                <Frame Tag="15" Grid.Column="4" Grid.Row="4" Style="{StaticResource ControlButton}" Content="F&#10;  # 🔒"/>
+
+            </Grid>
+            <Grid Name="SpectrumGrid" Grid.Column="2" Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="0.5*" />
+                    <ColumnDefinition Width="0.4*" />
+                    <ColumnDefinition Width="0.8*"/>
+                    <ColumnDefinition Width="0.75*" />
+                    <ColumnDefinition Width="0.75*" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="6*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                </Grid.RowDefinitions>
+                <Border Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="7" Background="{Binding SpectBG.Value}" Margin="0,0,0,8" CornerRadius="10">
+                    <Grid Margin="5,5,5,5">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="MouseMove">
+                                <i:InvokeCommandAction Command="{Binding MouseCommand}" CommandParameter="Cursor" />
+                            </i:EventTrigger>
+                            <i:EventTrigger EventName="MouseLeave">
+                                <i:InvokeCommandAction Command="{Binding MouseCommand}" CommandParameter="CursorOff" />
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                        <Image Name="SpectrumImage" Stretch="Fill" Source="{Binding SpectrumImage.Value}">
+                            <Image.ContextMenu>
+                                <ContextMenu>
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="Opened">
+                                            <i:InvokeCommandAction Command="{Binding MenuCommand}" CommandParameter="Opened"/>
+                                        </i:EventTrigger>
+                                        <i:EventTrigger EventName="Closed">
+                                            <i:InvokeCommandAction Command="{Binding MenuCommand}" CommandParameter="Closed"/>
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
+                                    <MenuItem Command="{Binding MenuCommand}" CommandParameter="ClearTrigger" Header="Clear Trigger Level"/>
+                                    <MenuItem Command="{Binding MenuCommand}" CommandParameter="SetTrigger" Header="Set Trigger Level"/>
+                                    <Separator/>
+                                    <MenuItem Command="{Binding MenuCommand}" CommandParameter="BlacklistCursor" Header="Ignore Frequency"/>
+                                    <MenuItem Command="{Binding MenuCommand}" CommandParameter="BlacklistMonitor" Header="Ignore Monitored Frequency"/>
+                                    <MenuItem Command="{Binding MenuCommand}" CommandParameter="BlacklistClear" Header="Clear Ingored Frequencies"/>
+                                    <Separator/>
+                                    <MenuItem Header="Signal Lost Timeout">
+                                        <MenuItem Command="{Binding MenuCommand}" CommandParameter="RXTimeout,1" Header="1 Second" IsChecked="{Binding RXTimeout.EqualTo[1.0], Mode=OneWay}" />
+                                        <MenuItem Command="{Binding MenuCommand}" CommandParameter="RXTimeout,1.5" Header="1.5 Seconds" IsChecked="{Binding RXTimeout.EqualTo[1.5], Mode=OneWay}" />
+                                        <MenuItem Command="{Binding MenuCommand}" CommandParameter="RXTimeout,2" Header="2 Seconds" IsChecked="{Binding RXTimeout.EqualTo[2.0], Mode=OneWay}" />
+                                        <MenuItem Command="{Binding MenuCommand}" CommandParameter="RXTimeout,3.5" Header="3.5 Seconds" IsChecked="{Binding RXTimeout.EqualTo[3.5], Mode=OneWay}" />
+                                        <MenuItem Command="{Binding MenuCommand}" CommandParameter="RXTimeout,5" Header="5 Seconds" IsChecked="{Binding RXTimeout.EqualTo[5.0], Mode=OneWay}" />
+                                        <MenuItem Command="{Binding MenuCommand}" CommandParameter="RXTimeout,7.5" Header="7.5 Seconds" IsChecked="{Binding RXTimeout.EqualTo[7.5], Mode=OneWay}" />
+                                        <MenuItem Command="{Binding MenuCommand}" CommandParameter="RXTimeout,10" Header="10 Seconds" IsChecked="{Binding RXTimeout.EqualTo[10.0], Mode=OneWay}" />
+                                    </MenuItem>
+                                    <MenuItem Header="Total Timeout">
+                                        <MenuItem Command="{Binding MenuCommand}" CommandParameter="TotalTimeout,2" Header="2 Seconds" IsChecked="{Binding TotalTimeout.EqualTo[2.0], Mode=OneWay}" />
+                                        <MenuItem Command="{Binding MenuCommand}" CommandParameter="TotalTimeout,3.5" Header="3.5 Seconds" IsChecked="{Binding TotalTimeout.EqualTo[3.5], Mode=OneWay}" />
+                                        <MenuItem Command="{Binding MenuCommand}" CommandParameter="TotalTimeout,5" Header="5 Seconds" IsChecked="{Binding TotalTimeout.EqualTo[5.0], Mode=OneWay}" />
+                                        <MenuItem Command="{Binding MenuCommand}" CommandParameter="TotalTimeout,7.5" Header="7.5 Seconds" IsChecked="{Binding TotalTimeout.EqualTo[7.5], Mode=OneWay}" />
+                                        <MenuItem Command="{Binding MenuCommand}" CommandParameter="TotalTimeout,10" Header="10 Seconds" IsChecked="{Binding TotalTimeout.EqualTo[10.0], Mode=OneWay}" />
+                                        <MenuItem Command="{Binding MenuCommand}" CommandParameter="TotalTimeout,15" Header="15 Seconds" IsChecked="{Binding TotalTimeout.EqualTo[15.0], Mode=OneWay}" />
+                                        <MenuItem Command="{Binding MenuCommand}" CommandParameter="TotalTimeout,20" Header="20 Seconds" IsChecked="{Binding TotalTimeout.EqualTo[20.0], Mode=OneWay}" />
+                                        <MenuItem Command="{Binding MenuCommand}" CommandParameter="TotalTimeout,999" Header="999 Seconds" IsChecked="{Binding TotalTimeout.EqualTo[999.0], Mode=OneWay}" />
+                                    </MenuItem>
+                                    <Separator/>
+                                    <MenuItem IsEnabled="False" Header="Save Preset As"/>
+                                    <TextBox Width="200" Text="{Binding PresetName.Value}">
+                                        <i:Interaction.Triggers>
+                                            <i:EventTrigger EventName="LostFocus">
+                                                <i:InvokeCommandAction Command="{Binding MenuCommand}" CommandParameter="SavePreset"/>
+                                            </i:EventTrigger>
+                                        </i:Interaction.Triggers>
+                                    </TextBox>
+                                    <MenuItem Header="Presets" ItemsSource="{Binding MenuCommand.Value}">
+                                        <MenuItem.ItemTemplate>
+                                            <DataTemplate>
+                                                <Grid>
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="200"/>
+                                                        <ColumnDefinition Width="1*"/>
+                                                        <ColumnDefinition Width="1*"/>
+                                                    </Grid.ColumnDefinitions>
+                                                    <MenuItem Grid.Column="0" Header="{Binding Path=Header}" Command="{Binding Path=Command}" CommandParameter="{Binding Path=Load}"/>
+                                                    <Button Grid.Column="1" Content="Replace" HorizontalAlignment="Right" Command="{Binding Path=Command}" CommandParameter="{Binding Path=Replace}" />
+                                                    <Button Grid.Column="2" Content="Delete" HorizontalAlignment="Right" Command="{Binding Path=Command}" CommandParameter="{Binding Path=Delete}" />
+                                                </Grid>
+                                            </DataTemplate>
+                                        </MenuItem.ItemTemplate>
+                                    </MenuItem> 
+                                </ContextMenu>
+                            </Image.ContextMenu>
+                        </Image>
+                        <Border IsHitTestVisible="False" HorizontalAlignment="Left" Width="{Binding CursorX.Value}">
+                            <Frame HorizontalAlignment="Right" Width="1" Background="Red"/>
+                        </Border>
+                        <Border IsHitTestVisible="False" VerticalAlignment="Top" Height="{Binding CursorY.Value}">
+                            <Frame VerticalAlignment="Bottom" Height="1" Background="Green"/>
+                        </Border>
+                        <Border IsHitTestVisible="False" MinHeight="{Binding ElementName=FreqText, Path=ActualHeight}" MinWidth="{Binding ElementName=FreqText, Path=ActualWidth}" HorizontalAlignment="Left" VerticalAlignment="Top" Width="{Binding CursorX.Value}" Height="{Binding CursorY.Value}">
+                            <TextBlock Padding="4,4,4,4" HorizontalAlignment="Right" VerticalAlignment="Bottom" FontSize="16" Name="FreqText" Text="{Binding CursorFreq.Value}"/>
+                        </Border>
+                    </Grid>
+                </Border>
+
+                <Frame Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="4" Style="{StaticResource RaisedBorder}" />
+                <Frame Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="4" Style="{StaticResource RaisedBorder}" />
+                <Frame Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="4" Style="{StaticResource RaisedBorder}" />
+
+                <Frame Grid.Column="0" Grid.Row="1" Style="{StaticResource TextLabel}" Content="Frequency" />
+                <Frame Grid.Column="0" Grid.Row="2" Style="{StaticResource TextLabel}" Content="Step Size" />
+                <Frame Grid.Column="0" Grid.Row="3" Style="{StaticResource TextLabel}" Content="Step Count" />
+
+                <Frame Grid.Column="3" Grid.Row="1" Style="{StaticResource TextLabel}" Content="MHz" Margin="-28,0,-20,0" />
+                <Frame Grid.Column="3" Grid.Row="2" Style="{StaticResource TextLabel}" Content="kHz" Margin="-28,0,-20,0" />
+
+                <Frame Grid.Column="5" Grid.Row="4" Style="{StaticResource TextLabel}" Content="Floor" Margin="-20,0,-20,0" />
+                <Frame Grid.Column="6" Grid.Row="4" Style="{StaticResource TextLabel}" Content="Amplify" Margin="-20,0,-20,0" />
+
+                <Frame Tag="Normalize" Grid.Column="3" Grid.ColumnSpan="2" Grid.Row="4" Style="{StaticResource ControlButton}" Content="Norm        " />
+                <Viewbox Grid.Column="4" Grid.Row="4" Stretch="Fill">
+                    <ui:Indicator BorderBrush="#ff888888" BorderThickness="0.1" IsOn="{Binding SpecNorm.Value}" Width="1" Height="1" Margin="4,1.75,1.7,1.75"/>
+                </Viewbox>
+
+                <Viewbox Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2" Stretch="Fill">
+                    <xctk:DoubleUpDown Value="{Binding SpecMid.Value}" Minimum="10.0" Maximum="1300.0" FormatString="F5"/>
+                </Viewbox>
+                <Viewbox Grid.Column="1" Grid.Row="2" Grid.ColumnSpan="2" Stretch="Fill">
+                    <xctk:DoubleUpDown Value="{Binding SpecStep.Value}" Minimum="0.001" Maximum="10000.0" FormatString="F2"/>
+                </Viewbox>
+                <Viewbox Grid.Column="1" Grid.Row="3" Grid.ColumnSpan="2" Stretch="Fill">
+                    <xctk:DoubleUpDown Value="{Binding SpecSteps.Value}" Minimum="5" Maximum="299" FormatString="F0"/>
+                </Viewbox>
+
+                <Frame Tag="Spectrum" Grid.Column="0" Grid.Row="4" Style="{StaticResource ControlButton}" Content="Analyzer" />
+                <Frame Tag="Waterfall" Grid.Column="1" Grid.Row="4" Style="{StaticResource ControlButton}" Content="Waterfall" />
+
+                <Viewbox Grid.Column="5" Grid.Row="1" Grid.RowSpan="3" Stretch="Fill">
+                    <Slider Orientation="Vertical" Value="{Binding SpecFloor.Value}" Minimum="-1" Maximum="1" Height="140" Margin="10,0,10,0"/>
+                </Viewbox>
+                <Viewbox Grid.Column="6" Grid.Row="1" Grid.RowSpan="3" Stretch="Fill">
+                    <Slider Orientation="Vertical" Value="{Binding SpecAmp.Value}" Minimum="1" Maximum="30" Height="140" Margin="10,0,10,0"/>
+                </Viewbox>
+            </Grid>
+        </Grid>
+    </Border>
+</Window>
