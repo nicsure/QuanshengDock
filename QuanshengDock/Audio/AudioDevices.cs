@@ -8,6 +8,9 @@ using System.Threading.Tasks;
 
 namespace QuanshengDock.Audio
 {
+    // code by -nicsure- 2024
+    // https://www.youtube.com/nicsure
+
     public static class AudioDevices
     {
         private static readonly Dictionary<string, string> fullDeviceNames = new();

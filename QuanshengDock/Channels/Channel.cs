@@ -12,6 +12,9 @@ using System.Windows.Media;
 
 namespace QuanshengDock.Channels
 {
+    // code by -nicsure- 2024
+    // https://www.youtube.com/nicsure
+
     public partial class Channel
     {
         public void Clear()

@@ -19,6 +19,9 @@ using System.Xml.Serialization;
 
 namespace QuanshengDock.Analyzer
 {
+    // code by -nicsure- 2024
+    // https://www.youtube.com/nicsure
+
     public static class SpectrumAnalyzer
     {
         public static int Activator { get => 0; set { } }

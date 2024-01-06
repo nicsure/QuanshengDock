@@ -7,6 +7,9 @@ using System.Windows.Controls;
 
 namespace QuanshengDock.UI
 {
+    // code by -nicsure- 2024
+    // https://www.youtube.com/nicsure
+
     public class ButtonBorder : Border
     {
     }

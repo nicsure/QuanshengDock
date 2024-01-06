@@ -19,6 +19,9 @@ using QuanshengDock.User;
 
 namespace QuanshengDock.Data
 {
+    // code by -nicsure- 2024
+    // https://www.youtube.com/nicsure
+
     public class Context
     {
         public static Context Instance => instance;

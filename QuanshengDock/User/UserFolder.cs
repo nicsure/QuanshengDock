@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace QuanshengDock.User
 {
+    // code by -nicsure- 2024
+    // https://www.youtube.com/nicsure
+
     public static class UserFolder
     {
         private static readonly string myDocuments = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);

@@ -9,6 +9,9 @@ using System.Windows.Media;
 
 namespace QuanshengDock.UI
 {
+    // code by -nicsure- 2024
+    // https://www.youtube.com/nicsure
+
     public class Indicator : Border
     {
         private Frame innerFrame = new();

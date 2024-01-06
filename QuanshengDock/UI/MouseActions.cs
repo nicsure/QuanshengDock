@@ -17,6 +17,9 @@ using System.Windows.Input;
 
 namespace QuanshengDock.UI
 {
+    // code by -nicsure- 2024
+    // https://www.youtube.com/nicsure
+
     public static class MouseActions
     {
         public static int Activator { get => 0; set { } }

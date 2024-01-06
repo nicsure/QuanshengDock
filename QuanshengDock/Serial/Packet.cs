@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace QuanshengDock.Serial
 {
+    // code by -nicsure- 2024
+    // https://www.youtube.com/nicsure
+
     public static class Packet
     {
         public const ushort Hello = 0x514;

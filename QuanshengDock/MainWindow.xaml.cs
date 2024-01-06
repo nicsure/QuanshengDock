@@ -21,9 +21,9 @@ using Xceed.Wpf.Toolkit;
 
 namespace QuanshengDock
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
+    // code by -nicsure- 2024
+    // https://www.youtube.com/nicsure
+    
     public partial class MainWindow : Window
     {
         private static readonly Brush upButt = new SolidColorBrush(Color.FromArgb(255, 0x20, 0x20, 0x20));

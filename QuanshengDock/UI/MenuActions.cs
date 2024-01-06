@@ -15,6 +15,9 @@ namespace QuanshengDock.UI
 {
     public static class MenuActions
     {
+        // code by -nicsure- 2024
+        // https://www.youtube.com/nicsure
+
         public static int Activator { get => 0; set { } }
 
         private static readonly VM command = VM.Get("MenuCommand");

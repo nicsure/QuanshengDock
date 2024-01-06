@@ -8,6 +8,9 @@ using System.Windows.Data;
 
 namespace QuanshengDock.Channels
 {
+    // code by -nicsure- 2024
+    // https://www.youtube.com/nicsure
+
     internal class Conversions { }
 
     public enum CTCSS_CODE

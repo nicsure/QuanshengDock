@@ -8,6 +8,9 @@ using System.Windows;
 
 namespace QuanshengDock.General
 {
+    // code by -nicsure- 2024
+    // https://www.youtube.com/nicsure
+
     public enum RState { TX, RX, None }
 
     public static class Radio

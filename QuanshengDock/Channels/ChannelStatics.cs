@@ -16,6 +16,9 @@ using System.Windows;
 
 namespace QuanshengDock.Channels
 {
+    // code by -nicsure- 2024
+    // https://www.youtube.com/nicsure
+
     internal class ChannelStatics { }
 
     public partial class Channel

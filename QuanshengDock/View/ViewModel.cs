@@ -11,6 +11,9 @@ using System.Windows.Media;
 
 namespace QuanshengDock.View
 {
+    // code by -nicsure- 2024
+    // https://www.youtube.com/nicsure
+
     public class VMEquality<T>
     {
         private readonly T value;

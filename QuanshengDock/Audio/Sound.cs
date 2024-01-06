@@ -11,6 +11,9 @@ using System.Threading.Tasks;
 
 namespace QuanshengDock.Audio
 {
+    // code by -nicsure- 2024
+    // https://www.youtube.com/nicsure
+
     public static class Sound
     {
         public static int Activator { get => 0; set { } }

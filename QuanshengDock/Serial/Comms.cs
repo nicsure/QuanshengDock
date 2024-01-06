@@ -20,6 +20,9 @@ using System.Windows.Media;
 
 namespace QuanshengDock.Serial
 {
+    // code by -nicsure- 2024
+    // https://www.youtube.com/nicsure
+
     public static class Comms
     {
         public static int Activator { get => 0; set { } }

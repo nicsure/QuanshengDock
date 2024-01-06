@@ -9,6 +9,9 @@ using System.Windows.Input;
 
 namespace QuanshengDock.General
 {
+    // code by -nicsure- 2024
+    // https://www.youtube.com/nicsure
+
     public class SavedDictionary : Dictionary<string, string>
     {
         public string BackingFile { get; set; }

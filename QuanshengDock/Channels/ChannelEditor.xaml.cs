@@ -18,9 +18,9 @@ using System.Windows.Shapes;
 
 namespace QuanshengDock.Channels
 {
-    /// <summary>
-    /// Interaction logic for ChannelEditor.xaml
-    /// </summary>
+    // code by -nicsure- 2024
+    // https://www.youtube.com/nicsure
+
     public partial class ChannelEditor : Window
     {
         private static readonly Brush upButt = new SolidColorBrush(Color.FromArgb(255, 0x20, 0x20, 0x20));

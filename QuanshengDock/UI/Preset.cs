@@ -13,6 +13,9 @@ using System.Xml.Serialization;
 
 namespace QuanshengDock.UI
 {
+    // code by -nicsure- 2024
+    // https://www.youtube.com/nicsure
+
     public class Preset : INotifyPropertyChanged
     {
         public static int Activator { get => 0; set { } }

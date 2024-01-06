@@ -10,6 +10,9 @@ using Xceed.Wpf.Toolkit.PropertyGrid.Editors;
 
 namespace QuanshengDock.General
 {
+    // code by -nicsure- 2024
+    // https://www.youtube.com/nicsure
+
     public class ColorBrushPen : INotifyPropertyChanged
     {
         private SolidColorBrush brush;
