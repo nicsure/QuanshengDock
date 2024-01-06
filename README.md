@@ -1,6 +1,6 @@
 #### **Quansheng Dock**
 
-A combination of firmware and a Windows app that allows remote operation of the Quansheng UV-K5 (and equivalent) hand-held radios via the programming cable.
+A WPF Windows app that allows remote operation of the Quansheng UV-K5 (and equivalent) hand-held radios via the programming cable.
 
 **Features** 
 - Enhanced LCD display cloning. Font and color selection.
@@ -11,7 +11,7 @@ A combination of firmware and a Windows app that allows remote operation of the 
 
 **Installation**
 : The app is essentially portable and can be placed anywhere. If installing from the release build, just unzip it to a location of your choice and run the "QuanshengDock.exe" inside the folder.
-The included firmware file also needs to be flashed to the radio. This can be done with any firmware flashing tool.
+You will also need to program the radio with the accompanying firmware found here : https://github.com/nicsure/quansheng-dock-fw
 
 
 **Demonstration**
