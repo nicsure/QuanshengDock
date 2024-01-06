@@ -15,6 +15,7 @@ using System.Net.NetworkInformation;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Media;
 
 namespace QuanshengDock.Serial
@@ -33,7 +34,8 @@ namespace QuanshengDock.Serial
         static Comms()
         {
             comPort.PropertyChanged += (object? sender, PropertyChangedEventArgs e) => Close();
-            _ = OpenPortLoop();
+            if (!DesignerProperties.GetIsInDesignMode(new DependencyObject()))
+                _ = OpenPortLoop();
         }
 
         public static void Close()

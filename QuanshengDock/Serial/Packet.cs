@@ -10,11 +10,11 @@ namespace QuanshengDock.Serial
     {
         public const ushort Hello = 0x514;
         public const ushort GetRssi = 0x527;
-        public const ushort KeyPress = 0x601;
-        public const ushort GetScreen = 0x603;
-        public const ushort Scan = 0x608;
-        public const ushort ScanAdjust = 0x609;
-        public const ushort ScanReply = 0x708;
+        public const ushort KeyPress = 0x801;
+        public const ushort GetScreen = 0x803;
+        public const ushort Scan = 0x808;
+        public const ushort ScanAdjust = 0x809;
+        public const ushort ScanReply = 0x908;
         public const ushort ImHere = 0x515;
         public const ushort RssiInfo = 0x528;
         public const ushort WriteEeprom = 0x51D;
