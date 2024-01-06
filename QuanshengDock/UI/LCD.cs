@@ -16,6 +16,8 @@ namespace QuanshengDock.UI
 {
     public static class LCD
     {
+        public static int Activator { get => 0; set { } }
+
         private static readonly ViewModel<ColorBrushPen> lcdForeColor = VM.Get<ColorBrushPen>("LCDForeColor");
         private static readonly ViewModel<ColorBrushPen> lcdBackColor = VM.Get<ColorBrushPen>("LCDBackColor");
         private static readonly ViewModel<Typeface> lcdFont = VM.Get<Typeface>("LCDFont");
@@ -26,9 +28,17 @@ namespace QuanshengDock.UI
         private static readonly ViewModel<double> vSize = VM.Get<double>("VSize");
         private static readonly ViewModel<double> fStretch = VM.Get<double>("FStretch");
         private static readonly ViewModel<RenderTargetBitmap> lcdImage = VM.Get<RenderTargetBitmap>("LcdImage");
-        private static RenderTargetBitmap backBuffer = new(1024, 512, 96, 96, PixelFormats.Pbgra32);
+        private static RenderTargetBitmap backBuffer;
         private static int updateCount = 0;
         private static bool clear = false;
+
+        static LCD()
+        {
+            backBuffer = null!;
+            Radio.Invoke(() => {
+                backBuffer = new(1024, 512, 96, 96, PixelFormats.Pbgra32);
+            });
+        }
 
         public static Point Transform(double x, double line)
         {
@@ -47,7 +57,7 @@ namespace QuanshengDock.UI
         {
             if (!Radio.Closing)
             {
-                (_ = Application.Current)?.Dispatcher.Invoke(() =>
+                Radio.Invoke(() =>
                 {
                     DrawingVisual drawingVisual = new();
                     using (DrawingContext drawingContext = drawingVisual.RenderOpen())
@@ -122,7 +132,7 @@ namespace QuanshengDock.UI
                 {
                     if (s > slevel + over) break;
                     Rect rect = new((x + 39.5) * 8, (39.5 - y) * 8, 8, y * 8);
-                    drawingContext.DrawRectangle(lcdBackColor.Value.Brush, null, rect);
+                    drawingContext.DrawRectangle(lcdForeColor.Value.Brush, null, rect);
                 }
                 clear = false;
             });

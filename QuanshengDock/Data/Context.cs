@@ -47,6 +47,7 @@ namespace QuanshengDock.Data
         public ViewModel<ColorBrushPen> LEDColor { get; } = new(new(Colors.Black, 0), nameof(LEDColor));
         public ViewModel<string> AudioInDevice { get; } = new(string.Empty, nameof(AudioInDevice), true);
         public ViewModel<string> AudioOutDevice { get; } = new(string.Empty, nameof(AudioOutDevice), true);
+        public ViewModel<bool> Passthrough { get; } = new(true, nameof(Passthrough), true);
         public ViewModel<double> SpecMid { get; } = new(144.0, nameof(SpecMid), true);
         public ViewModel<double> SpecStep { get; } = new(25.0, nameof(SpecStep), true);
         public ViewModel<double> SpecSteps { get; } = new(25.0, nameof(SpecSteps), true);
@@ -92,6 +93,7 @@ namespace QuanshengDock.Data
             FStretch.PropertyChanged += FontAdj_PropertyChanged;
             AudioInDevice.PropertyChanged += AudioDevice_PropertyChanged;
             AudioOutDevice.PropertyChanged += AudioDevice_PropertyChanged;
+            Passthrough.PropertyChanged += AudioDevice_PropertyChanged;
             WaterfallCol1.PropertyChanged += WaterfallColour_PropertyChanged;
             WaterfallCol2.PropertyChanged += WaterfallColour_PropertyChanged;
             LCDFontName.ForceUpdate++;
@@ -108,13 +110,14 @@ namespace QuanshengDock.Data
                 AudioInDevice.Value = AudioInDevices[0];
             if (AudioOutDevice.Value.Length == 0 && AudioOutDevices.Length > 0)
                 AudioOutDevice.Value = AudioOutDevices[0];
+            LCD.Activator++;
             MouseActions.Activator++;
             MenuActions.Activator++;
-            Comms.Activator++;
             Sound.Activator++;
             SpectrumAnalyzer.Activator++;
             Preset.Activator++;
             Channel.Activator++;
+            Comms.Activator++;
             AudioInDevice.ForceUpdate++;
         }
 

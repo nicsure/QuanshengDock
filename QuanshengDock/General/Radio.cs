@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -18,11 +19,12 @@ namespace QuanshengDock.General
         public static uint MonitoredFreq { get; set; } = 0;
         public static bool Monitoring { get; set; } = false;
         public static RState State { get; set; } = RState.None;
+        public static bool DesignMode { get; } = DesignerProperties.GetIsInDesignMode(new DependencyObject());
 
         public static void Invoke(Action action)
         {
-            if(!Closing)
-                Application.Current.Dispatcher.Invoke(action);
+            if (!Closing)
+                (_ = Application.Current)?.Dispatcher.Invoke(action);
         }
     }
 }

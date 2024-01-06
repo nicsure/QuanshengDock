@@ -34,7 +34,7 @@ namespace QuanshengDock.Serial
         static Comms()
         {
             comPort.PropertyChanged += (object? sender, PropertyChangedEventArgs e) => Close();
-            if (!DesignerProperties.GetIsInDesignMode(new DependencyObject()))
+            if (!Radio.DesignMode)
                 _ = OpenPortLoop();
         }
 
@@ -197,7 +197,6 @@ namespace QuanshengDock.Serial
                     Channel.EepromDataWritten(offset);
                     break;
             }
-
         }
 
         private static void UiPacket(int type, int val1, int val2, int val3, int dataLen, byte[] data)
@@ -210,7 +209,7 @@ namespace QuanshengDock.Serial
                     break;
                 case 1:
                     while (val1 > 128) { val2++; val1 -= 128; }
-                    LCD.DrawText(val1, val2 + 1, val3 / 6.0, Encoding.ASCII.GetString(data), false, true);
+                    LCD.DrawText(val1, val2 + 1, val3 / 6.0, Encoding.ASCII.GetString(data), false, false);
                     break;
                 case 2:
                     while (val1 > 128) { val2++; val1 -= 128; }

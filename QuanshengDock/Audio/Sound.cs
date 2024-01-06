@@ -1,5 +1,6 @@
 ﻿using NAudio.CoreAudioApi;
 using NAudio.Wave;
+using QuanshengDock.General;
 using QuanshengDock.View;
 using System;
 using System.Collections.Generic;
@@ -18,7 +19,8 @@ namespace QuanshengDock.Audio
         private static WaveIn? input = null;
         private static WaveInProvider? provider = null;
 
-        private static readonly ViewModel<double> volume = VM.Get<double>("Volume"); 
+        private static readonly ViewModel<double> volume = VM.Get<double>("Volume");
+        private static readonly ViewModel<bool> passthrough = VM.Get<bool>("Passthrough");
 
         static Sound()
         {
@@ -33,6 +35,7 @@ namespace QuanshengDock.Audio
         {
             try { input?.StopRecording(); } catch { }
             try { outEvent?.Stop(); } catch { }
+            if (!passthrough.Value || Radio.DesignMode) return;
             try
             {
                 using (outEvent)
