@@ -30,11 +30,15 @@ In order to hear the audio you'll need to make a simple wiring harness. I made m
 - Connect both sides of the tail grounds (outer shield) back together and connect those to the patch cable's outer shield.
 - Connect the tail's TX data lines back together.
 ![](./WiringMod.png)
-You may be wondering why you can't just use an external speaker microphone, and the reason is because the audio needs to be converted to high-impedance to prevent the audio bleeding over the serial data. If you just plug in a speaker microphone and the programming cable using the Y adapters, when there's any audio from the radio, the serial line gets flooded with garbage data.
+You may be wondering why you can't just use an external speaker, the reason is because the audio needs to be converted to high-impedance to prevent the audio bleeding over the serial data. If you just connect a low impedance speaker (like in a speaker microphone) and the programming cable using the Y adapters, when there's any audio from the radio, the serial line gets flooded with garbage data.
 
 
 **Hardware Configuration**
-: As previously mentioned you can just use a programming cable alone without any audio.
-If using the wiring harness you should plug the programming cable's 3.5mm jack into any of the 3.5mm Y cable's tails. But the programming cable's 2.5mm jack should be plugged into the unmodified tail of the 2.5mm Y adapter. The external microphone should then be plugged into the remaining tails. This is so that the microphone will not output any audio and corrupt the serial data. 
-Plug both Y adapter's jacks into the radio.
+: As previously mentioned you can just use a programming cable alone without any audio, but if you're using the wiring harness
+- plug the programming cable's 3.5mm jack into either of the 3.5mm Y cable's tails.
+- The programming cable's 2.5mm jack should be plugged into the **UNMODIFIED** tail of the 2.5mm Y adapter.
+- The microphone's 2.5mm jack should be plugged into the **MODIFIED** tail.
+- Plug the microphone's 3.5mm jack into the remaining tail.
+- Plug both Y adapter's jacks into the radio.
+- Connect the 3.5mm patch lead to your PC's line input or you may use any device that can accept audio line input.
 ![](./WiringOverview.png)
