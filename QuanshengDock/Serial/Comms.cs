@@ -210,11 +210,11 @@ namespace QuanshengDock.Serial
                     break;
                 case 1:
                     while (val1 > 128) { val2++; val1 -= 128; }
-                    LCD.DrawText(val1, val2 + 1, val3 / 8.0, Encoding.ASCII.GetString(data));
+                    LCD.DrawText(val1, val2 + 1, val3 / 6.0, Encoding.ASCII.GetString(data), false, true);
                     break;
                 case 2:
                     while (val1 > 128) { val2++; val1 -= 128; }
-                    LCD.DrawText(val1, val2 + 1, val3 / 8.0, Encoding.ASCII.GetString(data), true);
+                    LCD.DrawText(val1, val2 + 1, val3 / 6.0, Encoding.ASCII.GetString(data), true, true);
                     break;
                 case 3:
                     while (val1 > 128) { val2++; val1 -= 128; }
