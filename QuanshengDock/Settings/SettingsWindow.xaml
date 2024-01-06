@@ -91,6 +91,9 @@
             </TextBlock>
             <TextBlock Style="{StaticResource Label}" Grid.Column="0" Grid.Row="9" Text="LCD Font Adjust" />
 
+            <TextBlock Style="{StaticResource Label}" HorizontalAlignment="Left" Grid.Column="0" Grid.Row="10" Grid.ColumnSpan="2" Text="By -nicsure- 2024" Margin="20,0,0,0"/>
+
+
             <ComboBox Grid.Column="1" Grid.Row="1" ItemsSource="{Binding ComPorts}" SelectedItem="{Binding ComPort.Value}"/>
             <ComboBox Grid.Column="1" Grid.Row="2" ItemsSource="{Binding AudioInDevices}" SelectedItem="{Binding AudioInDevice.Value}" />
             <ComboBox Grid.Column="1" Grid.Row="3" ItemsSource="{Binding AudioOutDevices}" SelectedItem="{Binding AudioOutDevice.Value}" />
