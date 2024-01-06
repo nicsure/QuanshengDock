@@ -10,7 +10,7 @@
         xmlns:local="clr-namespace:QuanshengDock.Channels"
         mc:Ignorable="d"
         ResizeMode="CanResizeWithGrip"
-        Title="ChannelEditor" Height="520" Width="1406" Background="#01000000" Foreground="White" WindowStyle="None" AllowsTransparency="True">
+        Title="ChannelEditor" Height="520" Width="1406" Background="#00000000" Foreground="White" WindowStyle="None" AllowsTransparency="True">
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="MouseLeftButtonDown">
             <i:InvokeCommandAction Command="{Binding MouseCommand}" CommandParameter="LeftDown" />
@@ -92,7 +92,7 @@
                 <RowDefinition Height="9*"/>
                 <RowDefinition Height="1*"/>
             </Grid.RowDefinitions>
-            <TextBlock Grid.ColumnSpan="5" Text="Quansheng Channel Editor" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            <TextBlock IsHitTestVisible="False" Grid.ColumnSpan="5" Text="Quansheng Channel Editor" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
             <DataGrid IsEnabled="{Binding EnableChanButtons.Value}" FontSize="{Binding ElementName=Magnify, Path=Value}" Name="ChannelGrid" VerticalGridLinesBrush="{x:Null}" Grid.Row="1" UnloadingRow="ChannelGrid_UnloadingRow" LoadingRow="ChannelGrid_LoadingRow" AutoGeneratingColumn="DataGrid_AutoGeneratingColumn" ItemsSource="{Binding Channels.Value}" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="White">
                 <DataGrid.RowHeaderStyle>
                     <Style>

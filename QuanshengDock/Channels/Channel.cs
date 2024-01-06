@@ -139,11 +139,11 @@ namespace QuanshengDock.Channels
 
         public string Name
         {
-            get => Encoding.ASCII.GetString(NameBytes, Offset, 16).Trim('\0');
+            get => Encoding.ASCII.GetString(NameBytes, Offset, 10).Trim('\0');
             set
             {
                 Array.Clear(NameBytes, Offset, 16);
-                Array.Copy(Encoding.ASCII.GetBytes(value), 0, NameBytes, Offset, value.Length > 16 ? 16 : value.Length);
+                Array.Copy(Encoding.ASCII.GetBytes(value), 0, NameBytes, Offset, value.Length > 10 ? 10 : value.Length);
             }
         }
 

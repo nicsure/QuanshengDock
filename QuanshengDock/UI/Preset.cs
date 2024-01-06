@@ -1,4 +1,5 @@
 ﻿using QuanshengDock.General;
+using QuanshengDock.User;
 using QuanshengDock.View;
 using System;
 using System.Collections.Generic;
@@ -16,7 +17,7 @@ namespace QuanshengDock.UI
     {
         public static int Activator { get => 0; set { } }
 
-        private static readonly SavedDictionary backing = new("presets.conf");
+        private static readonly SavedDictionary backing = new(UserFolder.File("presets.conf"));
 
         private static readonly ViewModel<double> trigger = VM.Get<double>("Trigger");
         private static readonly ViewModel<double> rxTimeout = VM.Get<double>("RXTimeout");
@@ -30,7 +31,7 @@ namespace QuanshengDock.UI
         private static readonly ViewModel<ObservableCollection<Preset>> presets = VM.Get<ObservableCollection<Preset>>("MenuCommand");
 
         public event PropertyChangedEventHandler? PropertyChanged;
-
+        
         public double RXTimeout { get; set; }
         public double TotalTimeout { get; set; }
         public double Trigger { get; set; }

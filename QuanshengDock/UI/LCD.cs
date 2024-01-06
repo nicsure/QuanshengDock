@@ -16,8 +16,8 @@ namespace QuanshengDock.UI
 {
     public static class LCD
     {
-        private static readonly ViewModel<Brush> lcdForeBrush = VM.Get<Brush>("LCDForeBrush");
-        private static readonly ViewModel<Brush> lcdBackBrush = VM.Get<Brush>("LCDBackBrush");
+        private static readonly ViewModel<ColorBrushPen> lcdForeColor = VM.Get<ColorBrushPen>("LCDForeColor");
+        private static readonly ViewModel<ColorBrushPen> lcdBackColor = VM.Get<ColorBrushPen>("LCDBackColor");
         private static readonly ViewModel<Typeface> lcdFont = VM.Get<Typeface>("LCDFont");
         private static readonly ViewModel<Typeface> lcdBoldFont = VM.Get<Typeface>("LCDBoldFont");
         private static readonly ViewModel<double> hOffset = VM.Get<double>("HOffset");
@@ -82,7 +82,7 @@ namespace QuanshengDock.UI
                     FlowDirection.LeftToRight,
                     bold ? lcdBoldFont.Value : lcdFont.Value,
                     em,
-                    lcdForeBrush.Value,
+                    lcdForeColor.Value.Brush,
                     96)
                 {
                     Trimming = TextTrimming.CharacterEllipsis,
@@ -108,7 +108,7 @@ namespace QuanshengDock.UI
                 for (int i = from; i <= to; i++)
                 {
                     Rect rect = new(0, i * 64, 1024, 64);
-                    drawingContext.DrawRectangle(lcdBackBrush.Value, null, rect);
+                    drawingContext.DrawRectangle(lcdBackColor.Value.Brush, null, rect);
                 }
                 clear = true;
             });
@@ -122,7 +122,7 @@ namespace QuanshengDock.UI
                 {
                     if (s > slevel + over) break;
                     Rect rect = new((x + 39.5) * 8, (39.5 - y) * 8, 8, y * 8);
-                    drawingContext.DrawRectangle(lcdForeBrush.Value, null, rect);
+                    drawingContext.DrawRectangle(lcdBackColor.Value.Brush, null, rect);
                 }
                 clear = false;
             });

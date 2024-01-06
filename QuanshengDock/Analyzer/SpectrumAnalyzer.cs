@@ -31,16 +31,18 @@ namespace QuanshengDock.Analyzer
         private static readonly ViewModel<bool> normVM = VM.Get<bool>("SpecNorm");
         private static readonly ViewModel<double> ampVM = VM.Get<double>("SpecAmp");
         private static readonly ViewModel<double> floorVM = VM.Get<double>("SpecFloor");
-        private static readonly ViewModel<Brush> bgVM = VM.Get<Brush>("SpectBG");
-        private static readonly ViewModel<Brush> barVM = VM.Get<Brush>("SpectBar");
-        private static readonly ViewModel<Pen> linePen = VM.Get<Pen>("SpecLinePen");
+        private static readonly ViewModel<double> waterfallSpeed = VM.Get<double>("WaterfallSpeed");
+        private static readonly ViewModel<ColorBrushPen> bgVM = VM.Get<ColorBrushPen>("SpectBGCol");
+        private static readonly ViewModel<ColorBrushPen> barVM = VM.Get<ColorBrushPen>("SpectBarCol");
+        private static readonly ViewModel<ColorBrushPen> linePen = VM.Get<ColorBrushPen>("SpecLine");
         private static readonly ViewModel<Brush[]> wfPalette = VM.Get<Brush[]>("WaterFallPalette");
         private static readonly ViewModel<string> cursorFreq = VM.Get<string>("CursorFreq");
         private static readonly ViewModel<double> trigger = VM.Get<double>("Trigger");
-        private static readonly ViewModel<Color> ledColor = VM.Get<Color>("LEDColor");
+        private static readonly ViewModel<ColorBrushPen> ledColor = VM.Get<ColorBrushPen>("LEDColor");
         private static readonly ViewModel<double> rxTimeout = VM.Get<double>("RXTimeout");
         private static readonly ViewModel<double> totalTimeout = VM.Get<double>("TotalTimeout");
         private static readonly ViewModel<int> specStyle = VM.Get<int>("SpecStyle");
+        private static readonly ViewModel<LinearGradientBrush> heatBG = VM.Get<LinearGradientBrush>("HeatBG");
 
         private static uint mid = (uint)Math.Round(midVM.Value * 100000.0), step = (uint)Math.Round(stepVM.Value * 100.0);
         private static double amp = ampVM.Value, floor = floorVM.Value * floorScaler;
@@ -52,8 +54,8 @@ namespace QuanshengDock.Analyzer
         private static double detectedHighSignal = 0;
         private static readonly Dictionary<uint, int> blackList = new();
         private static readonly Pen triggerPen = new(new SolidColorBrush(Colors.SkyBlue), 1);
-        private static readonly Rect scrollRect = new(0, 2, 1024, 512);
         private static readonly Brush fadeBrush = new SolidColorBrush(Color.FromArgb(127, 0, 0, 0));
+        private static readonly Rect clearRect = new(0, 0, 1024, 512);
 
         static SpectrumAnalyzer()
         {
@@ -118,14 +120,18 @@ namespace QuanshengDock.Analyzer
             double trig = trigger.Value;
             if (!Radio.Closing)
             {
-                Application.Current.Dispatcher.Invoke(() =>
+                Radio.Invoke(() =>
                 {
-                    Brush barBrush = barVM.Value;
-                    Brush bgBrush = bgVM.Value;
-                    Pen line = linePen.Value;
+                    Brush barBrush = barVM.Value.Brush;
+                    Brush bgBrush = bgVM.Value.Brush;
+                    Brush heat = heatBG.Value;
+                    Pen line = linePen.Value.Pen;
                     int style = specStyle.Value;
+                    double speed = waterfallSpeed.Value;
                     double w = 1024.0 / sigs.Length;
+                    double wc = Math.Ceiling(w);
                     double w2 = w / 2.0;
+                    double gap = w / 4.0;
                     double lastiy = -1;
                     DrawingVisual drawingVisual = new();
                     double hiSig = -1;
@@ -134,11 +140,20 @@ namespace QuanshengDock.Analyzer
                     List<Rect> ignored = new();
                     using (DrawingContext drawingContext = drawingVisual.RenderOpen())
                     {
-                        if(Radio.WaterfallMode)
-                            drawingContext.DrawImage(image, scrollRect);
+                        if (Radio.WaterfallMode)
+                            drawingContext.DrawImage(image, new(0, speed, 1024, 512));
+                        else
+                        {
+                            switch (style)
+                            {
+                                case 0: // bar
+                                case 1: drawingContext.DrawRectangle(bgBrush, null, clearRect); break; // line
+                                case 2: drawingContext.DrawRectangle(heat, null, clearRect); break; // heat
+                            }
+                        }
                         for (int i = 0; i < sigs.Length; i++)
                         {
-                            double x = w * i;
+                            double x = Math.Floor(w * i);
                             double y = sigs[i].Clamp(0, 511);
                             switch(freq.Blacklist())
                             {
@@ -158,24 +173,31 @@ namespace QuanshengDock.Analyzer
                             }
                             if (Radio.SpectrumMode)
                             {
-                                double iy = 511 - y;
-                                Rect top = new(x, 0, w, 511);
+                                Rect col = new(x, 0, wc, 511);
                                 if (freq.Blacklist() > 1)
-                                    ignored.Add(top);
-                                Rect bot = new(x, iy, w, y+1);
-                                drawingContext.DrawRectangle(bgBrush, null, top);
-                                drawingContext.DrawRectangle(style == 0 || style == 2 ? barBrush : bgBrush, null, bot);
-                                if (style == 1 || style == 2)
+                                    ignored.Add(col);
+                                double iy = 511 - y;
+                                switch (style)
                                 {
-                                    if (lastiy > -1)
-                                        drawingContext.DrawLine(line, new(x - w2, lastiy), new(x + w2, iy));
-                                    lastiy = iy;
+                                    case 1: // line
+                                        if (lastiy > -1)
+                                            drawingContext.DrawLine(line, new(x - w2, lastiy), new(x + w2, iy));
+                                        lastiy = iy;
+                                        break;
+                                    case 0: // bar
+                                        Rect bar = new(x + gap, iy, wc - gap, 512 - iy);
+                                        drawingContext.DrawRectangle(barBrush, null, bar);
+                                        break;
+                                    case 2: // heat
+                                        Rect top = new(x, 0, wc, iy);
+                                        drawingContext.DrawRectangle(bgBrush, null, top);
+                                        break;
                                 }
                             }
                             else
                             {
                                 Brush col = wfPalette.Value[(int)y];
-                                Rect rect = new(x, 0, w, 2);
+                                Rect rect = new(x, 0, w, speed);
                                 drawingContext.DrawRectangle(col, null, rect);
                             }
                             freq += step;
@@ -242,7 +264,7 @@ namespace QuanshengDock.Analyzer
 
         private static void Status(double hi)
         {
-            ledColor.Value = Radio.SpectrumMode ? Colors.Purple : Colors.DarkOrange;
+            ledColor.Value.Color = Radio.SpectrumMode ? Colors.Purple : Colors.DarkOrange;
             LCD.ClearLines(0, 7);
             LCD.DrawText(8, 1, 1, Radio.SpectrumMode ? "Spectrum Analyzer" : "Waterfall", true);
             int spread = (steps / 2) * (int)step;

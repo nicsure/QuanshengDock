@@ -1,4 +1,5 @@
 ﻿using QuanshengDock.General;
+using QuanshengDock.User;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -27,7 +28,7 @@ namespace QuanshengDock.View
 
     public abstract class VM : ICommand
     {
-        private static readonly SavedDictionary backing = new("app.config");
+        private static readonly SavedDictionary backing = new(UserFolder.File("app.config"));
         protected static SavedDictionary Backing => backing;
 
         protected abstract bool IsSetting { get; set; }
@@ -137,6 +138,11 @@ namespace QuanshengDock.View
                 {
                     Backing[name] = c.ToString();
                 }
+                else
+                if(value_ is ColorBrushPen p)
+                {
+                    Backing[name] = p.ToString();
+                }
             }
         }
 
@@ -147,17 +153,22 @@ namespace QuanshengDock.View
                 Type t = typeof(T);
                 if (t == typeof(string))
                 {
-                    return (T)(object)saved;                    
+                    return (T)(object)saved;
                 }
                 else
-                if(typeof(IConvertible).IsAssignableFrom(t))
+                if (typeof(IConvertible).IsAssignableFrom(t))
                 {
                     return (T)Convert.ChangeType(saved, t);
                 }
                 else
-                if(t == typeof(Color))
+                if (t == typeof(Color))
                 {
                     return (T)ColorConverter.ConvertFromString(saved);
+                }
+                else
+                if (t == typeof(ColorBrushPen))
+                {
+                    return (T)(object)ColorBrushPen.FromString(saved);
                 }
             }
             return deflt;

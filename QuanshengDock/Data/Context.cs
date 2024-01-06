@@ -15,17 +15,10 @@ using QuanshengDock.Audio;
 using QuanshengDock.Analyzer;
 using System.Collections.ObjectModel;
 using QuanshengDock.Channels;
+using QuanshengDock.User;
 
 namespace QuanshengDock.Data
 {
-    public class ContextTest
-    {
-        public static ContextTest Instance => instance;
-        private static readonly ContextTest instance = new();
-    }
-
-
-
     public class Context
     {
         public static Context Instance => instance;
@@ -49,12 +42,9 @@ namespace QuanshengDock.Data
         public ViewModel<Typeface> LCDFont { get; } = new(nameof(LCDFont));
         public ViewModel<Typeface> LCDBoldFont { get; } = new(nameof(LCDBoldFont));
         public ViewModel<string> LCDFontName { get; } = new("Consolas", nameof(LCDFontName), true);
-        public ViewModel<Brush> LCDBackBrush { get; } = new(new SolidColorBrush(Colors.Black), nameof(LCDBackBrush));
-        public ViewModel<Brush> LCDForeBrush { get; } = new(new SolidColorBrush(Colors.LimeGreen), nameof(LCDForeBrush));
-        public ViewModel<Color> LCDBackColor { get; } = new(Colors.Black, nameof(LCDBackBrush), true);
-        public ViewModel<Color> LCDForeColor { get; } = new(Colors.LimeGreen, nameof(LCDForeColor), true);
-        public ViewModel<Brush> LEDBrush { get; } = new(nameof(LEDBrush));
-        public ViewModel<Color> LEDColor { get; } = new(Colors.Black, nameof(LEDColor));
+        public ViewModel<ColorBrushPen> LCDBackColor { get; } = new(new(Colors.Black, 0), nameof(LCDBackColor), true);
+        public ViewModel<ColorBrushPen> LCDForeColor { get; } = new(new(Colors.LimeGreen, 0), nameof(LCDForeColor), true);
+        public ViewModel<ColorBrushPen> LEDColor { get; } = new(new(Colors.Black, 0), nameof(LEDColor));
         public ViewModel<string> AudioInDevice { get; } = new(string.Empty, nameof(AudioInDevice), true);
         public ViewModel<string> AudioOutDevice { get; } = new(string.Empty, nameof(AudioOutDevice), true);
         public ViewModel<double> SpecMid { get; } = new(144.0, nameof(SpecMid), true);
@@ -63,23 +53,19 @@ namespace QuanshengDock.Data
         public ViewModel<bool> SpecNorm { get; } = new(true, nameof(SpecNorm), true);
         public ViewModel<double> SpecAmp { get; } = new(1.0, nameof(SpecAmp), true);
         public ViewModel<double> SpecFloor { get; } = new(0.0, nameof(SpecFloor), true);
-        public ViewModel<Brush> SpectBG { get; } = new(new SolidColorBrush(Colors.Black), nameof(SpectBG));
-        public ViewModel<Brush> SpectBar { get; } = new(new SolidColorBrush(Colors.LimeGreen), nameof(SpectBar));
-        public ViewModel<Color> SpectBGCol { get; } = new(Colors.Black, nameof(SpectBGCol), true);
-        public ViewModel<Color> SpectBarCol { get; } = new(Colors.LimeGreen, nameof(SpectBarCol), true);
+        public ViewModel<ColorBrushPen> SpectBGCol { get; } = new(new(Colors.Black, 0), nameof(SpectBGCol), true);
+        public ViewModel<ColorBrushPen> SpectBarCol { get; } = new(new(Colors.LimeGreen, 0), nameof(SpectBarCol), true);
         public ViewModel<double> CursorX { get; } = new(0.0, nameof(CursorX));
         public ViewModel<double> CursorY { get; } = new(0.0, nameof(CursorY));
         public ViewModel<double> Trigger { get; } = new(0.0, nameof(Trigger));
         public ViewModel<string> CursorFreq { get; } = new(string.Empty, nameof(CursorFreq));
-        public ViewModel<double> RXTimeout { get; } = new(2.0, nameof(RXTimeout));
-        public ViewModel<double> TotalTimeout { get; } = new(999.0, nameof(TotalTimeout));
+        public ViewModel<double> RXTimeout { get; } = new(2.0, nameof(RXTimeout), true);
+        public ViewModel<double> TotalTimeout { get; } = new(999.0, nameof(TotalTimeout), true);
         public ViewModel<string> PresetName { get; } = new(string.Empty, nameof(PresetName));
         public ViewModel<Color> WaterfallCol1 { get; } = new(Colors.DarkBlue, nameof(WaterfallCol1), true);
         public ViewModel<Color> WaterfallCol2 { get; } = new(Colors.Orange, nameof(WaterfallCol2), true);
         public ViewModel<Brush[]> WaterFallPalette { get; } = new(nameof(WaterFallPalette));
-        public ViewModel<Color> SpecLineCol { get; } = new(Colors.White, nameof(SpecLineCol), true);
-        public ViewModel<double> SpecLineThickness { get; } = new(2.0, nameof(SpecLineThickness), true);
-        public ViewModel<Pen> SpecLinePen { get; } = new(new(new SolidColorBrush(Colors.White), 2), nameof(SpecLinePen));
+        public ViewModel<ColorBrushPen> SpecLine { get; } = new(new(Colors.White, 5.0), nameof(SpecLine), true);
         public ViewModel<int> SpecStyle { get; } = new(0, nameof(SpecStyle), true);
         public ViewModel<ObservableCollection<GridChannel>> Channels { get; } = new(nameof(Channels));
         public ViewModel<ObservableCollection<GridChannel>> AllChannels { get; } = new(new(), nameof(AllChannels));
@@ -89,6 +75,8 @@ namespace QuanshengDock.Data
         public ViewModel<double> ChanButtonsOpacity { get; } = new(nameof(ChanButtonsOpacity));
         public ViewModel<bool> ShowAll { get; } = new(true, nameof(ShowAll));
         public ViewModel<Brush> ShowAllBrush { get; } = new(nameof(ShowAllBrush));
+        public ViewModel<double> WaterfallSpeed { get; } = new(2.0, nameof(WaterfallSpeed), true);
+        public ViewModel<LinearGradientBrush> HeatBG { get; } = new(nameof(HeatBG));
 
         public static string[] ComPorts => SerialPort.GetPortNames();
         public static string[] AudioInDevices => AudioDevices.GetAudioInDevices();
@@ -96,8 +84,6 @@ namespace QuanshengDock.Data
 
         public Context()
         {
-            LCDBackColor.PropertyChanged += LCDBackColor_PropertyChanged;
-            LCDForeColor.PropertyChanged += LCDForeColor_PropertyChanged;
             LCDFontName.PropertyChanged += LCDFontName_PropertyChanged;
             HOffset.PropertyChanged += FontAdj_PropertyChanged;
             VOffset.PropertyChanged += FontAdj_PropertyChanged;
@@ -106,25 +92,15 @@ namespace QuanshengDock.Data
             FStretch.PropertyChanged += FontAdj_PropertyChanged;
             AudioInDevice.PropertyChanged += AudioDevice_PropertyChanged;
             AudioOutDevice.PropertyChanged += AudioDevice_PropertyChanged;
-            SpectBGCol.PropertyChanged += SpectBGCol_PropertyChanged;
-            SpectBarCol.PropertyChanged += SpectBarCol_PropertyChanged;
             WaterfallCol1.PropertyChanged += WaterfallColour_PropertyChanged;
             WaterfallCol2.PropertyChanged += WaterfallColour_PropertyChanged;
-            SpecLineCol.PropertyChanged += SpecLine_PropertyChanged;
-            SpecLineThickness.PropertyChanged += SpecLine_PropertyChanged;
             LCDFontName.ForceUpdate++;
-            LCDBackColor.ForceUpdate++;
-            LCDForeColor.ForceUpdate++;
-            SpectBGCol.ForceUpdate++;
-            SpectBarCol.ForceUpdate++;
             SpecMid.ForceUpdate++;
             SpecStep.ForceUpdate++;
             SpecSteps.ForceUpdate++;
             WaterfallCol1.ForceUpdate++;
-            SpecLineCol.ForceUpdate++;
             ShowAllBrush.SetConverter(() => new SolidColorBrush(ShowAll.Value ? Colors.LimeGreen : Colors.DarkSlateGray), ShowAll);
             ChanButtonsOpacity.SetConverter(() => EnableChanButtons.Value ? 1.0 : 0.3, EnableChanButtons);
-            LEDBrush.SetConverter(() => new SolidColorBrush(LEDColor.Value), LEDColor);
             TxLockButtonText.SetConverter(() => $"TX {(TxLockButtonLocked.Value ? "🔒" : "🔓")}", TxLockButtonLocked);
             if (ComPort.Value.Length == 0 && ComPorts.Length > 0)
                 ComPort.Value = ComPorts[0];
@@ -142,14 +118,6 @@ namespace QuanshengDock.Data
             AudioInDevice.ForceUpdate++;
         }
 
-        private void SpecLine_PropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
-        {
-            SpecLinePen.Value = new(new SolidColorBrush(SpecLineCol.Value), SpecLineThickness.Value)
-            {
-                EndLineCap = PenLineCap.Round
-            };
-        }
-
         private void WaterfallColour_PropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
             var palette = WaterFallPalette.Value = new Brush[512];
@@ -163,16 +131,7 @@ namespace QuanshengDock.Data
                 byte b = (byte)(WaterfallCol1.Value.B + (db * i)).Clamp(0, 255);
                 palette[i] = new SolidColorBrush(Color.FromArgb(255, r, g, b));
             }
-        }
-
-        private void SpectBarCol_PropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
-        {
-            SpectBar.Value = new SolidColorBrush(SpectBarCol.Value);
-        }
-
-        private void SpectBGCol_PropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
-        {
-            SpectBG.Value = new SolidColorBrush(SpectBGCol.Value);
+            HeatBG.Value = new(WaterfallCol2.Value, WaterfallCol1.Value, 90.0);
         }
 
         private void AudioDevice_PropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
@@ -200,7 +159,7 @@ namespace QuanshengDock.Data
         {
             LCDFont.Value = new(LCDFontName.Value);
             LCDBoldFont.Value = new(LCDFont.Value.FontFamily, FontStyles.Normal, FontWeights.Black, FontStretches.Normal);
-            fontAdj = new($"{LCDFontName.Value}.font");
+            fontAdj = new(UserFolder.File($"{LCDFontName.Value}.font"));
             FStretch.Value = fontAdj.GetValue(nameof(FStretch), "1.17").ToDouble();
             VSize.Value = fontAdj.GetValue(nameof(VSize), "1.0").ToDouble();
             HSize.Value = fontAdj.GetValue(nameof(HSize), "1.0").ToDouble();
@@ -208,14 +167,6 @@ namespace QuanshengDock.Data
             HOffset.Value = fontAdj.GetValue(nameof(HOffset), "0.0").ToDouble();
         }
 
-        private void LCDForeColor_PropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
-        {
-            LCDForeBrush.Value = new SolidColorBrush(LCDForeColor.Value);
-        }
 
-        private void LCDBackColor_PropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
-        {
-            LCDBackBrush.Value = new SolidColorBrush(LCDBackColor.Value);
-        }
     }
 }

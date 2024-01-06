@@ -31,6 +31,7 @@ namespace QuanshengDock.UI
         private static readonly ViewModel<double> step = VM.Get<double>("SpecStep");
         private static readonly ViewModel<double> steps = VM.Get<double>("SpecSteps");
         private static readonly ViewModel<string> cursorFreq = VM.Get<string>("CursorFreq");
+        private static readonly ViewModel<int> specStyle = VM.Get<int>("SpecStyle");
 
         public static string LastCursorFreq { get; private set; } = string.Empty;
 
@@ -124,6 +125,24 @@ namespace QuanshengDock.UI
         {
             switch (func)
             {
+                case "ToggleSpectrum":
+                    MainWindow.ToggleSpectrum();
+                    break;
+                case "Minimize":
+                    MainWindow.Minimizer();
+                    break;
+                case "Maximize":
+                    MainWindow.Maximizer();
+                    break;
+                case "Bar":
+                    specStyle.Value = 0;
+                    break;
+                case "Line":
+                    specStyle.Value = 1;
+                    break;
+                case "Heat":
+                    specStyle.Value = 2;
+                    break;
                 case "WriteChannels":
                     Channel.WriteToRadio();
                     break;

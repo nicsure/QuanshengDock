@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using System.Windows.Input;
 
 namespace QuanshengDock.General
 {
@@ -29,17 +30,9 @@ namespace QuanshengDock.General
 
         public void Save()
         {
-            List<string> lines = new();
-            foreach (string key in Keys)
-            {
-                string deKey = Regex.Escape(key);
-                string deVal = Regex.Escape(this[key]);
-                lines.Add(deKey);
-                lines.Add(deVal);
-            }
             try
             {
-                File.WriteAllLines(BackingFile, lines);
+                File.WriteAllLines(BackingFile, this.Select(kp => $"{Regex.Escape(kp.Key)}\r\n{Regex.Escape(kp.Value)}").ToArray());
             }
             catch { }
         }

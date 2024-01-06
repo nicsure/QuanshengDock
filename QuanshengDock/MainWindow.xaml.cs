@@ -48,6 +48,51 @@ namespace QuanshengDock
             return Mouse.GetPosition(Instance.SpectrumImage);
         }
 
+        public static void Maximizer()
+        {
+            if (Instance != null)
+            {
+                switch (Instance.WindowState)
+                {
+                    case System.Windows.WindowState.Normal:
+                        Instance.WindowState = System.Windows.WindowState.Maximized;
+                        break;
+                    case System.Windows.WindowState.Maximized:
+                        Instance.WindowState = System.Windows.WindowState.Normal;
+                        break;
+                }
+            }
+        }
+
+        public static void ToggleSpectrum()
+        {
+            if (Instance != null)
+            {
+                double d = Instance.MainCol.ActualWidth;
+                switch (Instance.SpectrumCol.ActualWidth)
+                {
+                    case 0.0:
+                        Instance.SpectrumCol.Width = new(1, GridUnitType.Star);
+                        Instance.Width = Instance.ActualWidth + d;
+                        break;
+                    default:
+                        Instance.SpectrumCol.Width = new(0.0, GridUnitType.Star);
+                        Instance.Width = Instance.ActualWidth - d;
+                        break;
+                }
+
+
+            }
+        }
+
+        public static void Minimizer()
+        {
+            if(Instance != null)
+            {
+                Instance.WindowState = System.Windows.WindowState.Minimized;
+            }
+        }
+
         public static double SpectrumImageWidth() => Instance?.SpectrumImage.ActualWidth ?? 0;
         public static double SpectrumImageHeight() => Instance?.SpectrumImage.ActualHeight ?? 0;
 
@@ -92,12 +137,11 @@ namespace QuanshengDock
 
         protected override void OnPreviewKeyDown(KeyEventArgs e)
         {
-            base.OnPreviewKeyDown(e);
             Key key = e.Key;
             var fe = FocusManager.GetFocusedElement(this);
-            if (key == Key.Enter) Defocusser.Focus();
             if (fe is not WatermarkTextBox)
             {
+                Defocusser.Focus();
                 if (lastKey != key)
                 {
                     lastKey = key;
@@ -120,8 +164,9 @@ namespace QuanshengDock
                                 command.Execute("15");
                                 break;
                             case Key.A:
-                            case Key.LeftAlt:
+                            case Key.Enter:
                             case Key.RightAlt:
+                            case Key.LeftAlt:
                                 command.Execute("10");
                                 break;
                             case Key.B:
@@ -133,7 +178,7 @@ namespace QuanshengDock
                                 command.Execute("12");
                                 break;
                             case Key.Space:
-                                if(!txLockButtonLocked.Value)
+                                if (!txLockButtonLocked.Value)
                                     command.Execute("16");
                                 break;
                             case Key.Multiply:
@@ -157,17 +202,21 @@ namespace QuanshengDock
                     }
                 }
             }
+            else
+                base.OnPreviewKeyDown(e);
         }
 
         protected override void OnPreviewKeyUp(KeyEventArgs e)
         {
             base.OnPreviewKeyUp(e);
             var fe = FocusManager.GetFocusedElement(this);
-            if (fe is not WatermarkTextBox && e.Key != Key.Enter)
+            if (fe is not WatermarkTextBox)
             {
                 command.Execute("19");
                 lastKey = Key.None;
             }
+            else
+            if (e.Key == Key.Enter) Defocusser.Focus();
         }
 
     }

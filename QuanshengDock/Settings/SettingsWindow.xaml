@@ -10,7 +10,7 @@
         d:DataContext="{d:DesignInstance Type=data:Context, IsDesignTimeCreatable=True}"
         mc:Ignorable="d"
         ResizeMode="CanResizeWithGrip"
-        Title="Settings" Height="375" Width="592" Foreground="White" Background="#01000000" WindowStyle="None" AllowsTransparency="True">
+        Title="Settings" Height="375" Width="592" Foreground="White" Background="#00000000" WindowStyle="None" AllowsTransparency="True">
     <Window.Resources>
         <Style x:Key="Label" TargetType="TextBlock">
             <Setter Property="HorizontalAlignment" Value="Right"/>
@@ -70,7 +70,7 @@
                 <ColumnDefinition Width="0.5*"/>
                 <ColumnDefinition Width="10"/>
             </Grid.ColumnDefinitions>
-            <TextBlock Grid.ColumnSpan="5" Text="Quansheng Dock Settings" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            <TextBlock IsHitTestVisible="False" Grid.ColumnSpan="5" Text="Quansheng Dock Settings" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
             <TextBlock Style="{StaticResource Label}" Grid.Column="0" Grid.Row="1" Text="Serial Port" />
             <TextBlock Style="{StaticResource Label}" Grid.Column="0" Grid.Row="2" Text="Audio In Device" />
             <TextBlock Style="{StaticResource Label}" Grid.Column="0" Grid.Row="3" Text="Audio Out Device" />
@@ -90,11 +90,11 @@
             <ComboBox Grid.Column="1" Grid.Row="2" ItemsSource="{Binding AudioInDevices}" SelectedItem="{Binding AudioInDevice.Value}" />
             <ComboBox Grid.Column="1" Grid.Row="3" ItemsSource="{Binding AudioOutDevices}" SelectedItem="{Binding AudioOutDevice.Value}" />
             <Slider SmallChange="0.05" LargeChange="0.1" Grid.Column="1" Grid.Row="4" Minimum="0" Maximum="1" Value="{Binding Volume.Value}" VerticalAlignment="Center"/>
-            <Border CornerRadius="10" Grid.Row="5" Grid.Column="1" Background="{Binding LCDBackBrush.Value}" Margin="0,5,0,5">
-                <xctk:ColorPicker Opacity="0.01" SelectedColor="{Binding LCDBackColor.Value}" />
+            <Border CornerRadius="10" Grid.Row="5" Grid.Column="1" Background="{Binding LCDBackColor.Value.Brush}" Margin="0,5,0,5">
+                <xctk:ColorPicker Opacity="0.01" SelectedColor="{Binding LCDBackColor.Value.Color}" />
             </Border>
-            <Border CornerRadius="10"  Grid.Row="6" Grid.Column="1" Background="{Binding LCDForeBrush.Value}" Margin="0,5,0,5">
-                <xctk:ColorPicker Opacity="0.01" SelectedColor="{Binding LCDForeColor.Value}" />
+            <Border CornerRadius="10"  Grid.Row="6" Grid.Column="1" Background="{Binding LCDForeColor.Value.Brush}" Margin="0,5,0,5">
+                <xctk:ColorPicker Opacity="0.01" SelectedColor="{Binding LCDForeColor.Value.Color}" />
             </Border>
             <TextBox Grid.Row="7" Grid.Column="1" Text="{Binding LCDFontName.Value}">
                 <i:Interaction.Triggers>
@@ -131,27 +131,31 @@
             <TextBlock Style="{StaticResource Label}" Grid.Column="3" Grid.Row="3" Text="Analyzer Line" />
             <TextBlock Style="{StaticResource Label}" Grid.Column="3" Grid.Row="4" Text="Analyzer Line Thickness" />
             <TextBlock Style="{StaticResource Label}" Grid.Column="3" Grid.Row="5" Text="Analyzer Style" />
-            <TextBlock Style="{StaticResource Label}" Grid.Column="3" Grid.Row="6" Text="Waterfall Gradient" />
-            <Border CornerRadius="10" Grid.Row="1" Grid.Column="4" Background="{Binding SpectBG.Value}" Margin="0,5,0,5">
-                <xctk:ColorPicker Opacity="0.01" SelectedColor="{Binding SpectBGCol.Value}" />
+            <TextBlock Style="{StaticResource Label}" Grid.Column="3" Grid.Row="6" Text="Waterfall/Heat Gradient" />
+            <Border CornerRadius="10" Grid.Row="1" Grid.Column="4" Background="{Binding SpectBGCol.Value.Brush}" Margin="0,5,0,5">
+                <xctk:ColorPicker Opacity="0.01" SelectedColor="{Binding SpectBGCol.Value.Color}" />
             </Border>
-            <Border CornerRadius="10" Grid.Row="2" Grid.Column="4" Background="{Binding SpectBar.Value}" Margin="0,5,0,5">
-                <xctk:ColorPicker Opacity="0.01" SelectedColor="{Binding SpectBarCol.Value}" />
+            <Border CornerRadius="10" Grid.Row="2" Grid.Column="4" Background="{Binding SpectBarCol.Value.Brush}" Margin="0,5,0,5">
+                <xctk:ColorPicker Opacity="0.01" SelectedColor="{Binding SpectBarCol.Value.Color}" />
             </Border>
-            <Border CornerRadius="10" Grid.Row="3" Grid.Column="4" Background="{Binding SpecLinePen.Value.Brush}" Margin="0,5,0,5">
-                <xctk:ColorPicker Opacity="0.01" SelectedColor="{Binding SpecLineCol.Value}" />
+            <Border CornerRadius="10" Grid.Row="3" Grid.Column="4" Background="{Binding SpecLine.Value.Brush}" Margin="0,5,0,5">
+                <xctk:ColorPicker Opacity="0.01" SelectedColor="{Binding SpecLine.Value.Color}" />
             </Border>
-            <xctk:SingleUpDown Minimum="0.1" Maximum="30" Grid.Column="4" Grid.Row="4" Value="{Binding SpecLineThickness.Value}"/>
+            <xctk:SingleUpDown Minimum="0.1" Maximum="30" Grid.Column="4" Grid.Row="4" Value="{Binding SpecLine.Value.Thickness}"/>
             <ComboBox Grid.Column="4" Grid.Row="5" SelectedIndex="{Binding SpecStyle.Value}">
                 <ComboBoxItem Content="Bars"/>
                 <ComboBoxItem Content="Line"/>
-                <ComboBoxItem Content="Both"/>
+                <ComboBoxItem Content="Heat"/>
             </ComboBox>
-            <Border CornerRadius="10" Grid.Row="6" Grid.Column="4" Background="{Binding WaterFallPalette.Value[0]}" Margin="0,5,0,5">
-                <xctk:ColorPicker Opacity="0.01" SelectedColor="{Binding WaterfallCol1.Value}" />
-            </Border>
-            <Border CornerRadius="10" Grid.Row="7" Grid.Column="4" Background="{Binding WaterFallPalette.Value[511]}" Margin="0,5,0,5">
-                <xctk:ColorPicker Opacity="0.01" SelectedColor="{Binding WaterfallCol2.Value}" />
+            <Border CornerRadius="10" Grid.Row="6" Grid.Column="4" Grid.RowSpan="2" Background="{Binding HeatBG.Value}" Margin="0,5,0,5">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                    </Grid.RowDefinitions>
+                    <xctk:ColorPicker Grid.Row="0" Opacity="0.01" SelectedColor="{Binding WaterfallCol2.Value}" />
+                    <xctk:ColorPicker Grid.Row="1" Opacity="0.01" SelectedColor="{Binding WaterfallCol1.Value}" />
+                </Grid>
             </Border>
             <Button IsCancel="True" FontSize="16" Background="#ff111111" Foreground="#ff999999" Grid.Column="4" Grid.Row="9" HorizontalAlignment="Right" VerticalAlignment="Center" Content="  Close  " Margin="0,0,30,10"/>
         </Grid>

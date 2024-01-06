@@ -16,7 +16,7 @@
         Title="MainWindow"
         Height="442" Width="775"        
         WindowStyle="None"        
-        Background="#01000000" Foreground="White" AllowsTransparency="True">
+        Background="#00000000" Foreground="White" AllowsTransparency="True">
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="MouseLeftButtonDown">
             <i:InvokeCommandAction Command="{Binding MouseCommand}" CommandParameter="LeftDown" />
@@ -39,11 +39,12 @@
             <Setter Property="UpdateValueOnEnterKey" Value="True"/>
         </Style>
         <Style x:Key="TextLabel" TargetType="Frame">
+            <Setter Property="FontSize" Value="5"/>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="Frame">
                         <Viewbox Stretch="Fill">
-                            <TextBlock Width="30" Margin="2,2,2,2" Text="{TemplateBinding Content}" FontSize="5" FontFamily="Calibri" Foreground="#FF939393" TextAlignment="Center"/>
+                            <TextBlock Width="30" Margin="2,2,2,2" Text="{TemplateBinding Content}" FontSize="{TemplateBinding FontSize}" FontFamily="Calibri" Foreground="#FF939393" TextAlignment="Center"/>
                         </Viewbox>
                     </ControlTemplate>
                 </Setter.Value>
@@ -60,7 +61,7 @@
                             <Border Background="#ff202020" CornerRadius="10" BorderThickness="1" Margin="2,2,2,2">
                                 <Border.Effect>
                                     <DropShadowEffect BlurRadius="2" ShadowDepth="2"/>
-                                </Border.Effect>                                
+                                </Border.Effect>
                             </Border>
                         </Border>
                     </ControlTemplate>
@@ -68,6 +69,8 @@
             </Setter>
         </Style>
         <Style x:Key="ControlButton" TargetType="Frame">
+            <Setter Property="Foreground" Value="#ffbbbbbb"/>
+            <Setter Property="FontSize" Value="5"/>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="Frame">
@@ -80,7 +83,7 @@
                                     <DropShadowEffect BlurRadius="2" ShadowDepth="2"/>
                                 </ui:ButtonBorder.Effect>
                                 <Viewbox Stretch="Fill">
-                                    <TextBlock IsHitTestVisible="False" Width="19" Margin="2,2,2,2" Text="{TemplateBinding Content}" FontSize="5" FontFamily="Calibri" Foreground="#FFC3C3C3" TextAlignment="Center"/>
+                                    <TextBlock Foreground="{TemplateBinding Foreground}" IsHitTestVisible="False" Width="19" Margin="2,2,2,2" Text="{TemplateBinding Content}" FontSize="{TemplateBinding FontSize}" FontFamily="Calibri" TextAlignment="Center"/>
                                 </Viewbox>
                             </ui:ButtonBorder>
                         </Border>
@@ -98,18 +101,21 @@
         </Border.Background>
         <Grid>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="1*"/>
-                <ColumnDefinition Width="5"/>
-                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Name="MainCol" Width="1*"/>
+                <ColumnDefinition Width="0"/>
+                <ColumnDefinition Name="SpectrumCol" Width="1*"/>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition Height="40"/>
                 <RowDefinition Height="1*"/>
             </Grid.RowDefinitions>
             <CheckBox Name="Defocusser" Width="0" Height="0"/>
+            <TextBlock IsHitTestVisible="False" Grid.ColumnSpan="3" Text="Quansheng Dock" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,11"/>
             <Grid Grid.ColumnSpan="3">
-                <Rectangle Stroke="Gray" Margin="10,0,0,0" Fill="{Binding LEDBrush.Value}" Width="30" Height="15" HorizontalAlignment="Left"/>
-                <Frame Tag="Close" Width="30" Height="30" Style="{StaticResource ControlButton}" Content="❌" HorizontalAlignment="Right" />
+                <Rectangle Stroke="Gray" Margin="10,0,0,0" Fill="{Binding LEDColor.Value.Brush}" Width="30" Height="15" HorizontalAlignment="Left"/>
+                <Frame Tag="Close" Width="40" Style="{StaticResource ControlButton}" FontSize="9" Content="❌" HorizontalAlignment="Right" Margin="0,-7,0,5" />
+                <Frame Tag="Minimize" Width="40" Style="{StaticResource ControlButton}" FontSize="19" Content="🗕" HorizontalAlignment="Right" Margin="0,-7,80,5" />
+                <Frame Tag="Maximize" Width="40" Style="{StaticResource ControlButton}" FontSize="13" Content="🗖" HorizontalAlignment="Right" Margin="0,-7,40,5" />
             </Grid>
             <Grid Name="RadioGrid" Grid.Column="0" Grid.Row="1">
                 <Grid.RowDefinitions>
@@ -127,7 +133,7 @@
                     <ColumnDefinition Width="1*" />
                     <ColumnDefinition Width="1*" />
                 </Grid.ColumnDefinitions>
-                <Border Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="6" Background="{Binding LCDBackBrush.Value}" Margin="0,0,0,8" CornerRadius="10">
+                <Border Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="6" Background="{Binding LCDBackColor.Value.Brush}" Margin="2,0,2,8" CornerRadius="10">
                     <Image Margin="5,5,5,5" Stretch="Fill" Source="{Binding LcdImage.Value}"/>
                 </Border>
                 <Frame Tag="ChannelEdit" Grid.Column="0" Grid.Row="1" Style="{StaticResource ControlButton}" Content="CHAN&#10;EDIT" />
@@ -142,7 +148,7 @@
                 <Frame Tag="2" Grid.Column="2" Grid.Row="2" Style="{StaticResource ControlButton}" Content="2&#10;A/B" />
                 <Frame Tag="3" Grid.Column="3" Grid.Row="2" Style="{StaticResource ControlButton}" Content="3&#10;VFO/MR" />
                 <Frame Tag="14" Grid.Column="4" Grid.Row="2" Style="{StaticResource ControlButton}" Content="*&#10;SCAN" />
-                <Frame Grid.Column="5" Grid.Row="2" Style="{StaticResource ControlButton}" Content="SPECT" />
+                <Frame Tag="ToggleSpectrum" Grid.Column="5" Grid.Row="2" Style="{StaticResource ControlButton}" Content="SPECT" />
 
                 <Frame Tag="17" Grid.Column="0" Grid.Row="3" Style="{StaticResource ControlButton}" Content="💡" />
                 <Frame Tag="4" Grid.Column="1" Grid.Row="3" Style="{StaticResource ControlButton}" Content="4&#10;FC" />
@@ -165,8 +171,9 @@
                     <ColumnDefinition Width="0.5*" />
                     <ColumnDefinition Width="0.4*" />
                     <ColumnDefinition Width="0.8*"/>
-                    <ColumnDefinition Width="0.75*" />
-                    <ColumnDefinition Width="0.75*" />
+                    <ColumnDefinition Width="0.5*" />
+                    <ColumnDefinition Width="0.5*" />
+                    <ColumnDefinition Width="0.5*" />
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="6*"/>
@@ -175,7 +182,7 @@
                     <RowDefinition Height="1*"/>
                     <RowDefinition Height="1*"/>
                 </Grid.RowDefinitions>
-                <Border Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="7" Background="{Binding SpectBG.Value}" Margin="0,0,0,8" CornerRadius="10">
+                <Border Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="9" Background="{Binding SpectBGCol.Value.Brush}" Margin="2,0,2,8" CornerRadius="10">
                     <Grid Margin="5,5,5,5">
                         <i:Interaction.Triggers>
                             <i:EventTrigger EventName="MouseMove">
@@ -246,7 +253,7 @@
                                                 </Grid>
                                             </DataTemplate>
                                         </MenuItem.ItemTemplate>
-                                    </MenuItem> 
+                                    </MenuItem>
                                 </ContextMenu>
                             </Image.ContextMenu>
                         </Image>
@@ -270,19 +277,22 @@
                 <Frame Grid.Column="0" Grid.Row="2" Style="{StaticResource TextLabel}" Content="Step Size" />
                 <Frame Grid.Column="0" Grid.Row="3" Style="{StaticResource TextLabel}" Content="Step Count" />
 
-                <Frame Grid.Column="3" Grid.Row="1" Style="{StaticResource TextLabel}" Content="MHz" Margin="-28,0,-20,0" />
-                <Frame Grid.Column="3" Grid.Row="2" Style="{StaticResource TextLabel}" Content="kHz" Margin="-28,0,-20,0" />
+                <Frame Grid.Column="3" Grid.Row="1" Style="{StaticResource TextLabel}" Content="MHz" FontSize="10" />
+                <Frame Grid.Column="3" Grid.Row="2" Style="{StaticResource TextLabel}" Content="kHz" FontSize="11" />
 
-                <Frame Grid.Column="5" Grid.Row="4" Style="{StaticResource TextLabel}" Content="Floor" Margin="-20,0,-20,0" />
-                <Frame Grid.Column="6" Grid.Row="4" Style="{StaticResource TextLabel}" Content="Amplify" Margin="-20,0,-20,0" />
+                <Frame Grid.Column="5" Grid.Row="4" Style="{StaticResource TextLabel}" Content="Floor" FontSize="9" />
+                <Frame Grid.Column="6" Grid.Row="4" Style="{StaticResource TextLabel}" Content="Amplify" FontSize="9" />
+                <Frame Grid.Column="7" Grid.Row="4" Style="{StaticResource TextLabel}" Content="Speed" FontSize="9" />
 
-                <Frame Tag="Normalize" Grid.Column="3" Grid.ColumnSpan="2" Grid.Row="4" Style="{StaticResource ControlButton}" Content="Norm        " />
+
+
+                <Frame Tag="Normalize" Grid.Column="2" Grid.ColumnSpan="3" Grid.Row="4" FontSize="3.5" Style="{StaticResource ControlButton}" Content="Normalize        " />
                 <Viewbox Grid.Column="4" Grid.Row="4" Stretch="Fill">
                     <ui:Indicator BorderBrush="#ff888888" BorderThickness="0.1" IsOn="{Binding SpecNorm.Value}" Width="1" Height="1" Margin="4,1.75,1.7,1.75"/>
                 </Viewbox>
 
                 <Viewbox Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2" Stretch="Fill">
-                    <xctk:DoubleUpDown Value="{Binding SpecMid.Value}" Minimum="10.0" Maximum="1300.0" FormatString="F5"/>
+                    <xctk:DoubleUpDown Value="{Binding SpecMid.Value}" Minimum="10.0" Maximum="999.99999" FormatString="F5"/>
                 </Viewbox>
                 <Viewbox Grid.Column="1" Grid.Row="2" Grid.ColumnSpan="2" Stretch="Fill">
                     <xctk:DoubleUpDown Value="{Binding SpecStep.Value}" Minimum="0.001" Maximum="10000.0" FormatString="F2"/>
@@ -294,11 +304,19 @@
                 <Frame Tag="Spectrum" Grid.Column="0" Grid.Row="4" Style="{StaticResource ControlButton}" Content="Analyzer" />
                 <Frame Tag="Waterfall" Grid.Column="1" Grid.Row="4" Style="{StaticResource ControlButton}" Content="Waterfall" />
 
+                <Frame Tag="Bar" Grid.Column="4" Grid.Row="1" Style="{StaticResource ControlButton}" Content="Bar" />
+                <Frame Tag="Line" Grid.Column="4" Grid.Row="2" Style="{StaticResource ControlButton}" Content="Line" />
+                <Frame Tag="Heat" Grid.Column="4" Grid.Row="3" Style="{StaticResource ControlButton}" Content="Heat" />
+
+
                 <Viewbox Grid.Column="5" Grid.Row="1" Grid.RowSpan="3" Stretch="Fill">
                     <Slider Orientation="Vertical" Value="{Binding SpecFloor.Value}" Minimum="-1" Maximum="1" Height="140" Margin="10,0,10,0"/>
                 </Viewbox>
                 <Viewbox Grid.Column="6" Grid.Row="1" Grid.RowSpan="3" Stretch="Fill">
                     <Slider Orientation="Vertical" Value="{Binding SpecAmp.Value}" Minimum="1" Maximum="30" Height="140" Margin="10,0,10,0"/>
+                </Viewbox>
+                <Viewbox Grid.Column="7" Grid.Row="1" Grid.RowSpan="3" Stretch="Fill">
+                    <Slider Orientation="Vertical" Value="{Binding WaterfallSpeed.Value}" Minimum="0.1" Maximum="20" Height="140" Margin="10,0,10,0"/>
                 </Viewbox>
             </Grid>
         </Grid>

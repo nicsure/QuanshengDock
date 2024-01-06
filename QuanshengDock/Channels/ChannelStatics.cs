@@ -1,6 +1,8 @@
 ﻿using Microsoft.Win32;
 using QuanshengDock.Data;
+using QuanshengDock.General;
 using QuanshengDock.Serial;
+using QuanshengDock.User;
 using QuanshengDock.View;
 using System;
 using System.Collections.Generic;
@@ -25,8 +27,8 @@ namespace QuanshengDock.Channels
         private static readonly ViewModel<string> message = VM.Get<string>("ChEditMessage");
         private static readonly ViewModel<bool> enableChButts = VM.Get<bool>("EnableChanButtons");
         private static bool timeout = false;
-        public static byte[] DataBytes { get; } = new byte[200 * 16];
-        public static byte[] NameBytes { get; } = new byte[200 * 16];
+        public static byte[] DataBytes { get; } = new byte[3200];
+        public static byte[] NameBytes { get; } = new byte[3200];
         public static byte[] AttrBytes { get; } = new byte[200];
         public static Channel[] Channels { get; } = new Channel[200];
         static Channel()
@@ -117,7 +119,7 @@ namespace QuanshengDock.Channels
                 }
                 timeout = false;
                 DisplayMessage("Channels read from radio");
-                Application.Current.Dispatcher.Invoke(() => {
+                Radio.Invoke(() => {
                     enableChButts.Value = true;
                     Sanitize();
                     FilterUsed();
@@ -215,7 +217,8 @@ namespace QuanshengDock.Channels
             OpenFileDialog openFileDialog = new()
             {
                 Title = "Load channels from disk",
-                Filter = "CHAN Files|*.chan|All Files|*.*"
+                Filter = "CHAN Files|*.chan|All Files|*.*",
+                InitialDirectory = UserFolder.Dir
             };
             if (openFileDialog.ShowDialog() ?? false)
             {
@@ -245,7 +248,8 @@ namespace QuanshengDock.Channels
             SaveFileDialog saveFileDialog = new()
             {
                 Title = "Save channels to disk",
-                Filter = "CHAN Files|*.chan|All Files|*.*"
+                Filter = "CHAN Files|*.chan|All Files|*.*",
+                InitialDirectory = UserFolder.Dir
             };
             if(saveFileDialog.ShowDialog() ?? false) 
             {

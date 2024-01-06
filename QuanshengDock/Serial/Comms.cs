@@ -24,7 +24,7 @@ namespace QuanshengDock.Serial
         public static int Activator { get => 0; set { } }
         public static uint TimeStamp => timeStamp;
 
-        private static readonly ViewModel<Color> ledColor = VM.Get<Color>("LEDColor");
+        private static readonly ViewModel<ColorBrushPen> ledColor = VM.Get<ColorBrushPen>("LEDColor");
         private static readonly ViewModel<string> comPort = VM.Get<string>("ComPort");
         private static readonly byte[] xor_array = { 0x16, 0x6c, 0x14, 0xe6, 0x2e, 0x91, 0x0d, 0x40, 0x21, 0x35, 0xd5, 0x40, 0x13, 0x03, 0xe9, 0x80 };
         private static uint timeStamp = 0;
@@ -68,6 +68,10 @@ namespace QuanshengDock.Serial
                     sp.Open();
                     port = sp;
                     SendHello();
+                    await Task.Delay(50);
+                    SendCommand(Packet.KeyPress, (ushort)13);
+                    await Task.Delay(50);
+                    SendCommand(Packet.KeyPress, (ushort)19);
                 }
                 catch
                 {
@@ -223,23 +227,23 @@ namespace QuanshengDock.Serial
                     {
                         case 1:
                             ps = "T";
-                            ledColor.Value = Colors.Red;
+                            ledColor.Value.Color = Colors.Red;
                             Radio.State = RState.TX;
                             Radio.AnalyzerMode = false;
                             Radio.Monitoring = false;
                             break;
                         case 2:
                             ps = "R";
-                            ledColor.Value = Radio.Monitoring ? Colors.Cyan : Colors.LimeGreen;
+                            ledColor.Value.Color = Radio.Monitoring ? Colors.Cyan : Colors.LimeGreen;
                             Radio.State = RState.RX;
                             break;
                         case 4:
                             ps = "PS";
-                            ledColor.Value = Colors.Black;
+                            ledColor.Value.Color = Colors.Black;
                             Radio.State = RState.None;
                             break;
                         default:
-                            ledColor.Value = Colors.DarkBlue;
+                            ledColor.Value.Color = Colors.DarkBlue;
                             Radio.State = RState.None;
                             break;
                     }
