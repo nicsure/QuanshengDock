@@ -1,4 +1,5 @@
 ﻿using QuanshengDock.Data;
+using QuanshengDock.General;
 using QuanshengDock.UI;
 using QuanshengDock.View;
 using System;
@@ -40,6 +41,11 @@ namespace QuanshengDock
             command = VM.Get("MouseCommand");
             txLockButtonLocked = VM.Get<bool>("TxLockButtonLocked");
             InitializeComponent();
+            if (!Radio.DesignMode)
+            {
+                ToggleSpectrum();
+                Width = 400;
+            }
         }
 
         public static Point MouseRelative()
@@ -69,7 +75,7 @@ namespace QuanshengDock
             if (Instance != null)
             {
                 double d = Instance.MainCol.ActualWidth;
-                switch (Instance.SpectrumCol.ActualWidth)
+                switch (Instance.SpectrumCol.Width.Value)
                 {
                     case 0.0:
                         Instance.SpectrumCol.Width = new(1, GridUnitType.Star);
@@ -80,8 +86,6 @@ namespace QuanshengDock
                         Instance.Width = Instance.ActualWidth - d;
                         break;
                 }
-
-
             }
         }
 
