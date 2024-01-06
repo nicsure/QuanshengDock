@@ -35,6 +35,6 @@ You may be wondering why you can't just use an external speaker microphone, and 
 
 **Hardware Configuration**
 : As previously mentioned you can just use a programming cable alone without any audio.
-
 If using the wiring harness you should plug the programming cable's 3.5mm jack into any of the 3.5mm Y cable's tails. But the programming cable's 2.5mm jack should be plugged into the unmodified tail of the 2.5mm Y adapter. The external microphone should then be plugged into the remaining tails. This is so that the microphone will not output any audio and corrupt the serial data. 
 Plug both Y adapter's jacks into the radio.
+![](./WiringOverview.png)
