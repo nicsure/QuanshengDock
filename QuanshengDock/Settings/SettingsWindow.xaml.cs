@@ -34,5 +34,10 @@ namespace QuanshengDock.Settings
             if (Mouse.DirectlyOver is Border)
                 this.DragMove();
         }
+
+        private void TextBox_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter) Defocusser.Focus();
+        }
     }
 }

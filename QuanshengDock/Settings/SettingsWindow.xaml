@@ -74,6 +74,7 @@
                 <ColumnDefinition Width="0.5*"/>
                 <ColumnDefinition Width="10"/>
             </Grid.ColumnDefinitions>
+            <CheckBox Width="0" Height="0" Name="Defocusser"/>
             <TextBlock IsHitTestVisible="False" Grid.ColumnSpan="5" Text="Quansheng Dock Settings" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
             <TextBlock Style="{StaticResource Label}" Grid.Column="0" Grid.Row="1" Text="Serial Port" />
             <TextBlock Style="{StaticResource Label}" Grid.Column="0" Grid.Row="2" Text="Audio In Device" />
@@ -105,7 +106,7 @@
             <Border CornerRadius="10"  Grid.Row="7" Grid.Column="1" Background="{Binding LCDForeColor.Value.Brush}" Margin="0,5,0,5">
                 <xctk:ColorPicker Opacity="0.01" SelectedColor="{Binding LCDForeColor.Value.Color}" />
             </Border>
-            <TextBox Grid.Row="8" Grid.Column="1" Text="{Binding LCDFontName.Value}">
+            <TextBox KeyDown="TextBox_KeyDown" Grid.Row="8" Grid.Column="1" Text="{Binding LCDFontName.Value}">
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="MouseDoubleClick">
                         <i:InvokeCommandAction Command="{Binding MouseCommand}" CommandParameter="FontBrowse"/>
