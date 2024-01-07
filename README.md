@@ -20,7 +20,7 @@ You will also need to program the radio with the accompanying firmware found her
 
 
 **Demonstration**
-: You can find a demo video here:
+: You can find a demo video here: https://www.youtube.com/watch?v=UwTz5wricmY
 
 
 **Hardware Requirements**
