@@ -16,9 +16,9 @@
         mc:Ignorable="d"
         x:Name="MyWindow"
         ResizeMode="CanResizeWithGrip"
-        Title="MainWindow"
+        Title="Quansheng Dock"
         Height="442" Width="775"        
-        WindowStyle="None"        
+        WindowStyle="None"    
         Background="#00000000" Foreground="White" AllowsTransparency="True">
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="MouseLeftButtonDown">
