@@ -160,8 +160,8 @@ namespace QuanshengDock.Serial
                         if ((uiVal2 = NextByte()) == -1) break;
                         if ((uiVal3 = NextByte()) == -1) break;
                         if ((uiDataLen = NextByte()) == -1) break;
-                        byte[] uiData = new byte[uiDataLen];
-                        for (int i = 0; i < uiDataLen; i++)
+                        byte[] uiData = new byte[uiType == 6 ? 0 : uiDataLen];
+                        for (int i = 0; i < uiData.Length; i++)
                         {
                             int t = NextByte();
                             if (t == -1)
