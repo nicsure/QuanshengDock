@@ -34,14 +34,24 @@ namespace QuanshengDock.Channels
             DataContext = Context.Instance;
             InitializeComponent();
             ChannelGrid.SelectedCellsChanged += ChannelGrid_SelectedCellsChanged;
+            ChannelGrid.CurrentCellChanged += ChannelGrid_CurrentCellChanged;
+        }
+
+        private void ChannelGrid_CurrentCellChanged(object? sender, EventArgs e)
+        {
+            ChannelGrid.CommitEdit();
         }
 
         private void ChannelGrid_SelectedCellsChanged(object sender, SelectedCellsChangedEventArgs e)
         {
             GridChannel.SelectedChannels.Clear();
             foreach (var v in ChannelGrid.SelectedItems)
+            {
                 if (v is GridChannel channel)
+                {
                     GridChannel.SelectedChannels.Add(channel);
+                }
+            }
         }
 
         protected override void OnMouseLeftButtonDown(MouseButtonEventArgs e)

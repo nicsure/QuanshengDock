@@ -273,7 +273,7 @@ namespace QuanshengDock.Channels
         }
         public bool IsGrouped() => grouped;
 
-        protected virtual void OnPropertyChanged(string name)
+        public virtual void OnPropertyChanged(string name)
         {
             (_ = PropertyChanged)?.Invoke(this, new(name));
             if(!groupChange && groupedChannels.Contains(this))

@@ -95,6 +95,7 @@
                 <RowDefinition Height="9*"/>
                 <RowDefinition Height="1*"/>
             </Grid.RowDefinitions>
+            <CheckBox Name="Defocusser" Width="0" Height="0" />
             <TextBlock IsHitTestVisible="False" Grid.ColumnSpan="5" Text="Quansheng Channel Editor" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
             <DataGrid IsEnabled="{Binding EnableChanButtons.Value}" FontSize="{Binding ElementName=Magnify, Path=Value}" Name="ChannelGrid" VerticalGridLinesBrush="{x:Null}" Grid.Row="1" UnloadingRow="ChannelGrid_UnloadingRow" LoadingRow="ChannelGrid_LoadingRow" AutoGeneratingColumn="DataGrid_AutoGeneratingColumn" ItemsSource="{Binding Channels.Value}" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="White">
                 <DataGrid.RowHeaderStyle>
