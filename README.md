@@ -11,7 +11,7 @@ A WPF Windows app that allows remote operation of the Quansheng UV-K5 (and equiv
 
 **Download**
 : A pre-compiled release is available here
-https://github.com/nicsure/QuanshengDock/releases/download/v0.21q/quanshengdock.zip
+https://github.com/nicsure/QuanshengDock/releases/download/0.27.1q/quanshengdock.zip
 
 
 **Installation**
