@@ -137,7 +137,7 @@
                 <xctk:SingleUpDown Grid.Column="3" Grid.Row="1" Value="{Binding VSize.Value}"/>
             </Grid>
             <TextBlock Style="{StaticResource Label}" Grid.Column="3" Grid.Row="1" Text="Audio Latency" />
-            <TextBlock Style="{StaticResource Label}" Grid.Column="3" Grid.Row="2" Text="Auido Buffers" />
+            <TextBlock Style="{StaticResource Label}" Grid.Column="3" Grid.Row="2" Text="Audio Buffers" />
             <TextBlock Style="{StaticResource Label}" Grid.Column="3" Grid.Row="3" Text="Analyzer Background" />
             <TextBlock Style="{StaticResource Label}" Grid.Column="3" Grid.Row="4" Text="Analyzer Bars" />
             <TextBlock Style="{StaticResource Label}" Grid.Column="3" Grid.Row="5" Text="Analyzer Line" />
