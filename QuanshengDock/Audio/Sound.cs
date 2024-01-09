@@ -24,6 +24,8 @@ namespace QuanshengDock.Audio
 
         private static readonly ViewModel<double> volume = VM.Get<double>("Volume");
         private static readonly ViewModel<bool> passthrough = VM.Get<bool>("Passthrough");
+        private static readonly ViewModel<double> latency = VM.Get<double>("AudioLatency");
+        private static readonly ViewModel<double> buffers = VM.Get<double>("AudioBuffers");
 
         static Sound()
         {
@@ -49,9 +51,9 @@ namespace QuanshengDock.Audio
                 outEvent.Volume = (float)volume.Value;
                 if (inputID != -1 && outputID != -1)
                 {
-                    outEvent.DesiredLatency = 40;
+                    outEvent.DesiredLatency = (int)latency.Value;
                     outEvent.DeviceNumber = outputID;
-                    outEvent.NumberOfBuffers = 15;
+                    outEvent.NumberOfBuffers = (int)buffers.Value;
                     input.DeviceNumber = inputID;
                     input.WaveFormat = new(44100, 24, 1);
                     input.BufferMilliseconds = 50;

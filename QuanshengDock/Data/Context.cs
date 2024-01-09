@@ -81,6 +81,10 @@ namespace QuanshengDock.Data
         public ViewModel<Brush> ShowAllBrush { get; } = new(nameof(ShowAllBrush));
         public ViewModel<double> WaterfallSpeed { get; } = new(2.0, nameof(WaterfallSpeed), true);
         public ViewModel<LinearGradientBrush> HeatBG { get; } = new(nameof(HeatBG));
+        public ViewModel<double> AudioLatency { get; } = new(40.0, nameof(AudioLatency), true);
+        public ViewModel<double> AudioBuffers { get; } = new(15.0, nameof(AudioBuffers), true);
+
+
 
         public static string[] ComPorts => SerialPort.GetPortNames();
         public static string[] AudioInDevices => AudioDevices.GetAudioInDevices();
