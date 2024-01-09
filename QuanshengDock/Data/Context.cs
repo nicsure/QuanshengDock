@@ -84,8 +84,6 @@ namespace QuanshengDock.Data
         public ViewModel<double> AudioLatency { get; } = new(40.0, nameof(AudioLatency), true);
         public ViewModel<double> AudioBuffers { get; } = new(15.0, nameof(AudioBuffers), true);
 
-
-
         public static string[] ComPorts => SerialPort.GetPortNames();
         public static string[] AudioInDevices => AudioDevices.GetAudioInDevices();
         public static string[] AudioOutDevices => AudioDevices.GetAudioOutDevices();

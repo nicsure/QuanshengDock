@@ -28,18 +28,27 @@ namespace QuanshengDock.Channels
         private static ButtonBorder? pressedButt = null;
         private static readonly Brush groupedBrush = new SolidColorBrush(Colors.DarkBlue);
         private static readonly Brush transBrush = new SolidColorBrush(Colors.Transparent);
-        private static readonly Brush whiteBrush = new SolidColorBrush(Colors.White);
-        private static readonly Brush greyBrush = new SolidColorBrush(Colors.DarkGray);
-
 
         public ChannelEditor()
         {
             DataContext = Context.Instance;
             InitializeComponent();
+            ChannelGrid.SelectedCellsChanged += ChannelGrid_SelectedCellsChanged;
         }
+
+        private void ChannelGrid_SelectedCellsChanged(object sender, SelectedCellsChangedEventArgs e)
+        {
+            GridChannel.SelectedChannels.Clear();
+            foreach (var v in ChannelGrid.SelectedItems)
+                if (v is GridChannel channel)
+                    GridChannel.SelectedChannels.Add(channel);
+        }
+
         protected override void OnMouseLeftButtonDown(MouseButtonEventArgs e)
         {
             base.OnMouseLeftButtonDown(e);
+            Channel.SelectedChannel = 
+                ChannelGrid.SelectedItems.Count == 0 ? -1 : (ChannelGrid.SelectedItems[0] as GridChannel)!.Number - 1;
             if (Mouse.DirectlyOver is ButtonBorder butt)
             {
                 switch (butt.Tag)
@@ -61,7 +70,7 @@ namespace QuanshengDock.Channels
 
         private void GroupChannels(bool group)
         {
-            foreach(var v in ChannelGrid.SelectedItems)
+            foreach (var v in ChannelGrid.SelectedItems)
             {
                 if (v is GridChannel channel)
                 {
@@ -156,7 +165,7 @@ namespace QuanshengDock.Channels
             {
                 channel.SetRow(e.Row);
                 e.Row.Background = channel.IsGrouped() ? groupedBrush : transBrush;
-                e.Row.Foreground = channel.IsInUse() ? whiteBrush : greyBrush;
+                e.Row.Opacity = channel.IsInUse() ? 1 : 0.6;
             }
         }
 

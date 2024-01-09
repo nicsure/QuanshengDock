@@ -128,6 +128,12 @@ namespace QuanshengDock.UI
         {
             switch (func)
             {
+                case "PasteChannels":
+                    Channel.PasteChannels(Channel.SelectedChannel);
+                    break;
+                case "CopyChannels":
+                    Channel.CopyChannels();
+                    break;
                 case "ToggleSpectrum":
                     MainWindow.ToggleSpectrum();
                     break;

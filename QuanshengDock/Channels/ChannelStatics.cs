@@ -7,10 +7,12 @@ using QuanshengDock.View;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Security.Authentication.ExtendedProtection;
 using System.Text;
+using System.Threading.Channels;
 using System.Threading.Tasks;
 using System.Windows;
 
@@ -34,6 +36,8 @@ namespace QuanshengDock.Channels
         public static byte[] NameBytes { get; } = new byte[3200];
         public static byte[] AttrBytes { get; } = new byte[200];
         public static Channel[] Channels { get; } = new Channel[200];
+        public static int SelectedChannel { get; set; } = -1;
+
         static Channel()
         {
             for (int i = 0; i < 200; i++)
@@ -71,6 +75,39 @@ namespace QuanshengDock.Channels
                 if (channel.IsInUse() || channel.IsGrouped())
                     UsedChannelsVM.Value.Add(channel);
             }
+        }
+
+        public static void CopyChannels()
+        {
+            if(GridChannel.SelectedChannels.Count > 0)
+            {
+                List<CopiedChannel> channels = new();   
+                foreach (var channel in GridChannel.SelectedChannels)
+                    channels.Add(new(channel.Number - 1));
+                CopiedChannel.Clipboard = channels.ToArray();
+                DisplayMessage($"{channels.Count} channels copied");
+            }
+            else
+                DisplayMessage("No selected channels");
+        }
+
+        public static void PasteChannels(int start)
+        {
+            if (start > -1)
+            {
+                int cnt = 0;
+                foreach (var channel in CopiedChannel.Clipboard)
+                {
+                    channel.Paste(start++);
+                    cnt++;
+                    if (start == 200)
+                        break;
+                }
+                DisplayMessage($"{cnt} channels pasted");
+                Refresh();
+            }
+            else
+                DisplayMessage("No copied channels");
         }
 
         public static void SetDisplayed(bool all)

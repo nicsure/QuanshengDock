@@ -233,6 +233,7 @@ namespace QuanshengDock.Channels
         public string G => grouped ? "➤" : string.Empty;
         private bool grouped = false;
         private static readonly List<GridChannel> groupedChannels = new();
+        private static readonly List<GridChannel> selectedChannels = new();
         public int Number => number + 1;
         private readonly int number;
         public event PropertyChangedEventHandler? PropertyChanged;
@@ -243,6 +244,9 @@ namespace QuanshengDock.Channels
         private static readonly Brush transBrush = new SolidColorBrush(Colors.Transparent);
         private static readonly Brush whiteBrush = new SolidColorBrush(Colors.White);
         private static readonly Brush greyBrush = new SolidColorBrush(Colors.DarkGray);
+
+        public static List<GridChannel> GroupedChannels => groupedChannels;
+        public static List<GridChannel> SelectedChannels => selectedChannels;
 
         public int CompareTo(GridChannel? other)
         {
