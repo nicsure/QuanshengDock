@@ -34,7 +34,7 @@ In order to hear the audio you'll need to make a simple wiring harness. I made m
 - Connect the inner wires together and then connect this combined wire to the other side of the resistor.
 - Connect both sides of the tail grounds (outer shield) back together and connect those to the patch cable's outer shield.
 - Connect the tail's TX data lines back together.
-![](./WiringMod.png)
+![](./WiringMod2.png)
 ![](./WiringSchematic.png)
 You may be wondering why you can't just use an external speaker, the reason is because the audio needs to be converted to high-impedance to prevent the audio bleeding over the serial data. If you just connect a low impedance speaker (like in a speaker microphone) and the programming cable using the Y adapters, when there's any audio from the radio, the serial line gets flooded with garbage data.
 
