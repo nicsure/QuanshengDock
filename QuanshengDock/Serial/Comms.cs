@@ -263,7 +263,7 @@ namespace QuanshengDock.Serial
                     if ((val1 & 64) != 0)
                         LCD.DrawText(48, 0, 0.5, "🢀");
                     if ((val1 & 128) != 0)
-                        LCD.DrawText(56, 0, 0.5, "UWR");
+                        LCD.DrawText(56, 0, 0.5, "DWR");
                     if ((val2 & 1) != 0)
                         LCD.DrawText(56, 0, 0.5, "><");
                     if ((val2 & 2) != 0)
