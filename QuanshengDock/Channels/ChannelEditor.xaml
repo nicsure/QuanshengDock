@@ -12,6 +12,7 @@
         xmlns:ui="clr-namespace:QuanshengDock.UI"
         xmlns:local="clr-namespace:QuanshengDock.Channels"
         mc:Ignorable="d"
+        Topmost="{Binding OnTop.Value}"
         ResizeMode="CanResizeWithGrip"
         Title="ChannelEditor" Height="520" Width="1406" Background="#00000000" Foreground="White" WindowStyle="None" AllowsTransparency="True">
     <i:Interaction.Triggers>

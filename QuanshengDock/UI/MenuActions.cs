@@ -34,6 +34,7 @@ namespace QuanshengDock.UI
         private static readonly ViewModel<bool> specNorm = VM.Get<bool>("SpecNorm");
         private static readonly ViewModel<string> presetName = VM.Get<string>("PresetName");
         private static readonly ViewModel<string> cursorFreq = VM.Get<string>("CursorFreq");
+        private static readonly ViewModel<bool> onTop = VM.Get<bool>("OnTop");
 
         private static double openedPos = 0;
 
@@ -51,6 +52,9 @@ namespace QuanshengDock.UI
             Preset? preset = p.Length > 1 ? (int.TryParse(p[1], out int idx) && idx > -1 && presets.Value.Count > idx ? presets.Value[idx] : null) : null;
             switch (p[0])
             {
+                case "ToggleOnTop":
+                    onTop.Value = !onTop.Value;
+                    break;
                 case "DeletePreset":
                     if (preset != null)
                     {

@@ -12,6 +12,7 @@
         xmlns:data="clr-namespace:QuanshengDock.Data"
         d:DataContext="{d:DesignInstance Type=data:Context, IsDesignTimeCreatable=True}"
         mc:Ignorable="d"
+        Topmost="{Binding OnTop.Value}"
         ResizeMode="CanResizeWithGrip"
         Title="Settings" Height="410" Width="592" Foreground="White" Background="#00000000" WindowStyle="None" AllowsTransparency="True">
     <Window.Resources>

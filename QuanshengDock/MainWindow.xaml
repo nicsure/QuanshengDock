@@ -18,7 +18,8 @@
         ResizeMode="CanResizeWithGrip"
         Title="Quansheng Dock"
         Height="442" Width="775"        
-        WindowStyle="None"    
+        WindowStyle="None"
+        Topmost="{Binding OnTop.Value}"
         Background="#00000000" Foreground="White" AllowsTransparency="True">
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="MouseLeftButtonDown">
@@ -115,6 +116,11 @@
             <CheckBox Name="Defocusser" Width="0" Height="0"/>
             <TextBlock IsHitTestVisible="False" Grid.ColumnSpan="3" Text="Quansheng Dock" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,11"/>
             <Grid Grid.ColumnSpan="3">
+                <Grid.ContextMenu>
+                    <ContextMenu>
+                        <MenuItem Command="{Binding MenuCommand}" CommandParameter="ToggleOnTop" Header="Always On Top" IsChecked="{Binding OnTop.Value}"/>
+                    </ContextMenu>
+                </Grid.ContextMenu>
                 <Rectangle Stroke="Gray" Margin="10,0,0,0" Fill="{Binding LEDColor.Value.Brush}" Width="30" Height="15" HorizontalAlignment="Left"/>
                 <Frame Tag="Close" Width="40" Style="{StaticResource ControlButton}" FontSize="9" Content="❌" HorizontalAlignment="Right" Margin="0,-7,0,5" />
                 <Frame Tag="Minimize" Width="40" Style="{StaticResource ControlButton}" FontSize="19" Content="🗕" HorizontalAlignment="Right" Margin="0,-7,80,5" />
