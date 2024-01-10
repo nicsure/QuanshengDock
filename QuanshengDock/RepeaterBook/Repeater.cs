@@ -141,9 +141,9 @@ namespace QuanshengDock.RepeaterBook
                             ShowMessage("No items found");
                     }
                 }
-                catch (Exception ee)
+                catch
                 {
-                    Debug.WriteLine(ee.ToString());
+                    ShowMessage("Error parsing RepeaterBook data");
                 }
             }
             idle.Value = true;
