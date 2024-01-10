@@ -1,6 +1,7 @@
-# **Quansheng Dock**
+# **Quansheng Dock** V 0.27.3q
 
 A WPF Windows app that allows remote operation of the Quansheng UV-K5 (and equivalent) hand-held radios via the programming cable.
+- If upgrading from a version before 0.27.3q the new version will likely have HUGE text on the LCD screen. This is because I had to change the way the "fstretch" feature worked. If this happens open up your settings and change "fstretch" to a value around 0.20
 
 **WARNING** :
 **After some unfortunate incidents by users I'm going to put this warning and disclaimer up. DO NOT attempt to transmit without the proper precautions in place. Transmitting 5W of RF energy centimetres away from a PC can LITERALLY destroy it, it's almost like an EMP at that distance. Get your antenna away from the PC.**
@@ -17,10 +18,11 @@ A WPF Windows app that allows remote operation of the Quansheng UV-K5 (and equiv
 - Audio Latency and Buffering options added to settings.
 - (firmware) Added "Remote" option to radio menu to allow CHIRP to function.
 - Fixed an issue with status data packet lengths.
+- Some font rendering problems hopefully addressed.
 
 **Download**
 : A pre-compiled release is available here
-https://github.com/nicsure/QuanshengDock/releases/download/0.27.2q/quanshengdock.zip
+https://github.com/nicsure/QuanshengDock/releases/download/0.27.3q/quanshengdock.zip
 
 
 **Installation**
