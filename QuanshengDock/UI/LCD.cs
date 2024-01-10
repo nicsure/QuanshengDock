@@ -91,7 +91,7 @@ namespace QuanshengDock.UI
             {
                 FormattedText ft = new(
                     text,
-                    CultureInfo.InvariantCulture,
+                    CultureInfo.CurrentCulture,
                     FlowDirection.LeftToRight,
                     bold ? lcdBoldFont.Value : lcdFont.Value,
                     em,
@@ -103,10 +103,9 @@ namespace QuanshengDock.UI
                 };
                 Matrix matrix = new()
                 {
-                    M11 = hSize.Value,
+                    M11 = hSize.Value + (stretch ? fStretch.Value : 0),
                     M22 = vSize.Value
                 };
-                if (stretch) matrix.M11 *= fStretch.Value;
                 point.X -= ((point.X * matrix.M11) - point.X) / matrix.M11;
                 point.Y -= ((point.Y * matrix.M22) - point.Y) / matrix.M22;
                 drawingContext.PushTransform(new MatrixTransform(matrix));

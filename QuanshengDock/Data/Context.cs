@@ -40,7 +40,7 @@ namespace QuanshengDock.Data
         public ViewModel<double> VOffset { get; } = new(0.0, name: nameof(VOffset));
         public ViewModel<double> HSize { get; } = new(1.0, nameof(HSize));
         public ViewModel<double> VSize { get; } = new(1.0, nameof(VSize));
-        public ViewModel<double> FStretch { get; } = new(1.17, nameof(FStretch));
+        public ViewModel<double> FStretch { get; } = new(0.17, nameof(FStretch));
         public ViewModel<double> Volume { get; } = new(0.75, nameof(Volume), true);
         public ViewModel<Typeface> LCDFont { get; } = new(nameof(LCDFont));
         public ViewModel<Typeface> LCDBoldFont { get; } = new(nameof(LCDBoldFont));
