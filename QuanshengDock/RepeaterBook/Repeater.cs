@@ -106,7 +106,7 @@ namespace QuanshengDock.RepeaterBook
                 try
                 {
                     httpClient.DefaultRequestHeaders.UserAgent.ParseAdd($"(QuanshengDock {Radio.Version})");
-                    HttpResponseMessage response = await httpClient.GetAsync(apiUrl + get);
+                    HttpResponseMessage response = await httpClient.GetAsync((row ? apiUrl : usApiUrl) + get);
                     if (response.IsSuccessStatusCode)
                     {
                         string json = await response.Content.ReadAsStringAsync();

@@ -93,7 +93,7 @@
             </TextBlock>
             <TextBlock Style="{StaticResource Label}" Grid.Column="0" Grid.Row="9" Text="LCD Font Adjust" />
 
-            <TextBlock Style="{StaticResource Label}" HorizontalAlignment="Left" Grid.Column="0" Grid.Row="10" Grid.ColumnSpan="2" Text="V0.27.4q by -nicsure- 2024" Margin="20,0,0,0"/>
+            <TextBlock Style="{StaticResource Label}" HorizontalAlignment="Left" Grid.Column="0" Grid.Row="10" Grid.ColumnSpan="2" Text="V0.27.5q by -nicsure- 2024" Margin="20,0,0,0"/>
 
 
             <ComboBox Grid.Column="1" Grid.Row="1" ItemsSource="{Binding ComPorts}" SelectedItem="{Binding ComPort.Value}"/>
