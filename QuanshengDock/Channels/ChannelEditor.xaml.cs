@@ -175,7 +175,7 @@ namespace QuanshengDock.Channels
             {
                 channel.SetRow(e.Row);
                 e.Row.Background = channel.IsGrouped() ? groupedBrush : transBrush;
-                e.Row.Opacity = channel.IsInUse() ? 1 : 0.6;
+                channel.SetRowOpacity();
             }
         }
 

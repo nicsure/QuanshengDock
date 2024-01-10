@@ -344,6 +344,7 @@ namespace QuanshengDock.Channels
                 DataGridRow? temp = row;
                 if (temp != null)
                     temp.Foreground = value == 0 ? greyBrush : whiteBrush;
+                SetRowOpacity();
                 OnPropertyChanged(nameof(RX));
                 OnPropertyChanged(nameof(TX));
             }
@@ -542,6 +543,13 @@ namespace QuanshengDock.Channels
         }
 
         public bool IsInUse() => Base.Band <= 6;
+
+        public void SetRowOpacity()
+        {
+            if (row != null)
+                row.Opacity = IsInUse() ? 1.0 : 0.6;
+        }
+
     }
 
 
