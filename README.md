@@ -1,4 +1,4 @@
-#### **Quansheng Dock**
+# **Quansheng Dock**
 
 A WPF Windows app that allows remote operation of the Quansheng UV-K5 (and equivalent) hand-held radios via the programming cable.
 
