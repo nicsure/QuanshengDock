@@ -79,24 +79,31 @@
                     <RowDefinition Height="1*"/>
                     <RowDefinition Height="5"/>
                     <RowDefinition Height="1*"/>
+                    <RowDefinition Height="5"/>
+                    <RowDefinition Height="1*"/>
                     <RowDefinition Height="10"/>
                     <RowDefinition Height="1*"/>
                     <RowDefinition Height="5"/>
                 </Grid.RowDefinitions>
-                <TextBlock Grid.Column="0" Grid.Row="0" Text="  Callsign" HorizontalAlignment="Right" />
-                <TextBlock Grid.Column="2" Grid.Row="0" Text="City" HorizontalAlignment="Right" />
-                <TextBlock Grid.Column="4" Grid.Row="0" Text="Country" HorizontalAlignment="Right" />
-                <TextBlock Grid.Column="0" Grid.Row="2" Text="Region" HorizontalAlignment="Right" />
-                <TextBlock Grid.Column="2" Grid.Row="2" Text="Frequency" HorizontalAlignment="Right" />
-                <TextBlock Grid.Column="4" Grid.Row="2" Text="Mode" HorizontalAlignment="Right" />
-                <TextBox Grid.Column="1" Grid.Row="0" Text="{Binding BookCallsign.Value}" />
-                <TextBox Grid.Column="3" Grid.Row="0" Text="{Binding BookCity.Value}" />
-                <TextBox Grid.Column="5" Grid.Row="0" Text="{Binding BookCountry.Value}" />
-                <TextBox Grid.Column="1" Grid.Row="2" Text="{Binding BookRegion.Value}" />
-                <TextBox Grid.Column="3" Grid.Row="2" Text="{Binding BookFrequency.Value}" />
-                <TextBox Grid.Column="5" Grid.Row="2" Text="{Binding BookMode.Value}" />
-                <Button Margin="20,0,20,0" Command="{Binding BookActions}" CommandParameter="Browse" Background="#ff444444" Foreground="White" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" VerticalAlignment="Center" Content="Search"/>
-                <Button Margin="20,0,20,0" Command="{Binding BookActions}" CommandParameter="Copy" Background="#ff444444" Foreground="White" Grid.Row="4" Grid.Column="4" Grid.ColumnSpan="2" VerticalAlignment="Center" Content="Copy" />
+                <TextBlock Grid.Column="0" Text="  Callsign" HorizontalAlignment="Center" />
+                <TextBlock Grid.Column="2" Text="City" HorizontalAlignment="Left" Margin="38,0,0,0" />
+                <TextBlock Grid.Column="4" Text="Country" HorizontalAlignment="Center" />
+                <TextBlock Grid.Column="0" Grid.Row="2" Text="Region" HorizontalAlignment="Left" Margin="15,0,0,0" />
+                <TextBlock Grid.Column="2" Grid.Row="2" Text="Frequency" HorizontalAlignment="Center" />
+                <TextBlock Grid.Column="4" Grid.Row="2" Text="Mode" HorizontalAlignment="Left" Margin="15,0,0,0" />
+                <TextBlock Grid.Column="0" Grid.Row="4" Text="State" HorizontalAlignment="Left" Margin="15,0,0,0" />
+                <TextBlock Grid.Column="2" Grid.Row="4" Text="County" HorizontalAlignment="Left" Margin="15,0,0,0" />
+                <TextBox Grid.Column="1" Text="{Binding BookCallsign.Value}"  />
+                <TextBox Grid.Column="3" Text="{Binding BookCity.Value}"  />
+                <TextBox Grid.Column="5" Text="{Binding BookCountry.Value}"  />
+                <TextBox Grid.Column="1" Grid.Row="2" Text="{Binding BookRegion.Value}"  />
+                <TextBox Grid.Column="3" Grid.Row="2" Text="{Binding BookFrequency.Value}"  />
+                <TextBox Grid.Column="5" Grid.Row="2" Text="{Binding BookMode.Value}"  />
+                <TextBox Grid.Column="1" Grid.Row="4" Text="{Binding BookState.Value}"  />
+                <TextBox Grid.Column="3" Grid.Row="4" Text="{Binding BookCounty.Value}"  />
+                <Button Margin="20,0,20,0" Command="{Binding BookActions}" CommandParameter="Browse" Background="#ff444444" Foreground="White" Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="2" VerticalAlignment="Center" Content="Rest of the World"/>
+                <Button Margin="20,0,20,0" Command="{Binding BookActions}" CommandParameter="BrowseNA" Background="#ff444444" Foreground="White" Grid.Row="6" Grid.Column="2" Grid.ColumnSpan="2" VerticalAlignment="Center" Content="North America"/>
+                <Button Margin="20,0,20,0" Command="{Binding BookActions}" CommandParameter="Copy" Background="#ff444444" Foreground="White" Grid.Row="6" Grid.Column="4" Grid.ColumnSpan="2" VerticalAlignment="Center" Content="Copy" />
             </Grid>
             <DataGrid Name="RepeaterGrid" SelectedCellsChanged="DataGrid_SelectedCellsChanged" LoadingRow="DataGrid_LoadingRow" Margin="8,8,8,8" Grid.Row="2" Background="{x:Null}" Foreground="White" BorderBrush="{x:Null}" VerticalGridLinesBrush="{x:Null}" ItemsSource="{Binding BookResults.Value}">
                 <DataGrid.RowHeaderStyle>

@@ -17,11 +17,14 @@ namespace QuanshengDock.RepeaterBook
     public class Repeater
     {
         private const string apiUrl = "https://www.repeaterbook.com/api/exportROW.php?";
+        private const string usApiUrl = "https://www.repeaterbook.com/api/export.php?";
         public static int Activator { get => 0; set { } }
         private static readonly VM Actions = VM.Get("BookActions");
         private static readonly ViewModel<string> callsign = VM.Get<string>("BookCallsign");
         private static readonly ViewModel<string> city = VM.Get<string>("BookCity");
         private static readonly ViewModel<string> country = VM.Get<string>("BookCountry");
+        private static readonly ViewModel<string> county = VM.Get<string>("BookCounty");
+        private static readonly ViewModel<string> state = VM.Get<string>("BookState");
         private static readonly ViewModel<string> region = VM.Get<string>("BookRegion");
         private static readonly ViewModel<string> freq = VM.Get<string>("BookFrequency");
         private static readonly ViewModel<string> mode = VM.Get<string>("BookMode");
@@ -42,7 +45,10 @@ namespace QuanshengDock.RepeaterBook
                 switch (cmd)
                 {
                     case "Browse":
-                        _ = Search();
+                        _ = Search(true);
+                        break;
+                    case "BrowseNA":
+                        _ = Search(false);
                         break;
                     case "Copy":
                         Copy();
@@ -73,12 +79,14 @@ namespace QuanshengDock.RepeaterBook
                 ShowMessage("Nothing Selected");
         }
 
-        private static async Task Search()
+        private static async Task Search(bool row)
         {
             idle.Value = false;
             string cls = callsign.Value.Trim();
             string cty = city.Value.Trim();
             string cnt = country.Value.Trim();
+            string cou = county.Value.Trim();
+            string sta = state.Value.Trim();
             string reg = region.Value.Trim();
             string frq = freq.Value.Trim();
             string mod = mode.Value.Trim();
@@ -86,7 +94,9 @@ namespace QuanshengDock.RepeaterBook
             if (cls.Length > 0) get += $"callsign={WebUtility.UrlEncode(cls)}&";
             if (cty.Length > 0) get += $"city={WebUtility.UrlEncode(cty)}&";
             if (cnt.Length > 0) get += $"country={WebUtility.UrlEncode(cnt)}&";
-            if (reg.Length > 0) get += $"region={WebUtility.UrlEncode(reg)}&";
+            if (row && reg.Length > 0) get += $"region={WebUtility.UrlEncode(reg)}&";
+            if (!row && cou.Length > 0) get += $"county={WebUtility.UrlEncode(cou)}&";
+            if (!row && sta.Length > 0) get += $"state={WebUtility.UrlEncode(sta)}&";
             if (frq.Length > 0) get += $"frequency={WebUtility.UrlEncode(frq)}&";
             if (mod.Length > 0) get += $"mode={WebUtility.UrlEncode(mod)}&";
             if(get.Length > 0)
