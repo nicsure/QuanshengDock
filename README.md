@@ -13,6 +13,7 @@ A WPF Windows app that allows remote operation of the Quansheng UV-K5 (and equiv
 - Waterfall display.
 
 **Recent Changes**
+- Window Always On Top option added.
 - Hopefully fixed some channel editor crashes.
 - RepeaterBook integration.
 - Channel Editor Copy/Paste functions added.
