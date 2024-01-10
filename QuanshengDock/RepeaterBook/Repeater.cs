@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Configuration;
+using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -23,7 +24,6 @@ namespace QuanshengDock.RepeaterBook
         private static readonly ViewModel<string> callsign = VM.Get<string>("BookCallsign");
         private static readonly ViewModel<string> city = VM.Get<string>("BookCity");
         private static readonly ViewModel<string> country = VM.Get<string>("BookCountry");
-        private static readonly ViewModel<string> county = VM.Get<string>("BookCounty");
         private static readonly ViewModel<string> state = VM.Get<string>("BookState");
         private static readonly ViewModel<string> region = VM.Get<string>("BookRegion");
         private static readonly ViewModel<string> freq = VM.Get<string>("BookFrequency");
@@ -85,7 +85,6 @@ namespace QuanshengDock.RepeaterBook
             string cls = callsign.Value.Trim();
             string cty = city.Value.Trim();
             string cnt = country.Value.Trim();
-            string cou = county.Value.Trim();
             string sta = state.Value.Trim();
             string reg = region.Value.Trim();
             string frq = freq.Value.Trim();
@@ -95,7 +94,7 @@ namespace QuanshengDock.RepeaterBook
             if (cty.Length > 0) get += $"city={WebUtility.UrlEncode(cty)}&";
             if (cnt.Length > 0) get += $"country={WebUtility.UrlEncode(cnt)}&";
             if (row && reg.Length > 0) get += $"region={WebUtility.UrlEncode(reg)}&";
-            if (!row && cou.Length > 0) get += $"county={WebUtility.UrlEncode(cou)}&";
+            if (!row && reg.Length > 0) get += $"county={WebUtility.UrlEncode(reg)}&";
             if (!row && sta.Length > 0) get += $"state={WebUtility.UrlEncode(sta)}&";
             if (frq.Length > 0) get += $"frequency={WebUtility.UrlEncode(frq)}&";
             if (mod.Length > 0) get += $"mode={WebUtility.UrlEncode(mod)}&";
@@ -128,7 +127,7 @@ namespace QuanshengDock.RepeaterBook
                                     repeaterElement.GetProperty("Frequency").GetString() ?? string.Empty,
                                     repeaterElement.GetProperty("PL").GetString() ?? string.Empty,
                                     repeaterElement.GetProperty("FM Analog").GetString() ?? string.Empty,
-                                    repeaterElement.GetProperty(nameof(Region)).GetString() ?? string.Empty,
+                                    repeaterElement.GetProperty(row ? nameof(Region) : "County").GetString() ?? string.Empty,
                                     repeaterElement.GetProperty("Nearest City").GetString() ?? string.Empty,
                                     repeaterElement.GetProperty(nameof(State)).GetString() ?? string.Empty,
                                     repeaterElement.GetProperty(nameof(Country)).GetString() ?? string.Empty
@@ -136,12 +135,16 @@ namespace QuanshengDock.RepeaterBook
                                 list.Add(repeater);
                             }
                             results.Value = list;
+                            results.ForceUpdate++;
                         }
                         else
                             ShowMessage("No items found");
                     }
                 }
-                catch { }
+                catch (Exception ee)
+                {
+                    Debug.WriteLine(ee.ToString());
+                }
             }
             idle.Value = true;
         }

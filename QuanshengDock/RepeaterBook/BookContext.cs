@@ -16,7 +16,6 @@ namespace QuanshengDock.RepeaterBook
         public ViewModel<string> BookCallsign { get; } = new(string.Empty, nameof(BookCallsign));
         public ViewModel<string> BookCity { get; } = new(string.Empty, nameof(BookCity));
         public ViewModel<string> BookCountry { get; } = new(string.Empty, nameof(BookCountry));
-        public ViewModel<string> BookCounty { get; } = new(string.Empty, nameof(BookCounty));
         public ViewModel<string> BookState { get; } = new(string.Empty, nameof(BookState));
         public ViewModel<string> BookRegion { get; } = new(string.Empty, nameof(BookRegion));
         public ViewModel<string> BookFrequency { get; } = new(string.Empty, nameof(BookFrequency));
