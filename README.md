@@ -1,4 +1,4 @@
-#### **Quansheng Dock**
+# **Quansheng Dock**
 
 A WPF Windows app that allows remote operation of the Quansheng UV-K5 (and equivalent) hand-held radios via the programming cable.
 
@@ -11,6 +11,12 @@ A WPF Windows app that allows remote operation of the Quansheng UV-K5 (and equiv
 - Spectrum Analyzer with monitor mode.
 - Waterfall display.
 
+**Recent Changes**
+- Channel Editor Copy/Paste functions added.
+- Channel Editor cell editing improved.
+- Audio Latency and Buffering options added to settings.
+- (firmware) Added "Remote" option to radio menu to allow CHIRP to function.
+- Fixed an issue with status data packet lengths.
 
 **Download**
 : A pre-compiled release is available here
