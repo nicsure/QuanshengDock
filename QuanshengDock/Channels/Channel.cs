@@ -362,7 +362,7 @@ namespace QuanshengDock.Channels
 
         public BANDWIDTH Bandwidth
         {
-            get => (BANDWIDTH)Base.Bandwidth;
+            get => (BANDWIDTH)Base.Bandwidth.Clamp(0, 1);
             set
             {
                 Base.Bandwidth = (int)value;
@@ -382,7 +382,7 @@ namespace QuanshengDock.Channels
 
         public TX_POWER Power
         {
-            get => (TX_POWER)Base.OutputPower;
+            get => (TX_POWER)Base.OutputPower.Clamp(0, 2);
             set
             {
                 Base.OutputPower = (int)value;
@@ -392,7 +392,7 @@ namespace QuanshengDock.Channels
 
         public TONE_TYPE RxTone
         {
-            get => (TONE_TYPE)Base.RxCodeType;
+            get => (TONE_TYPE)Base.RxCodeType.Clamp(0, 3);
             set
             {
                 Base.RxCodeType = (int)value;
@@ -406,7 +406,7 @@ namespace QuanshengDock.Channels
 
         public CTCSS_CODE RxCTCSS
         {
-            get => RxTone == TONE_TYPE.CTCSS ? (CTCSS_CODE)Base.RxCode : CTCSS_CODE._None;
+            get => RxTone == TONE_TYPE.CTCSS ? (CTCSS_CODE)Base.RxCode.Clamp(0, 50) : CTCSS_CODE._None;
             set
             {
                 if(RxTone == TONE_TYPE.CTCSS)
@@ -417,7 +417,7 @@ namespace QuanshengDock.Channels
 
         public DCS_CODE RxDCS
         {
-            get => RxTone == TONE_TYPE.DCS || RxTone == TONE_TYPE.ReverseDCS ? (DCS_CODE)Base.RxCode : DCS_CODE._None;
+            get => RxTone == TONE_TYPE.DCS || RxTone == TONE_TYPE.ReverseDCS ? (DCS_CODE)Base.RxCode.Clamp(0, 104) : DCS_CODE._None;
             set
             {
                 if (RxTone == TONE_TYPE.DCS || RxTone == TONE_TYPE.ReverseDCS)
@@ -428,7 +428,7 @@ namespace QuanshengDock.Channels
 
         public TONE_TYPE TxTone
         {
-            get => (TONE_TYPE)Base.TxCodeType;
+            get => (TONE_TYPE)Base.TxCodeType.Clamp(0, 3);
             set
             {
                 Base.TxCodeType = (int)value;
@@ -442,7 +442,7 @@ namespace QuanshengDock.Channels
 
         public CTCSS_CODE TxCTCSS
         {
-            get => TxTone == TONE_TYPE.CTCSS ? (CTCSS_CODE)Base.TxCode : CTCSS_CODE._None;
+            get => TxTone == TONE_TYPE.CTCSS ? (CTCSS_CODE)Base.TxCode.Clamp(0, 50) : CTCSS_CODE._None;
             set
             {
                 if (TxTone == TONE_TYPE.CTCSS)
@@ -453,7 +453,7 @@ namespace QuanshengDock.Channels
 
         public DCS_CODE TxDCS
         {
-            get => TxTone == TONE_TYPE.DCS || TxTone == TONE_TYPE.ReverseDCS ? (DCS_CODE)Base.TxCode : DCS_CODE._None;
+            get => TxTone == TONE_TYPE.DCS || TxTone == TONE_TYPE.ReverseDCS ? (DCS_CODE)Base.TxCode.Clamp(0, 104) : DCS_CODE._None;
             set
             {
                 if (TxTone == TONE_TYPE.DCS || TxTone == TONE_TYPE.ReverseDCS)
@@ -464,7 +464,7 @@ namespace QuanshengDock.Channels
 
         public FQ_STEP Step
         {
-            get => (FQ_STEP)Base.Step;
+            get => (FQ_STEP)Base.Step.Clamp(0, 20);
             set
             {
                 Base.Step = (int)value;
@@ -484,7 +484,7 @@ namespace QuanshengDock.Channels
 
         public PTT_ID PttID
         {
-            get => (PTT_ID)Base.PttId;
+            get => (PTT_ID)Base.PttId.Clamp(0, 4);
             set
             {
                 Base.PttId = (int)value;
@@ -504,7 +504,7 @@ namespace QuanshengDock.Channels
 
         public MODULATION Modulation
         {
-            get => (MODULATION)Base.Modulation;
+            get => (MODULATION)Base.Modulation.Clamp(0, 2);
             set
             {
                 Base.Modulation = (int)value;
@@ -514,7 +514,7 @@ namespace QuanshengDock.Channels
 
         public SCRAMBLER Scramble
         {
-            get => (SCRAMBLER)Base.Scramble;
+            get => (SCRAMBLER)Base.Scramble.Clamp(0, 10);
             set
             {
                 Base.Scramble = (int)value;
@@ -524,7 +524,7 @@ namespace QuanshengDock.Channels
 
         public SCANLISTS Scanlists
         {
-            get => (SCANLISTS)Base.Scanlist;
+            get => (SCANLISTS)Base.Scanlist.Clamp(0, 3);
             set
             {
                 Base.Scanlist = (int)value;
@@ -534,7 +534,7 @@ namespace QuanshengDock.Channels
 
         public COMPANDER Compand
         {
-            get => (COMPANDER)Base.Compander;
+            get => (COMPANDER)Base.Compander.Clamp(0, 3);
             set
             {
                 Base.Compander = (int)value;

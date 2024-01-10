@@ -1,6 +1,7 @@
 ﻿using QuanshengDock.Analyzer;
 using QuanshengDock.Channels;
 using QuanshengDock.General;
+using QuanshengDock.RepeaterBook;
 using QuanshengDock.Serial;
 using QuanshengDock.Settings;
 using QuanshengDock.View;
@@ -128,6 +129,10 @@ namespace QuanshengDock.UI
         {
             switch (func)
             {
+                case "RepeaterBook":
+                    _ = BookContext.Instance;
+                    Repeater.Open();
+                    break;
                 case "PasteChannels":
                     Channel.PasteChannels(Channel.SelectedChannel);
                     break;

@@ -1,0 +1,133 @@
+﻿<Window x:Class="QuanshengDock.RepeaterBook.RepeaterBookBrowser"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:data="clr-namespace:QuanshengDock.RepeaterBook"
+        d:DataContext="{d:DesignInstance Type=data:BookContext, IsDesignTimeCreatable=True}"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:QuanshengDock.RepeaterBook"
+        mc:Ignorable="d"
+        xmlns:ui="clr-namespace:QuanshengDock.UI"
+        AllowsTransparency="True"
+        ResizeMode="CanResizeWithGrip"
+        Title="RepeaterBookBrowser" Height="450" Width="800" Background="{x:Null}" Foreground="#00000000" WindowStyle="None">
+    <Window.Resources>
+        <Style TargetType="TextBlock">
+            <Setter Property="Margin" Value="4,0,4,0"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="VerticalAlignment" Value="Center" />
+        </Style>
+        <Style TargetType="TextBox">
+            <Setter Property="Background" Value="Black"/>
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="Foreground" Value="White" />
+            <Setter Property="BorderBrush" Value="{x:Null}"/>
+            <Setter Property="Padding" Value="2,2,2,2"/>
+            <Setter Property="Margin" Value="0,0,15,0"/>
+            <Setter Property="FontFamily" Value="Segoe UI"/>
+        </Style>
+        <Style x:Key="ControlButton" TargetType="Frame">
+            <Setter Property="Foreground" Value="#ffbbbbbb"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Frame">
+                        <Border Margin="5,5,0,5">
+                            <Border.Effect>
+                                <DropShadowEffect BlurRadius="2" ShadowDepth="2" Direction="135" Color="#FF838383"/>
+                            </Border.Effect>
+                            <ui:ButtonBorder Tag="{TemplateBinding Tag}" Background="#ff202020" CornerRadius="10" BorderThickness="1" Margin="2,2,2,2">
+                                <ui:ButtonBorder.Effect>
+                                    <DropShadowEffect BlurRadius="2" ShadowDepth="2"/>
+                                </ui:ButtonBorder.Effect>
+                                <Viewbox Stretch="Fill">
+                                    <TextBlock Foreground="{TemplateBinding Foreground}" IsHitTestVisible="False" Width="19" Margin="2,2,2,2" Text="{TemplateBinding Content}" FontSize="5" FontFamily="Calibri" TextAlignment="Center"/>
+                                </Viewbox>
+                            </ui:ButtonBorder>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+    <Border CornerRadius="20" BorderBrush="#FF878787" BorderThickness="1">
+        <Border.Background>
+            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                <GradientStop Color="#FF3F3F3F"/>
+                <GradientStop Color="#FF222222" Offset="0.084"/>
+            </LinearGradientBrush>
+        </Border.Background>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="40"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="35"/>
+                <RowDefinition Height="25"/>
+            </Grid.RowDefinitions>
+            <TextBlock IsHitTestVisible="False" Text="RepeaterBook Browser" FontWeight="Bold" HorizontalAlignment="Center" />
+            <Frame MouseDown="Frame_MouseDown"  Grid.Column="16" Style="{StaticResource ControlButton}" Content="❌" HorizontalAlignment="Right" Width="50" Margin="0,0,10,0"/>
+            <Grid Grid.Row="1" IsEnabled="{Binding BookIdle.Value}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="1*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="5"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="10"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="5"/>
+                </Grid.RowDefinitions>
+                <TextBlock Grid.Column="0" Grid.Row="0" Text="  Callsign" HorizontalAlignment="Right" />
+                <TextBlock Grid.Column="2" Grid.Row="0" Text="City" HorizontalAlignment="Right" />
+                <TextBlock Grid.Column="4" Grid.Row="0" Text="Country" HorizontalAlignment="Right" />
+                <TextBlock Grid.Column="0" Grid.Row="2" Text="Region" HorizontalAlignment="Right" />
+                <TextBlock Grid.Column="2" Grid.Row="2" Text="Frequency" HorizontalAlignment="Right" />
+                <TextBlock Grid.Column="4" Grid.Row="2" Text="Mode" HorizontalAlignment="Right" />
+                <TextBox Grid.Column="1" Grid.Row="0" Text="{Binding BookCallsign.Value}" />
+                <TextBox Grid.Column="3" Grid.Row="0" Text="{Binding BookCity.Value}" />
+                <TextBox Grid.Column="5" Grid.Row="0" Text="{Binding BookCountry.Value}" />
+                <TextBox Grid.Column="1" Grid.Row="2" Text="{Binding BookRegion.Value}" />
+                <TextBox Grid.Column="3" Grid.Row="2" Text="{Binding BookFrequency.Value}" />
+                <TextBox Grid.Column="5" Grid.Row="2" Text="{Binding BookMode.Value}" />
+                <Button Margin="20,0,20,0" Command="{Binding BookActions}" CommandParameter="Browse" Background="#ff444444" Foreground="White" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" VerticalAlignment="Center" Content="Search"/>
+                <Button Margin="20,0,20,0" Command="{Binding BookActions}" CommandParameter="Copy" Background="#ff444444" Foreground="White" Grid.Row="4" Grid.Column="4" Grid.ColumnSpan="2" VerticalAlignment="Center" Content="Copy" />
+            </Grid>
+            <DataGrid Name="RepeaterGrid" SelectedCellsChanged="DataGrid_SelectedCellsChanged" LoadingRow="DataGrid_LoadingRow" Margin="8,8,8,8" Grid.Row="2" Background="{x:Null}" Foreground="White" BorderBrush="{x:Null}" VerticalGridLinesBrush="{x:Null}" ItemsSource="{Binding BookResults.Value}">
+                <DataGrid.RowHeaderStyle>
+                    <Style>
+                        <Setter Property="Canvas.Background" Value="Transparent" />
+                    </Style>
+                </DataGrid.RowHeaderStyle>
+                <DataGrid.CellStyle>
+                    <Style TargetType="DataGridCell">
+                        <Setter Property="Background" Value="Transparent"/>
+                        <Setter Property="HorizontalAlignment" Value="Center" />
+                        <Setter Property="Foreground" Value="White"/>
+                    </Style>
+                </DataGrid.CellStyle>
+                <DataGrid.RowStyle>
+                    <Style TargetType="DataGridRow">
+                        <Setter Property="Background" Value="Transparent"/>
+                    </Style>
+                </DataGrid.RowStyle>
+                <DataGrid.ColumnHeaderStyle>
+                    <Style TargetType="{x:Type DataGridColumnHeader}">
+                        <Setter Property="FontWeight" Value="Bold"/>
+                        <Setter Property="Background" Value="Transparent"/>
+                        <Setter Property="Margin" Value="5,0,5,0"/>
+                        <Setter Property="HorizontalAlignment" Value="Center" />
+                    </Style>
+                </DataGrid.ColumnHeaderStyle>
+            </DataGrid>
+            <TextBlock Foreground="#ffaaaaaa" FontSize="12" Grid.Row="4" HorizontalAlignment="Right" Text="This product uses RepeaterBook Data API but is not endorsed or certified by RepeaterBook    "/>
+            <TextBlock Foreground="#ffaaaaaa" FontSize="12" Grid.Row="4" HorizontalAlignment="Left" Text="    Use '%' as a wildcard"/>
+            <TextBlock FontSize="20" Margin="30,0,30,0" Padding="0,0,0,0"  Grid.Row="3" Text="{Binding BookMessage.Value}" HorizontalAlignment="Center"/>
+        </Grid>
+    </Border>
+</Window>

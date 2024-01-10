@@ -15,5 +15,6 @@ namespace QuanshengDock
         public static double ToDouble(this string s) => double.TryParse(s, out double d) ? d : 0;
         public static float Clamp(this float value, float min, float max) => Math.Max(min, Math.Min(value, max));
         public static double Clamp(this double value, double min, double max) => Math.Max(min, Math.Min(value, max));
+        public static int Clamp(this int value, int min, int max) => value < min ? min : value > max ? max : value;
     }
 }

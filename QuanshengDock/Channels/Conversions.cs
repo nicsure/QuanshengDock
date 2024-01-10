@@ -88,7 +88,7 @@ namespace QuanshengDock.Channels
 
     public static class Beautifiers
     {
-        private static readonly string[] CtcssStrings = new string[]
+        public static string[] CtcssStrings { get; } = new string[]
         {
              "67.0",  "69.3",  "71.9",  "74.4",  "77.0",  "79.7",  "82.5",  "85.4",  "88.5",  "91.5",
              "94.8",  "97.4", "100.0", "103.5", "107.2", "110.9", "114.8", "118.8", "123.0", "127.3",
@@ -96,7 +96,7 @@ namespace QuanshengDock.Channels
             "171.3", "173.8", "177.3", "179.9", "183.5", "186.2", "189.9", "192.8", "196.6", "199.5",
             "203.5", "206.5", "210.7", "218.1", "225.7", "229.1", "233.6", "241.8", "250.3", "254.1", "None"
         };
-        private static readonly string[] DcsStrings = new string[]
+        public static string[] DcsStrings { get; } = new string[]
         {
             "0019", "0021", "0022", "0025", "0026", "0030", "0035", "0039",
             "0041", "0043", "0044", "0053", "0057", "0058", "0059", "0060",
