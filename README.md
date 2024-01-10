@@ -17,6 +17,7 @@ A WPF Windows app that allows remote operation of the Quansheng UV-K5 (and equiv
 - Audio Latency and Buffering options added to settings.
 - (firmware) Added "Remote" option to radio menu to allow CHIRP to function.
 - Fixed an issue with status data packet lengths.
+- Some font rendering problems hopefully addressed.
 
 **Download**
 : A pre-compiled release is available here
