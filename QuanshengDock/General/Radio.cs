@@ -24,6 +24,7 @@ namespace QuanshengDock.General
         public static bool Monitoring { get; set; } = false;
         public static RState State { get; set; } = RState.None;
         public static bool DesignMode { get; } = DesignerProperties.GetIsInDesignMode(new DependencyObject());
+        public static bool PulseTX { get; set; } = false;
 
         public static void Invoke(Action action)
         {

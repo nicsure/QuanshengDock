@@ -63,6 +63,7 @@ namespace QuanshengDock.UI
                     {
                         Comms.SendCommand(Packet.KeyPress, (ushort)19);
                         currentButton = null;
+                        Radio.PulseTX = false;
                     }
                     break;
                 case "LeftDown":
@@ -241,11 +242,23 @@ namespace QuanshengDock.UI
                     Comms.SendCommand(Packet.KeyPress, (ushort)13);
                     break;
                 case "16":
-                    if(!txLockButtonLocked.Value && CheckScope())
-                        Comms.SendCommand(Packet.KeyPress, (ushort)16);
+                    if (!txLockButtonLocked.Value && CheckScope())
+                    {
+                        Radio.PulseTX = true;
+                        _ = TxPulser();
+                    }
                     break;
             }
 
+        }
+
+        private static async Task TxPulser()
+        {
+            while(Radio.PulseTX)
+            {
+                Comms.SendCommand(Packet.KeyPress, (ushort)16);
+                await Task.Delay(125);
+            }
         }
     }
 }
