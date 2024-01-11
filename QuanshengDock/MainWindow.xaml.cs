@@ -106,6 +106,7 @@ namespace QuanshengDock
             {
                 pressedButt.Background = upButt;
                 pressedButt = null;
+                Radio.PulseTX = false;
             }
         }
 
@@ -183,7 +184,10 @@ namespace QuanshengDock
                                 break;
                             case Key.Space:
                                 if (!txLockButtonLocked.Value)
+                                {
+
                                     command.Execute("16");
+                                }
                                 break;
                             case Key.Multiply:
                                 command.Execute("14");
@@ -220,7 +224,9 @@ namespace QuanshengDock
                 lastKey = Key.None;
             }
             else
-            if (e.Key == Key.Enter) Defocusser.Focus();
+            if (e.Key == Key.Enter)
+                Defocusser.Focus();
+            Radio.PulseTX = false;
         }
 
     }

@@ -53,7 +53,10 @@ namespace QuanshengDock.UI
             var v = Mouse.DirectlyOver;
             if(ushort.TryParse(cmd, out ushort key))
             {
-                Comms.SendCommand(Packet.KeyPress, key);
+                if (key == 16)
+                    _ = TxPulser();
+                else
+                    Comms.SendCommand(Packet.KeyPress, key);
             }
             else
             switch (cmd)
@@ -243,10 +246,7 @@ namespace QuanshengDock.UI
                     break;
                 case "16":
                     if (!txLockButtonLocked.Value && CheckScope())
-                    {
-                        Radio.PulseTX = true;
                         _ = TxPulser();
-                    }
                     break;
             }
 
@@ -254,7 +254,9 @@ namespace QuanshengDock.UI
 
         private static async Task TxPulser()
         {
-            while(Radio.PulseTX)
+            if (Radio.PulseTX) return;
+            Radio.PulseTX = true;
+            while (Radio.PulseTX)
             {
                 Comms.SendCommand(Packet.KeyPress, (ushort)16);
                 await Task.Delay(125);
