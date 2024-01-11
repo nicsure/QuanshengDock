@@ -1,4 +1,4 @@
-# **Quansheng Dock** V 0.27.4q
+# **Quansheng Dock** V 0.27.5q
 
 A WPF Windows app that allows remote operation of the Quansheng UV-K5 (and equivalent) hand-held radios via the programming cable.
 - If upgrading from a version before 0.27.3q the new version will likely have HUGE text on the LCD screen. This is because I had to change the way the "fstretch" feature worked. If this happens open up your settings and change "fstretch" to a value around 0.20
@@ -13,6 +13,7 @@ A WPF Windows app that allows remote operation of the Quansheng UV-K5 (and equiv
 - Waterfall display.
 
 **Recent Changes**
+- US RepeaterBook support added
 - Window Always On Top option added.
 - Hopefully fixed some channel editor crashes.
 - RepeaterBook integration.
@@ -25,7 +26,7 @@ A WPF Windows app that allows remote operation of the Quansheng UV-K5 (and equiv
 
 **Download**
 : A pre-compiled release is available here
-https://github.com/nicsure/QuanshengDock/releases/download/0.27.4q/quanshengdock.zip
+https://github.com/nicsure/QuanshengDock/releases/download/0.27.5q/quanshengdock.zip
 
 
 **Installation**
