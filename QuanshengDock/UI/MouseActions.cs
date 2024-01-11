@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Media;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -125,6 +126,17 @@ namespace QuanshengDock.UI
             Application.Current.Shutdown();
         }
 
+        private static bool CheckScope()
+        {
+            bool b = Radio.AnalyzerMode || Radio.Monitoring;
+            if (b)
+            {
+                SystemSounds.Asterisk.Play();
+                MessageBox.Show("The Analyzer is active. The only available button on this panel is 'EXIT'");
+            }
+            return !b;
+        }
+
         private static void ButtonActionDown(string func)
         {
             switch (func)
@@ -174,7 +186,8 @@ namespace QuanshengDock.UI
                     Channel.SaveToDisk();
                     break;
                 case "ChannelEdit":
-                    new ChannelEditor().ShowDialog();
+                    if (CheckScope())
+                        new ChannelEditor().ShowDialog();
                     break;
                 case "Spectrum":
                     Radio.SpectrumMode = true;
@@ -188,7 +201,8 @@ namespace QuanshengDock.UI
                     specNorm.Value = !specNorm.Value;
                     break;
                 case "Settings":
-                    new SettingsWindow().ShowDialog();
+                    if (CheckScope())
+                        new SettingsWindow().ShowDialog();
                     break;
                 case "Close":
                     CloseApp();
@@ -213,7 +227,8 @@ namespace QuanshengDock.UI
                 case "15":
                 case "17":
                 case "18":
-                    Comms.SendCommand(Packet.KeyPress, ushort.Parse(func));
+                    if(CheckScope()) 
+                        Comms.SendCommand(Packet.KeyPress, ushort.Parse(func));
                     break;
                 case "13":
                     if (Radio.AnalyzerMode)
@@ -226,7 +241,7 @@ namespace QuanshengDock.UI
                     Comms.SendCommand(Packet.KeyPress, (ushort)13);
                     break;
                 case "16":
-                    if(!txLockButtonLocked.Value)
+                    if(!txLockButtonLocked.Value && CheckScope())
                         Comms.SendCommand(Packet.KeyPress, (ushort)16);
                     break;
             }
