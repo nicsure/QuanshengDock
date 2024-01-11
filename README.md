@@ -9,8 +9,10 @@ A WPF Windows app that allows remote operation of the Quansheng UV-K5 (and equiv
 **Features** 
 - Enhanced LCD display cloning. Font and color selection.
 - Channel Editor with ability to adjust multiple channels simultaneously.
+- RepeaterBook Integration.
 - Spectrum Analyzer with monitor mode.
 - Waterfall display.
+- Audio passthrough.
 
 **Recent Changes**
 - US RepeaterBook support added
