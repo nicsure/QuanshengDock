@@ -109,7 +109,7 @@ namespace QuanshengDock.Data
             WaterfallCol1.ForceUpdate++;
             ShowAllBrush.SetConverter(() => new SolidColorBrush(ShowAll.Value ? Colors.LimeGreen : Colors.DarkSlateGray), ShowAll);
             ChanButtonsOpacity.SetConverter(() => EnableChanButtons.Value ? 1.0 : 0.3, EnableChanButtons);
-            TxLockButtonText.SetConverter(() => $"TX {(TxLockButtonLocked.Value ? "🔒" : "🔓")}", TxLockButtonLocked);
+            TxLockButtonText.SetConverter(() => $"TX {(TxLockButtonLocked.Value ? "🔒" : "✔")}", TxLockButtonLocked);
             if (ComPort.Value.Length == 0 && ComPorts.Length > 0)
                 ComPort.Value = ComPorts[0];
             if(AudioInDevice.Value.Length == 0 && AudioInDevices.Length > 0)
