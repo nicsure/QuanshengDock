@@ -259,7 +259,7 @@ namespace QuanshengDock.UI
             while (Radio.PulseTX)
             {
                 Comms.SendCommand(Packet.KeyPress, (ushort)16);
-                await Task.Delay(125);
+                await Task.Delay(125); 
             }
         }
     }
