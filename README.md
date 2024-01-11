@@ -15,6 +15,7 @@ A WPF Windows app that allows remote operation of the Quansheng UV-K5 (and equiv
 - Audio passthrough.
 
 **Recent Changes**
+- Experimental TX Guard. Hopefully stops TX getting jammed on.
 - US RepeaterBook support added
 - Window Always On Top option added.
 - Hopefully fixed some channel editor crashes.
