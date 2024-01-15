@@ -1,4 +1,4 @@
-# **Quansheng Dock** V 0.28.1q
+# **Quansheng Dock** V 0.29.0q
 - Requires firmware 0.28.1q XVFO will not function without it.
 
 A WPF Windows app that allows remote operation of the Quansheng UV-K5 (and equivalent) hand-held radios via the programming cable.
@@ -8,7 +8,7 @@ A WPF Windows app that allows remote operation of the Quansheng UV-K5 (and equiv
 **After some unfortunate incidents by users I'm going to put this warning and disclaimer up. DO NOT attempt to transmit without the proper precautions in place. Transmitting 5W of RF energy centimetres away from a PC can LITERALLY destroy it, it's almost like an EMP at that distance. Get your antenna away from the PC.**
 
 **Features** 
-- Hardware level VFO (experimental, RX only)
+- Hardware level VFO (experimental)
 - Enhanced LCD display cloning. Font and color selection.
 - Channel Editor with ability to adjust multiple channels simultaneously.
 - RepeaterBook Integration.
@@ -17,6 +17,7 @@ A WPF Windows app that allows remote operation of the Quansheng UV-K5 (and equiv
 - Audio passthrough.
 
 **Recent Changes**
+- XVFO TX implemented as well as other features.
 - XVFO Preview. Only working in RX currently.
 - Experimental TX Guard. Hopefully stops TX getting jammed on.
 - US RepeaterBook support added
