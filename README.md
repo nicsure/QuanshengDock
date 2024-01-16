@@ -1,4 +1,4 @@
-# **Quansheng Dock** V 0.29.0q
+# **Quansheng Dock** V 0.30.1q
 - Requires firmware 0.28.1q XVFO will not function without it.
 
 A WPF Windows app that allows remote operation of the Quansheng UV-K5 (and equivalent) hand-held radios via the programming cable.
@@ -17,6 +17,13 @@ A WPF Windows app that allows remote operation of the Quansheng UV-K5 (and equiv
 - Audio passthrough.
 
 **Recent Changes**
+- Fixed two erroneous DCS codes
+- Added Ultra Wide and Ultra Low bandwidth settings, not sure how useful they'll be though. (XVFO)
+- Fixed bug in channel editor preventing entry of negative offset frequency.
+- Auto Squelch (XVFO).
+- Channel import to XVFO Presets.
+- Mic Gain (XVFO).
+- RX CTCSS/DCS Implemented (XVFO).
 - XVFO TX implemented as well as other features.
 - XVFO Preview. Only working in RX currently.
 - Experimental TX Guard. Hopefully stops TX getting jammed on.
