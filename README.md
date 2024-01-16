@@ -1,4 +1,4 @@
-# **Quansheng Dock** V 0.30.1q
+# **Quansheng Dock** V 0.30.2q
 - Requires firmware 0.28.1q XVFO will not function without it.
 
 A WPF Windows app that allows remote operation of the Quansheng UV-K5 (and equivalent) hand-held radios via the programming cable.
@@ -31,7 +31,7 @@ A WPF Windows app that allows remote operation of the Quansheng UV-K5 (and equiv
 
 **Download**
 : A pre-compiled release is available here
-https://github.com/nicsure/QuanshengDock/releases/download/0.30.1q/quanshengdock.zip
+https://github.com/nicsure/QuanshengDock/releases/download/0.30.2q/quanshengdock.zip
 
 : Previous version is here
 https://github.com/nicsure/QuanshengDock/releases/download/0.28.1q/quanshengdock.zip
