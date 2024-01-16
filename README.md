@@ -27,9 +27,7 @@ A WPF Windows app that allows remote operation of the Quansheng UV-K5 (and equiv
 - XVFO TX implemented as well as other features.
 
 **TO DO**
-- Function to import/convert radio channels to XVFO presets.
-- RX Tones on XVFO
-- Automatic squelch for XVFO
+- Plenty
 
 **Download**
 : A pre-compiled release is available here
