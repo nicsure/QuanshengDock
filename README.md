@@ -25,18 +25,6 @@ A WPF Windows app that allows remote operation of the Quansheng UV-K5 (and equiv
 - Mic Gain (XVFO).
 - RX CTCSS/DCS Implemented (XVFO).
 - XVFO TX implemented as well as other features.
-- XVFO Preview. Only working in RX currently.
-- Experimental TX Guard. Hopefully stops TX getting jammed on.
-- US RepeaterBook support added
-- Window Always On Top option added.
-- Hopefully fixed some channel editor crashes.
-- RepeaterBook integration.
-- Channel Editor Copy/Paste functions added.
-- Channel Editor cell editing improved.
-- Audio Latency and Buffering options added to settings.
-- (firmware) Added "Remote" option to radio menu to allow CHIRP to function.
-- Fixed an issue with status data packet lengths.
-- Some font rendering problems hopefully addressed.
 
 **TO DO**
 - Function to import/convert radio channels to XVFO presets.
