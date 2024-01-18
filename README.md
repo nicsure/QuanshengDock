@@ -17,7 +17,7 @@ A WPF Windows app that allows remote operation of the Quansheng UV-K5 (and equiv
 - Audio passthrough.
 
 **Recent Changes**
-- XVFO preset scanner.
+- XVFO preset scanner (very early design, functional but ugly. Just like me)
 - Fixed two erroneous DCS codes
 - Added Ultra Wide and Ultra Low bandwidth settings, not sure how useful they'll be though. (XVFO)
 - Fixed bug in channel editor preventing entry of negative offset frequency.
