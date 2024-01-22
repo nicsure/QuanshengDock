@@ -1,9 +1,17 @@
-# **Quansheng Dock** V 0.31.3q
+# **Quansheng Dock** V 0.31.5w
 
-# Requires firmware 0.31.1q - I'm not kidding.
-https://github.com/nicsure/quansheng-dock-fw/releases/tag/0.31.1q
+# Requires firmware 0.31.5w - It REALLY does
+https://github.com/nicsure/quansheng-dock-fw/releases/tag/0.31.5w
 
-A WPF Windows app that allows remote operation of the Quansheng UV-K5 (and equivalent) hand-held radios via the programming cable.
+  There are some considerable configuration changes and it may break previous configs. I'm sorry if this happens but it's unlikely I caught every potential conflict. Clearing the config may help any issues, in your Documents folder, look for QuanshengDock folder and either delete it, or rename it to clear the previous config.  
+  
+  You may find that presets/channels in the XVFO now have a different mode than before. Again sorry about this, but was unavoidable.
+
+
+
+
+  
+# A WPF Windows app that allows remote operation of the Quansheng UV-K5 (and equivalent) hand-held radios via the programming cable.
 - If upgrading from a version before 0.27.3q the new version will likely have HUGE text on the LCD screen. This is because I had to change the way the "F Stretch" feature worked. If this happens open up your settings and change "F Stretch" to a value around 0.20
 
 **Features**
@@ -17,6 +25,7 @@ A WPF Windows app that allows remote operation of the Quansheng UV-K5 (and equiv
 - Audio passthrough.
 
 **Recent Changes**
+- XVFO CW Mode
 - CHIRP Fix
 - Preset selector wheel
 - Watch and Respond feature
@@ -39,7 +48,7 @@ A WPF Windows app that allows remote operation of the Quansheng UV-K5 (and equiv
 
 **Download**
 : A pre-compiled release is available here
-https://github.com/nicsure/QuanshengDock/releases/tag/0.31.3q
+https://github.com/nicsure/QuanshengDock/releases/tag/0.31.5w
 
 
 **Installation**
