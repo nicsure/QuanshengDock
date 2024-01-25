@@ -84,7 +84,12 @@ You may be wondering why you can't just use an external speaker, the reason is b
 - Plug the microphone's 3.5mm jack into the remaining tail.
 - Plug both Y adapter's jacks into the radio.
 - Connect the 3.5mm patch lead to your PC's line input or you may use any device that can accept audio line input.
-![](./WiringOverview2.png)
+![](./WiringOverview2.png)  
+  
 
+**Support**  
+I have been asked several times if there is any way to support me financially. Yes, you can do so by sending BitCoin to the following address.  
+Please DO NOT send what you cannot afford. I of all people understand the cost of living under the current economical disaster and I'm struggling to live just like everyone else. So please, only donate if you can afford to do so.  
+  
 Bitcoin: 3FJEy42F6WUnjtxWwgSYxDHmjVFooLKCDH  
 <img src='./btc qr.png' width='100' />
