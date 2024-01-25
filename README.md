@@ -86,5 +86,5 @@ You may be wondering why you can't just use an external speaker, the reason is b
 - Connect the 3.5mm patch lead to your PC's line input or you may use any device that can accept audio line input.
 ![](./WiringOverview2.png)
 
-Bitcoin: 3FJEy42F6WUnjtxWwgSYxDHmjVFooLKCDH
-
+Bitcoin: 3FJEy42F6WUnjtxWwgSYxDHmjVFooLKCDH  
+<img src='./btc qr.png' width='100' />
