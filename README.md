@@ -49,7 +49,7 @@ https://github.com/nicsure/quansheng-dock-fw/releases/tag/0.31.5w
 
 **Download**
 : A pre-compiled release is available here
-https://github.com/nicsure/QuanshengDock/releases/tag/0.31.5w
+https://github.com/nicsure/QuanshengDock/releases/tag/0.32.0q
 
 
 **Installation**
