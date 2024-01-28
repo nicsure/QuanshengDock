@@ -1,4 +1,4 @@
-# **Quansheng Dock** V 0.31.5w
+# **Quansheng Dock** V 0.32.0q
 
 # Requires firmware 0.31.5w - It REALLY does
 https://github.com/nicsure/quansheng-dock-fw/releases/tag/0.31.5w
@@ -25,6 +25,7 @@ https://github.com/nicsure/quansheng-dock-fw/releases/tag/0.31.5w
 - Audio passthrough.
 
 **Recent Changes**
+- Messenger, but it's incomplete, waiting on second radio.
 - XVFO CW Mode
 - CHIRP Fix
 - Preset selector wheel
