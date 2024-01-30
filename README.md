@@ -88,7 +88,7 @@ You may be wondering why you can't just use an external speaker, the reason is b
 ![](./WiringOverview2.png)  
   
 
-**Support**  
+# **Support**  
 I have been asked several times if there is any way to support me financially. Yes, you can do so by sending BitCoin to the following address.  
 Please DO NOT send what you cannot afford. I of all people understand the cost of living under the current economical disaster and I'm struggling to live just like everyone else. So please, only donate if you can afford to do so.  
   
