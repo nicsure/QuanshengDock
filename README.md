@@ -49,7 +49,9 @@ https://github.com/nicsure/quansheng-dock-fw/releases/tag/0.31.5w
 
 **Download**
 : A pre-compiled release is available here
-https://github.com/nicsure/QuanshengDock/releases/tag/0.32.6q
+https://github.com/nicsure/QuanshengDock/releases/tag/0.32.6q  
+: You also need .NET 6 runtime
+https://dotnet.microsoft.com/en-us/download/dotnet/thank-you/sdk-6.0.418-windows-x64-installer
 
 
 **Installation**
