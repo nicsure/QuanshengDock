@@ -88,7 +88,19 @@ You may be wondering why you can't just use an external speaker, the reason is b
 - Plug both Y adapter's jacks into the radio.
 - Connect the 3.5mm patch lead to your PC's line input or you may use any device that can accept audio line input.
 ![](./WiringOverview2.png)  
-  
+
+ 
+# **Manual**
+Please take a look at the [Online Manual (see Wiki)](https://github.com/nicsure/QuanshengDock/wiki) for instructions, tips and more
+* [First impression...](https://github.com/nicsure/QuanshengDock/wiki)
+* [Basic idea and operation](https://github.com/nicsure/QuanshengDock/wiki/10-%E2%80%90-Basic-idea-and-operation)
+* [The radio firmware](https://github.com/nicsure/QuanshengDock/wiki/20-%E2%80%90-The-radio-firmware)
+* [Connection between radio and PC](https://github.com/nicsure/QuanshengDock/wiki/30-%E2%80%90-Connection-between-radio-and-PC)
+* [QS‐Dock program on PC](https://github.com/nicsure/QuanshengDock/wiki/40-%E2%80%90-QS%E2%80%90Dock-program-on-PC)
+* [Specific Functions explained](https://github.com/nicsure/QuanshengDock/wiki/50-%E2%80%90-Specific-Functions-explained)
+* [Tips & Tricks and Known Issues](https://github.com/nicsure/QuanshengDock/wiki/70-%E2%80%90-Tips-&-Tricks-and-Known-Issues)
+* [Reviews on Youtube](https://github.com/nicsure/QuanshengDock/wiki/80-%E2%80%90-Reviews-on-Youtube)
+
 
 # **Support**  
 I have been asked several times if there is any way to support me financially. Yes, you can do so by sending BitCoin to the following address.  
