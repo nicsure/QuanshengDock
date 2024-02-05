@@ -62,10 +62,16 @@ You will also need to program the radio with the accompanying firmware found her
 **Demonstration**
 : You can find a demo video here: https://www.youtube.com/watch?v=UwTz5wricmY
 
+# Hardware Requirements
+The app will work with just the programming cable but you won't be able to hear the radio's audio as the programming cable cuts out the main speaker. You also won't be able to properly transmit as it cuts out the radio's microphone too. So to get audio in and out of the radio you'll need some extra hardware.  
 
-**Hardware Requirements**
-: The app will work with just the programming cable but you won't be able to hear the radio's audio as the programming cable cuts out the main speaker. You also won't be able to properly transmit as it cuts out the radio's microphone too. So to transmit voice you'll need an external microphone also.
-In order to hear the audio you'll need to make a simple wiring harness. I made mine from 2.5mm/3.5mm stereo Y cable adapters, a 47k resistor and a 3.5mm stereo patch cable.
+**AIOC (Recommended)**  
+I STRONGLY recommend using the excellent AOIC cable with this software.
+- You can find the AIOC GitHub page here https://github.com/skuep/AIOC  
+- A guide for configuring the AIOC with Quansheng Dock can be found on my YouTube channel here https://www.youtube.com/watch?v=IrnzWVdOlu8
+
+**Makeshift Audio Interface (Not Recommended)**  
+In order to hear the audio you can make a simple wiring harness. I made mine from 2.5mm/3.5mm stereo Y cable adapters, a 47k resistor and a 3.5mm stereo patch cable.
 - Cut one of the tails of the 2.5mm adapter in half and isolate the inner conductors on both sides, there will be three, An outer shield which is ground, and two wires, one of which carries the audio and the other carries the serial TX.
 - Determine which of these is the audio. It is the wire connecting to the tip (end) of the 2.5mm jack plug, you can use a multi-meter in continuity mode to do this.
 - Cut back and isolate the audio wire on the tail side (non radio side) as this is not used.
