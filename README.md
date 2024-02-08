@@ -1,7 +1,7 @@
-# **Quansheng Dock** V 0.32.6q
+# **Quansheng Dock** V 0.32.8x
 
-# Requires firmware 0.31.5w - It REALLY does
-https://github.com/nicsure/quansheng-dock-fw/releases/tag/0.31.5w
+# Requires firmware 0.32.8x - No kidding.
+https://github.com/nicsure/quansheng-dock-fw/releases/tag/0.32.8x
 
   There are some considerable configuration changes and it may break previous configs. I'm sorry if this happens but it's unlikely I caught every potential conflict. Clearing the config may help any issues, in your Documents folder, look for QuanshengDock folder and either delete it, or rename it to clear the previous config.  
   
@@ -25,7 +25,7 @@ https://github.com/nicsure/quansheng-dock-fw/releases/tag/0.31.5w
 - Audio passthrough.
 
 **Recent Changes**
-- Messenger, but it's incomplete, waiting on second radio.
+- Messenger
 - XVFO CW Mode
 - CHIRP Fix
 - Preset selector wheel
