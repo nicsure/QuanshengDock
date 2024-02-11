@@ -1,6 +1,6 @@
 # **Quansheng Dock** V 0.32.10q
 
-# Requires firmware 0.32.10q - No kidding.
+# Requires firmware 0.32.8x - No kidding.
 https://github.com/nicsure/quansheng-dock-fw/releases/tag/0.32.8x
 
   There are some considerable configuration changes and it may break previous configs. I'm sorry if this happens but it's unlikely I caught every potential conflict. Clearing the config may help any issues, in your Documents folder, look for QuanshengDock folder and either delete it, or rename it to clear the previous config.  
