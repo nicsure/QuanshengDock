@@ -1,4 +1,4 @@
-# **Quansheng Dock** V 0.32.10qx
+# **Quansheng Dock** V 0.32.10q
 
 # Requires firmware 0.32.10q - No kidding.
 https://github.com/nicsure/quansheng-dock-fw/releases/tag/0.32.8x
