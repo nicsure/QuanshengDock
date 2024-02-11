@@ -1,6 +1,6 @@
-# **Quansheng Dock** V 0.32.8x
+# **Quansheng Dock** V 0.32.10qx
 
-# Requires firmware 0.32.8x - No kidding.
+# Requires firmware 0.32.10q - No kidding.
 https://github.com/nicsure/quansheng-dock-fw/releases/tag/0.32.8x
 
   There are some considerable configuration changes and it may break previous configs. I'm sorry if this happens but it's unlikely I caught every potential conflict. Clearing the config may help any issues, in your Documents folder, look for QuanshengDock folder and either delete it, or rename it to clear the previous config.  
@@ -25,6 +25,7 @@ https://github.com/nicsure/quansheng-dock-fw/releases/tag/0.32.8x
 - Audio passthrough.
 
 **Recent Changes**
+- Further changes will be listed in the release notes instead of here
 - Messenger
 - XVFO CW Mode
 - CHIRP Fix
@@ -49,7 +50,7 @@ https://github.com/nicsure/quansheng-dock-fw/releases/tag/0.32.8x
 
 **Download**
 : A pre-compiled release is available here
-https://github.com/nicsure/QuanshengDock/releases/tag/0.32.8x  
+https://github.com/nicsure/QuanshengDock/releases/tag/0.32.10q  
 : You also need .NET 6 runtime  
 https://dotnet.microsoft.com/en-us/download/dotnet/thank-you/sdk-6.0.418-windows-x64-installer
 
