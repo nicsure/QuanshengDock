@@ -1,12 +1,22 @@
-# **Quansheng Dock** V 0.27.5q
+# **Quansheng Dock** V 0.32.11q
 
-A WPF Windows app that allows remote operation of the Quansheng UV-K5 (and equivalent) hand-held radios via the programming cable.
+# Requires firmware 0.32.8x - No kidding.
+https://github.com/nicsure/quansheng-dock-fw/releases/tag/0.32.8x
+
+  There are some considerable configuration changes and it may break previous configs. I'm sorry if this happens but it's unlikely I caught every potential conflict. Clearing the config may help any issues, in your Documents folder, look for QuanshengDock folder and either delete it, or rename it to clear the previous config.  
+  
+  You may find that presets/channels in the XVFO now have a different mode than before. Again sorry about this, but was unavoidable.
+
+
+
+
+  
+# A WPF Windows app that allows remote operation of the Quansheng UV-K5 (and equivalent) hand-held radios via the programming cable.
 - If upgrading from a version before 0.27.3q the new version will likely have HUGE text on the LCD screen. This is because I had to change the way the "F Stretch" feature worked. If this happens open up your settings and change "F Stretch" to a value around 0.20
 
-**WARNING** :
-**After some unfortunate incidents by users I'm going to put this warning and disclaimer up. DO NOT attempt to transmit without the proper precautions in place. Transmitting 5W of RF energy centimetres away from a PC can LITERALLY destroy it, it's almost like an EMP at that distance. Get your antenna away from the PC.**
-
-**Features** 
+**Features**
+- Enhanced preset/channel scanner.
+- Hardware level VFO (experimental)
 - Enhanced LCD display cloning. Font and color selection.
 - Channel Editor with ability to adjust multiple channels simultaneously.
 - RepeaterBook Integration.
@@ -15,20 +25,34 @@ A WPF Windows app that allows remote operation of the Quansheng UV-K5 (and equiv
 - Audio passthrough.
 
 **Recent Changes**
-- US RepeaterBook support added
-- Window Always On Top option added.
-- Hopefully fixed some channel editor crashes.
-- RepeaterBook integration.
-- Channel Editor Copy/Paste functions added.
-- Channel Editor cell editing improved.
-- Audio Latency and Buffering options added to settings.
-- (firmware) Added "Remote" option to radio menu to allow CHIRP to function.
-- Fixed an issue with status data packet lengths.
-- Some font rendering problems hopefully addressed.
+- Further changes will be listed in the release notes instead of here
+- Messenger
+- XVFO CW Mode
+- CHIRP Fix
+- Preset selector wheel
+- Watch and Respond feature
+- Mutiple VFOs A, B, C and D added
+- Mouse wheel changes XVFO freq by set step when pointer is over jog wheel.
+- Individual digit adjustment with mouse wheel
+- XVFO Scanner facelift
+- XVFO preset scanner (very early design, functional but ugly. Just like me)
+- Fixed two erroneous DCS codes
+- Added Ultra Wide and Ultra Low bandwidth settings, not sure how useful they'll be though. (XVFO)
+- Fixed bug in channel editor preventing entry of negative offset frequency.
+- Auto Squelch (XVFO).
+- Channel import to XVFO Presets.
+- Mic Gain (XVFO).
+- RX CTCSS/DCS Implemented (XVFO).
+- XVFO TX implemented as well as other features.
+
+**TO DO**
+- Plenty
 
 **Download**
 : A pre-compiled release is available here
-https://github.com/nicsure/QuanshengDock/releases/download/0.27.5q/quanshengdock.zip
+https://github.com/nicsure/QuanshengDock/releases/tag/0.32.11q  
+: You also need .NET 6 runtime  
+https://dotnet.microsoft.com/en-us/download/dotnet/thank-you/sdk-6.0.418-windows-x64-installer
 
 
 **Installation**
@@ -39,10 +63,16 @@ You will also need to program the radio with the accompanying firmware found her
 **Demonstration**
 : You can find a demo video here: https://www.youtube.com/watch?v=UwTz5wricmY
 
+# Hardware Requirements
+The app will work with just the programming cable but you won't be able to hear the radio's audio as the programming cable cuts out the main speaker. You also won't be able to properly transmit as it cuts out the radio's microphone too. So to get audio in and out of the radio you'll need some extra hardware.  
 
-**Hardware Requirements**
-: The app will work with just the programming cable but you won't be able to hear the radio's audio as the programming cable cuts out the main speaker. You also won't be able to properly transmit as it cuts out the radio's microphone too. So to transmit voice you'll need an external microphone also.
-In order to hear the audio you'll need to make a simple wiring harness. I made mine from 2.5mm/3.5mm stereo Y cable adapters, a 47k resistor and a 3.5mm stereo patch cable.
+**AIOC (Recommended)**  
+I STRONGLY recommend using the excellent AOIC cable with this software.
+- You can find the AIOC GitHub page here https://github.com/skuep/AIOC  
+- A guide for configuring the AIOC with Quansheng Dock can be found on my YouTube channel here https://www.youtube.com/watch?v=IrnzWVdOlu8
+
+**Makeshift Audio Interface (Not Recommended)**  
+In order to hear the audio you can make a simple wiring harness. I made mine from 2.5mm/3.5mm stereo Y cable adapters, a 47k resistor and a 3.5mm stereo patch cable.
 - Cut one of the tails of the 2.5mm adapter in half and isolate the inner conductors on both sides, there will be three, An outer shield which is ground, and two wires, one of which carries the audio and the other carries the serial TX.
 - Determine which of these is the audio. It is the wire connecting to the tip (end) of the 2.5mm jack plug, you can use a multi-meter in continuity mode to do this.
 - Cut back and isolate the audio wire on the tail side (non radio side) as this is not used.
@@ -64,4 +94,24 @@ You may be wondering why you can't just use an external speaker, the reason is b
 - Plug the microphone's 3.5mm jack into the remaining tail.
 - Plug both Y adapter's jacks into the radio.
 - Connect the 3.5mm patch lead to your PC's line input or you may use any device that can accept audio line input.
-![](./WiringOverview2.png)
+![](./WiringOverview2.png)  
+
+ 
+# **Manual**
+Please take a look at the [Online Manual (see Wiki)](https://github.com/nicsure/QuanshengDock/wiki) for instructions, tips and more
+* [First impression...](https://github.com/nicsure/QuanshengDock/wiki)
+* [Basic idea and operation](https://github.com/nicsure/QuanshengDock/wiki/10-%E2%80%90-Basic-idea-and-operation)
+* [The radio firmware](https://github.com/nicsure/QuanshengDock/wiki/20-%E2%80%90-The-radio-firmware)
+* [Connection between radio and PC](https://github.com/nicsure/QuanshengDock/wiki/30-%E2%80%90-Connection-between-radio-and-PC)
+* [QS‐Dock program on PC](https://github.com/nicsure/QuanshengDock/wiki/40-%E2%80%90-QS%E2%80%90Dock-program-on-PC)
+* [Specific Functions explained](https://github.com/nicsure/QuanshengDock/wiki/50-%E2%80%90-Specific-Functions-explained)
+* [Tips & Tricks and Known Issues](https://github.com/nicsure/QuanshengDock/wiki/70-%E2%80%90-Tips-&-Tricks-and-Known-Issues)
+* [Reviews on Youtube](https://github.com/nicsure/QuanshengDock/wiki/80-%E2%80%90-Reviews-on-Youtube)
+
+
+# **Support**  
+I have been asked several times if there is any way to support me financially. Yes, you can do so by sending BitCoin to the following address.  
+Please DO NOT send what you cannot afford. I of all people understand the cost of living under the current economical disaster and I'm struggling to live just like everyone else. So please, only donate if you can afford to do so.  
+  
+Bitcoin: 3FJEy42F6WUnjtxWwgSYxDHmjVFooLKCDH  
+<img src='./btc qr.png' width='100' />
