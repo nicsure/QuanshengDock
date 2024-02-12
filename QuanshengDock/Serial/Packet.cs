@@ -18,6 +18,16 @@ namespace QuanshengDock.Serial
         public const ushort Scan = 0x808;
         public const ushort ScanAdjust = 0x809;
         public const ushort ScanReply = 0x908;
+        public const ushort WriteRegisters = 0x850;
+        public const ushort ReadRegisters = 0x851;
+        public const ushort RegisterInfo = 0x951;
+        public const ushort WriteGPIO = 0x860;
+        public const ushort ReadGPIO = 0x861;
+        public const ushort GPIOInfo = 0x961;
+        public const ushort GPIOPulse = 0x862;
+        public const ushort EnterHardwareMode = 0x0870;
+        public const ushort ExitHardwareMode = 0x0871;
+        public const ushort SetReportReg = 0x0872;
         public const ushort ImHere = 0x515;
         public const ushort RssiInfo = 0x528;
         public const ushort WriteEeprom = 0x51D;

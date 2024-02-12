@@ -197,5 +197,10 @@ namespace QuanshengDock.Channels
             if (e.Row.Item is GridChannel channel)
                 channel.SetRow(null);
         }
+
+        private void ChannelGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
     }
 }

@@ -209,7 +209,7 @@ namespace QuanshengDock.Channels
                 else
                 {
                     uint off = (uint)Math.Round(value * 100000.0);
-                    long diff = off - RxFrequency;
+                    long diff = (long)off - RxFrequency;
                     OffsetDir = diff > 0 ? 1 : diff < 0 ? 2 : 0;
                     TxOffset = (uint)Math.Abs(diff);
                     CheckTx();
@@ -281,7 +281,9 @@ namespace QuanshengDock.Channels
                 groupChange = true;
                 bool first = groupedChannels[0] == this;
                 int cnt = 1;
-                double step = double.Parse(Step.ToString()[1..].Replace("kHz", "").Replace('_', '.')) / 1000.0;
+                //double step = double.Parse(Step.ToString()[1..].Replace("kHz", "").Replace('_', '.')) / 1000.0;
+                double step = Step.ToString()[1..].Replace("kHz", "").Replace('_', '.').DoubleParse(out double d) ? d : 12.5;
+                step /= 1000.0;
                 foreach (GridChannel channel in groupedChannels)
                 {
                     if (channel == this) continue;

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using QuanshengDock.UI;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -15,8 +16,9 @@ namespace QuanshengDock.General
 
     public static class Radio
     {
-        public const string Version = "0.27.6q";
+        public const string Version = "0.31.1q";
         public static bool Closing { get; set; } = false;
+        public static bool SpectrumVisible { get; set; } = false;
         public static bool AnalyzerMode { get; set; } = false;
         public static bool SpectrumMode { get; set; } = false;
         public static bool WaterfallMode => !SpectrumMode;
@@ -25,11 +27,22 @@ namespace QuanshengDock.General
         public static RState State { get; set; } = RState.None;
         public static bool DesignMode { get; } = DesignerProperties.GetIsInDesignMode(new DependencyObject());
         public static bool PulseTX { get; set; } = false;
+        public static bool IsXVFO { get; set; } = false;
+        public static bool UsedXVFO { get; set; } = false;
+        public static bool UseCommas { get; } = (0.5).ToString()[1] == ',';
+        public static int AudioOutID { get; set; } = -1;
+        public static int AudioInID { get; set; } = -1;
 
         public static void Invoke(Action action)
         {
             if (!Closing)
                 (_ = Application.Current)?.Dispatcher.Invoke(action);
+        }
+
+        public static string? Prompt(string prompt, bool canbeempty, string initial = "")
+        {
+            var window = new TextPrompt(prompt, canbeempty, initial);
+            return (window.ShowDialog() ?? false) ? window.InputText : null;
         }
     }
 }

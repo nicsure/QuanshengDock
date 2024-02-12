@@ -113,15 +113,15 @@ namespace QuanshengDock.UI
         public static void Deserialize(Preset p, string str)
         {
             string[] s = str.Split(',');
-            p.Trigger = double.Parse(s[0]);
-            p.RXTimeout = double.Parse(s[1]);
-            p.TotalTimeout = double.Parse(s[2]);
-            p.SpecMid = double.Parse(s[3]);
-            p.SpecStep = double.Parse(s[4]);
-            p.SpecSteps = double.Parse(s[5]);
-            p.SpecAmp = double.Parse(s[6]);
-            p.SpecFloor = double.Parse(s[7]);
-            p.SpecNorm = bool.Parse(s[8]);
+            p.Trigger = s[0].DoubleParse(out double d) ? d : 0.0;
+            p.RXTimeout = s[1].DoubleParse(out d) ? d : 1.5;
+            p.TotalTimeout = s[2].DoubleParse(out d) ? d : 20.0;
+            p.SpecMid = s[3].DoubleParse(out d) ? d : 145.0; ;
+            p.SpecStep =s[4].DoubleParse(out d) ? d : 12.5; ;
+            p.SpecSteps = s[5].DoubleParse(out d) ? d : 25.0; ;
+            p.SpecAmp = s[6].DoubleParse(out d) ? d : 1.0; ;
+            p.SpecFloor = s[7].DoubleParse(out d) ? d : 1.0; ;
+            p.SpecNorm = !bool.TryParse(s[8], out bool b) || b;
         }
     }
 }

@@ -71,7 +71,7 @@ namespace QuanshengDock.General
         public static ColorBrushPen FromString(string s)
         {
             string[] p = s.Split('#');
-            if (p.Length == 2 && double.TryParse(p[0], out double t))
+            if (p.Length == 2 && p[0].DoubleParse(out double t))
                 return new((Color)ColorConverter.ConvertFromString("#" + p[1]), t);
             return new(Colors.Gray, 1);
         }

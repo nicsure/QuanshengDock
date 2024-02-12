@@ -1,5 +1,6 @@
 ﻿
 using QuanshengDock.Analyzer;
+using QuanshengDock.ExtendedVFO;
 using QuanshengDock.View;
 using System;
 using System.Collections.Generic;
@@ -32,9 +33,11 @@ namespace QuanshengDock.UI
         private static readonly ViewModel<double> specAmp = VM.Get<double>("SpecAmp");
         private static readonly ViewModel<double> specFloor = VM.Get<double>("SpecFloor");
         private static readonly ViewModel<bool> specNorm = VM.Get<bool>("SpecNorm");
+        private static readonly ViewModel<bool> quantizing = VM.Get<bool>("Quantizing");
         private static readonly ViewModel<string> presetName = VM.Get<string>("PresetName");
         private static readonly ViewModel<string> cursorFreq = VM.Get<string>("CursorFreq");
         private static readonly ViewModel<bool> onTop = VM.Get<bool>("OnTop");
+        private static readonly ViewModel<bool> lockPower = VM.Get<bool>("LockPower");
 
         private static double openedPos = 0;
 
@@ -50,8 +53,51 @@ namespace QuanshengDock.UI
             if (e.Parameter is not string cmd) return;
             string[] p = cmd.Split(',');
             Preset? preset = p.Length > 1 ? (int.TryParse(p[1], out int idx) && idx > -1 && presets.Value.Count > idx ? presets.Value[idx] : null) : null;
+            
             switch (p[0])
             {
+                case "LockPower":
+                    lockPower.Value = !lockPower.Value;
+                    break;
+                case "ImportAll":
+                    VFOPreset.Import(true);
+                    break;
+                case "ImportUpdate":
+                    VFOPreset.Import(false);
+                    break;
+                case "VFOPresetMenuOpened":
+                    VFOPreset.MenuOpened();
+                    break;
+                case "VFOPresetMenuClosed":
+                    VFOPreset.MenuClosed();
+                    break;
+                case "VFOOverwrite":
+                    VFOPreset.MenuSelected?.Set();
+                    break;
+                case "VFOMoveUp":
+                    VFOPreset.MoveUp();
+                    break;
+                case "VFOMoveDown":
+                    VFOPreset.MoveDown();
+                    break;
+                case "VFODeletePreset":
+                    VFOPreset.Delete();
+                    break;
+                case "RenameVFOPreset":
+                    if (Keyboard.IsKeyDown(Key.Enter))
+                        VFOPreset.Rename();
+                    break;
+                case "NewVFOPreset":
+                    if (Keyboard.IsKeyDown(Key.Enter))
+                        VFOPreset.CreateNew();
+                    break;
+                case "Quantize":
+                    quantizing.Value = !quantizing.Value;
+                    break;
+                case "SetStep":
+                    if (int.TryParse(p[1], out int newStepIndex))
+                        XVFO.SetStep(newStepIndex);
+                    break;
                 case "ToggleOnTop":
                     onTop.Value = !onTop.Value;
                     break;
@@ -121,10 +167,10 @@ namespace QuanshengDock.UI
                     trigger.Value = openedPos;
                     break;
                 case "RXTimeout":
-                    rxTimeout.Value = double.Parse(p[1]);
+                    { rxTimeout.Value = p[1].DoubleParse(out double d) ? d : 1.5; }
                     break;
                 case "TotalTimeout":
-                    totalTimeout.Value = double.Parse(p[1]);
+                    { totalTimeout.Value = p[1].DoubleParse(out double d) ? d : 20.0; }
                     break;
             }
         }

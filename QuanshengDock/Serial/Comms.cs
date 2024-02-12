@@ -1,6 +1,8 @@
 ﻿
 using QuanshengDock.Analyzer;
+using QuanshengDock.Audio;
 using QuanshengDock.Channels;
+using QuanshengDock.ExtendedVFO;
 using QuanshengDock.General;
 using QuanshengDock.UI;
 using QuanshengDock.View;
@@ -48,7 +50,7 @@ namespace QuanshengDock.Serial
         }
 
         private static byte Crypt(int byt, int xori) => (byte)(byt ^ xor_array[xori & 15]);
-        private static int Crc16(int byt, int crc)
+        public static int Crc16(int byt, int crc)
         {
             crc ^= byt << 8;
             for (int i = 0; i < 8; i++)
@@ -200,11 +202,28 @@ namespace QuanshengDock.Serial
                     offset = BitConverter.ToUInt16(packet, 4);
                     Channel.EepromDataWritten(offset);
                     break;
+                case Packet.RegisterInfo:
+                    ushort reg = BitConverter.ToUInt16(packet, 4);
+                    ushort val = BitConverter.ToUInt16(packet, 6);
+                    //if(reg<0x65 || reg>0x6a)
+                    //    Debug.WriteLine($"Reg:{reg:X4} Val:{val:X4}");
+                    if(Radio.IsXVFO)
+                        BK4819.RegisterValue(reg, val);
+                    break;
             }
         }
 
         private static void UiPacket(int type, int val1, int val2, int val3, int dataLen, byte[] data)
         {
+            if (Radio.IsXVFO)
+            {
+                switch (type)
+                {
+                    case 10:
+                    case 9: break;
+                    default: return;
+                }
+            }
             switch (type)
             {
                 case 0:
@@ -283,6 +302,7 @@ namespace QuanshengDock.Serial
                     {
                         LCD.DrawText(93, 0, 0.5, "🔋");
                         float bat = dataLen * 0.04f;
+                        if (bat > 8.4f) bat = 8.4f;
                         LCD.DrawText(99, 0, 0.5, $"{bat:F2}V {(dataLen / 2.1f):F0}%");
                     }
                     break;
@@ -292,12 +312,32 @@ namespace QuanshengDock.Serial
                 case 8:
                     LCD.DrawSignal(val1, val2);
                     break;
+                case 9:
+                    //Debug.WriteLine($"{data[0]:X2} {data[1]:X2} {data[2]:X2} {data[3]:X2} {data[4]:X2} {data[5]:X2} {data[6]:X2} {data[7]:X2}");
+                    Messenger.Data(data);
+                    break;
+                case 10:
+                    {
+                        string s = val1 switch
+                        {
+                            0 or 1 or 2 or 3 or 4 or 5 or 6 or 7 or 8 or 9 => val1.ToString(),
+                            10 => "A",
+                            11 => "B",
+                            12 => "C",
+                            13 => "D",
+                            14 => "*",
+                            15 => "#",
+                            _ => "?",
+                        };
+                        XVFO.AppendDTMF(s);
+                    }
+                    break;
             }
         }
 
         public static void SendHello() 
         {
-            timeStamp = (uint)DateTimeOffset.Now.ToUnixTimeSeconds();
+            timeStamp = 0x12345678;
             SendCommand(Packet.Hello, timeStamp); 
         }
 
@@ -317,6 +357,15 @@ namespace QuanshengDock.Serial
             int ind = 8;
             foreach (object val in args)
             {
+                if(val is uint[] ia)
+                {
+                    foreach(uint u in ia)
+                    {
+                        Array.Copy(BitConverter.GetBytes(u), 0, data, ind, 4);
+                        ind += 4;
+                    }
+                }
+                else
                 if (val is byte[] ba)
                 {
                     foreach (byte byt in ba)

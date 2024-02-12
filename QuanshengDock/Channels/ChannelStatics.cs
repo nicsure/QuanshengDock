@@ -62,9 +62,34 @@ namespace QuanshengDock.Channels
         {
             foreach (var channel in Channels)
             {
-                if (channel.Band > 6 || channel.RxFrequency == 0)
-                    channel.Clear();
+                if (channel.Band > 6 || channel.RxFrequency == 0) channel.Clear();
+                if (channel.TxOffset == 0) channel.OffsetDir = 0;
+                if (channel.OffsetDir == 0) channel.TxOffset = 0;
+                if (channel.RxCodeType > 3) channel.RxCodeType = 0;
+                if (channel.TxCodeType > 3) channel.RxCodeType = 0;                
+                if (channel.RxCode > 103) channel.RxCode = 0;
+                if (channel.TxCode > 103) channel.TxCode = 0;
+                if (channel.RxCodeType == 1 && channel.RxCode > 49) channel.RxCode = 0;
+                if (channel.TxCodeType == 1 && channel.TxCode > 49) channel.TxCode = 0;
+                if (channel.Modulation > 2) channel.Modulation = 0;
+                if (channel.BusyLock > 1) channel.BusyLock = 0;
+                if (channel.OutputPower > 2) channel.OutputPower = 0;
+                if (channel.Bandwidth > 1) channel.Bandwidth = 0;
+                if (channel.Reverse > 1) channel.Reverse = 0;
+                if (channel.PttId > 4) channel.PttId = 0;
+                if (channel.Dtmf > 1) channel.Dtmf = 0;
+                if (channel.Step > 20) channel.Step = 0;
+                if (channel.Scramble > 10) channel.Scramble = 0;
+                if (channel.Compander > 3) channel.Compander = 0;
             }
+        }
+
+        public static void ClearAll()
+        {
+            foreach(var channel in Channels) 
+                channel.Clear();
+            Refresh();
+            DisplayMessage("All channels cleared");
         }
 
         public static void FilterUsed()

@@ -3,6 +3,7 @@ using QuanshengDock.User;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -82,7 +83,7 @@ namespace QuanshengDock.View
         protected override bool IsSetting { get; set; }
 
         public override string Name => name;
-        public VMEquality<T> EqualTo => new(value_);
+        public VMEquality<T> EqualTo => new(Value);
         public T Value 
         {
             get => converter == null ? value_ : converter();
@@ -123,6 +124,7 @@ namespace QuanshengDock.View
             Add(this);
         }
 
+        private readonly IFormatProvider dotCulture = new CultureInfo("en-US");
         protected override void Save()
         {
             if (IsSetting)
@@ -134,12 +136,12 @@ namespace QuanshengDock.View
                 else
                 if (value_ is IConvertible i)
                 {
-                    Backing[name] = (string)Convert.ChangeType(i, typeof(string));
+                    Backing[name] = (string)Convert.ChangeType(i, typeof(string), dotCulture);
                 }
                 else
                 if (value_ is Color c)
                 {
-                    Backing[name] = c.ToString();
+                    Backing[name] = c.ToString(dotCulture);
                 }
                 else
                 if(value_ is ColorBrushPen p)
@@ -161,7 +163,7 @@ namespace QuanshengDock.View
                 else
                 if (typeof(IConvertible).IsAssignableFrom(t))
                 {
-                    return (T)Convert.ChangeType(saved, t);
+                    return (T)Convert.ChangeType(saved.Replace(',','.'), t, dotCulture);
                 }
                 else
                 if (t == typeof(Color))

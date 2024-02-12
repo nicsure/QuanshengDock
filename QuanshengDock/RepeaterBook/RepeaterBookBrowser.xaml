@@ -10,6 +10,7 @@
         xmlns:ui="clr-namespace:QuanshengDock.UI"
         AllowsTransparency="True"
         ResizeMode="CanResizeWithGrip"
+        Topmost="{Binding OnTop.Value}"
         Title="RepeaterBookBrowser" Height="450" Width="800" Background="{x:Null}" Foreground="#00000000" WindowStyle="None">
     <Window.Resources>
         <Style TargetType="TextBlock">

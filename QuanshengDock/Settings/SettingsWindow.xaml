@@ -1,6 +1,6 @@
 ﻿<!-- code by nicsure 2024 -->
 <!-- https://www.youtube.com/nicsure -->
-        
+
 <Window x:Class="QuanshengDock.Settings.SettingsWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -64,6 +64,9 @@
                 <RowDefinition Height="1*"/>
                 <RowDefinition Height="1*"/>
                 <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
                 <RowDefinition Height="3*"/>
                 <RowDefinition Height="40"/>
             </Grid.RowDefinitions>
@@ -77,23 +80,31 @@
             </Grid.ColumnDefinitions>
             <CheckBox Width="0" Height="0" Name="Defocusser"/>
             <TextBlock IsHitTestVisible="False" Grid.ColumnSpan="5" Text="Quansheng Dock Settings" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-            <TextBlock Style="{StaticResource Label}" Grid.Column="0" Grid.Row="1" Text="Serial Port" />
+            <TextBlock Style="{StaticResource Label}" Grid.Column="0" Grid.Row="1" Text="Radio Serial Port" />
             <TextBlock Style="{StaticResource Label}" Grid.Column="0" Grid.Row="2" Text="Audio In Device" />
             <TextBlock Style="{StaticResource Label}" Grid.Column="0" Grid.Row="3" Text="Audio Out Device" />
             <TextBlock Style="{StaticResource Label}" Grid.Column="0" Grid.Row="4" Text="Enable Passthrough" />
             <TextBlock Style="{StaticResource Label}" Grid.Column="0" Grid.Row="5" Text="Volume" />
-            <TextBlock Style="{StaticResource Label}" Grid.Column="0" Grid.Row="6" Text="LCD Background" />
-            <TextBlock Style="{StaticResource Label}" Grid.Column="0" Grid.Row="7" Text="LCD Foreground" />
-            <TextBlock Cursor="Hand" TextDecorations="Underline" Style="{StaticResource Label}" Grid.Column="0" Grid.Row="8" Text="LCD Font" Foreground="Cyan">
+            <TextBlock Style="{StaticResource Label}" Grid.Column="0" Grid.Row="6" Text="CW SideTone (Hz)" />
+            <TextBlock Style="{StaticResource Label}" Grid.Column="0" Grid.Row="7" Text="User Button 1" />
+            <TextBlock Style="{StaticResource Label}" Grid.Column="0" Grid.Row="8" Text="User Button 2" />
+            <TextBlock Style="{StaticResource Label}" Grid.Column="0" Grid.Row="9" Text="LCD Background" />
+            <TextBlock Style="{StaticResource Label}" Grid.Column="0" Grid.Row="10" Text="LCD Foreground" />
+            <TextBlock Cursor="Hand" TextDecorations="Underline" Style="{StaticResource Label}" Grid.Column="0" Grid.Row="11" Text="LCD Font" Foreground="Cyan">
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="MouseLeftButtonDown">
                         <i:InvokeCommandAction Command="{Binding MouseCommand}" CommandParameter="FontBrowse"/>
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
             </TextBlock>
-            <TextBlock Style="{StaticResource Label}" Grid.Column="0" Grid.Row="9" Text="LCD Font Adjust" />
+            <TextBlock Style="{StaticResource Label}" Grid.Column="0" Grid.Row="12" Text="LCD Font Adjust" />
 
-            <TextBlock Style="{StaticResource Label}" HorizontalAlignment="Left" Grid.Column="0" Grid.Row="10" Grid.ColumnSpan="2" Text="V0.27.6q by -nicsure- 2024" Margin="20,0,0,0"/>
+            <TextBlock Style="{StaticResource Label}" HorizontalAlignment="Left" Grid.Column="0" Grid.Row="13" Grid.ColumnSpan="4" Margin="20,0,0,0">
+                v0.32.11q by -nicsure- 2024  
+                <Hyperlink NavigateUri="https://www.youtube.com/nicsure" RequestNavigate="Hyperlink_RequestNavigate">
+                    https://www.youtube.com/nicsure
+                </Hyperlink>
+            </TextBlock>
 
 
             <ComboBox Grid.Column="1" Grid.Row="1" ItemsSource="{Binding ComPorts}" SelectedItem="{Binding ComPort.Value}"/>
@@ -101,20 +112,23 @@
             <ComboBox Grid.Column="1" Grid.Row="3" ItemsSource="{Binding AudioOutDevices}" SelectedItem="{Binding AudioOutDevice.Value}" />
             <CheckBox Grid.Column="1" Grid.Row="4" IsChecked="{Binding Passthrough.Value}" VerticalAlignment="Center" />
             <Slider SmallChange="0.05" LargeChange="0.1" Grid.Column="1" Grid.Row="5" Minimum="0" Maximum="1" Value="{Binding Volume.Value}" VerticalAlignment="Center"/>
-            <Border CornerRadius="10" Grid.Row="6" Grid.Column="1" Background="{Binding LCDBackColor.Value.Brush}" Margin="0,5,0,5">
-                <xctk:ColorPicker Opacity="0.01" SelectedColor="{Binding LCDBackColor.Value.Color}" />
+            <xctk:SingleUpDown FormatString="F0" Minimum="100" Maximum="4000" Grid.Column="1" Grid.Row="6" Value="{Binding SideTone.Value}"/>
+            <TextBox KeyDown="TextBox_KeyDown" Grid.Row="7" Grid.Column="1" Text="{Binding UserButton1.Value}"/>
+            <TextBox KeyDown="TextBox_KeyDown" Grid.Row="8" Grid.Column="1" Text="{Binding UserButton2.Value}"/>
+            <Border CornerRadius="10" Grid.Row="9" Grid.Column="1" Background="{Binding LCDBackColor.Value.Brush}" Margin="0,2,0,2">
+                <xctk:ColorPicker Margin="0,0,0,0" Opacity="0.01" SelectedColor="{Binding LCDBackColor.Value.Color}" />
             </Border>
-            <Border CornerRadius="10"  Grid.Row="7" Grid.Column="1" Background="{Binding LCDForeColor.Value.Brush}" Margin="0,5,0,5">
-                <xctk:ColorPicker Opacity="0.01" SelectedColor="{Binding LCDForeColor.Value.Color}" />
+            <Border CornerRadius="10"  Grid.Row="10" Grid.Column="1" Background="{Binding LCDForeColor.Value.Brush}" Margin="0,2,0,2">
+                <xctk:ColorPicker Margin="0,0,0,0" Opacity="0.01" SelectedColor="{Binding LCDForeColor.Value.Color}" />
             </Border>
-            <TextBox KeyDown="TextBox_KeyDown" Grid.Row="8" Grid.Column="1" Text="{Binding LCDFontName.Value}">
+            <TextBox KeyDown="TextBox_KeyDown" Grid.Row="11" Grid.Column="1" Text="{Binding LCDFontName.Value}">
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="MouseDoubleClick">
                         <i:InvokeCommandAction Command="{Binding MouseCommand}" CommandParameter="FontBrowse"/>
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
             </TextBox>
-            <Grid Grid.Row="9" Grid.Column="1">
+            <Grid Grid.Row="12" Grid.Column="1">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="1*"/>
@@ -136,6 +150,8 @@
                 <xctk:SingleUpDown Grid.Column="1" Grid.Row="2" Value="{Binding FStretch.Value}"/>
                 <xctk:SingleUpDown Grid.Column="3" Grid.Row="0" Value="{Binding VOffset.Value}" />
                 <xctk:SingleUpDown Grid.Column="3" Grid.Row="1" Value="{Binding VSize.Value}"/>
+                <Button Command="{Binding MouseCommand}" CommandParameter="ResetFont" FontSize="12" Background="#ff111111" Foreground="#ff999999" Grid.Column="2"  Grid.Row="2" HorizontalAlignment="Right" VerticalAlignment="Center" Content=" Reset " Margin="0,0,0,0"/>
+                <Button Command="{Binding MouseCommand}" CommandParameter="ApplyFont" FontSize="12" Background="#ff111111" Foreground="#ff999999" Grid.Column="3"  Grid.Row="2" HorizontalAlignment="Right" VerticalAlignment="Center" Content=" Apply " Margin="0,0,0,0"/>
             </Grid>
             <TextBlock Style="{StaticResource Label}" Grid.Column="3" Grid.Row="1" Text="Audio Latency" />
             <TextBlock Style="{StaticResource Label}" Grid.Column="3" Grid.Row="2" Text="Audio Buffers" />
@@ -144,19 +160,21 @@
             <TextBlock Style="{StaticResource Label}" Grid.Column="3" Grid.Row="5" Text="Analyzer Line" />
             <TextBlock Style="{StaticResource Label}" Grid.Column="3" Grid.Row="6" Text="Analyzer Line Thickness" />
             <TextBlock Style="{StaticResource Label}" Grid.Column="3" Grid.Row="7" Text="Analyzer Style" />
-            <TextBlock Style="{StaticResource Label}" Grid.Column="3" Grid.Row="8" Text="Waterfall/Heat Gradient" />
+            <TextBlock Style="{StaticResource Label}" Grid.Column="3" Grid.Row="9" Text="DCD PTT Port" />
+            <TextBlock Style="{StaticResource Label}" Grid.Column="3" Grid.Row="10" Text="Callsign" />
+            <TextBlock Style="{StaticResource Label}" Grid.Column="3" Grid.Row="11" Text="Waterfall/Heat Gradient" />
 
             <xctk:SingleUpDown FormatString="F0" Minimum="1" Maximum="100" Grid.Column="4" Grid.Row="1" Increment="1" Value="{Binding AudioLatency.Value}"/>
             <xctk:SingleUpDown FormatString="F0" Minimum="1" Maximum="100" Grid.Column="4" Grid.Row="2" Increment="1" Value="{Binding AudioBuffers.Value}"/>
 
-            <Border CornerRadius="10" Grid.Row="3" Grid.Column="4" Background="{Binding SpectBGCol.Value.Brush}" Margin="0,5,0,5">
-                <xctk:ColorPicker Opacity="0.01" SelectedColor="{Binding SpectBGCol.Value.Color}" />
+            <Border CornerRadius="10" Grid.Row="3" Grid.Column="4" Background="{Binding SpectBGCol.Value.Brush}" Margin="0,2,0,2">
+                <xctk:ColorPicker Margin="0,0,0,0" Opacity="0.01" SelectedColor="{Binding SpectBGCol.Value.Color}" />
             </Border>
-            <Border CornerRadius="10" Grid.Row="4" Grid.Column="4" Background="{Binding SpectBarCol.Value.Brush}" Margin="0,5,0,5">
-                <xctk:ColorPicker Opacity="0.01" SelectedColor="{Binding SpectBarCol.Value.Color}" />
+            <Border CornerRadius="10" Grid.Row="4" Grid.Column="4" Background="{Binding SpectBarCol.Value.Brush}" Margin="0,2,0,2">
+                <xctk:ColorPicker Margin="0,0,0,0" Opacity="0.01" SelectedColor="{Binding SpectBarCol.Value.Color}" />
             </Border>
-            <Border CornerRadius="10" Grid.Row="5" Grid.Column="4" Background="{Binding SpecLine.Value.Brush}" Margin="0,5,0,5">
-                <xctk:ColorPicker Opacity="0.01" SelectedColor="{Binding SpecLine.Value.Color}" />
+            <Border CornerRadius="10" Grid.Row="5" Grid.Column="4" Background="{Binding SpecLine.Value.Brush}" Margin="0,2,0,2">
+                <xctk:ColorPicker Margin="0,0,0,0" Opacity="0.01" SelectedColor="{Binding SpecLine.Value.Color}" />
             </Border>
             <xctk:SingleUpDown Minimum="0.1" Maximum="30" Grid.Column="4" Grid.Row="6" Value="{Binding SpecLine.Value.Thickness}"/>
             <ComboBox Grid.Column="4" Grid.Row="7" SelectedIndex="{Binding SpecStyle.Value}">
@@ -164,17 +182,23 @@
                 <ComboBoxItem Content="Line"/>
                 <ComboBoxItem Content="Heat"/>
             </ComboBox>
-            <Border CornerRadius="10" Grid.Row="8" Grid.Column="4" Grid.RowSpan="2" Background="{Binding HeatBG.Value}" Margin="0,5,0,5">
+            <TextBox KeyDown="TextBox_KeyDown" Grid.Row="9" Grid.Column="4" Text="{Binding PttComPort.Value}"/>
+            <TextBox KeyDown="TextBox_KeyDown" Grid.Row="10" Grid.Column="4" Text="{Binding Callsign.Value}"/>
+            <TextBox Visibility="Hidden" Name="RegBox" KeyDown="Register_KeyDown" Grid.Row="8" Grid.Column="4" Text="{Binding Register.Value}"/>
+
+
+
+            <Border CornerRadius="10" Grid.Row="11" Grid.Column="4" Grid.RowSpan="2" Background="{Binding HeatBG.Value}" Margin="0,5,0,5">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="1*"/>
                         <RowDefinition Height="1*"/>
                     </Grid.RowDefinitions>
-                    <xctk:ColorPicker Grid.Row="0" Opacity="0.01" SelectedColor="{Binding WaterfallCol2.Value}" />
-                    <xctk:ColorPicker Grid.Row="1" Opacity="0.01" SelectedColor="{Binding WaterfallCol1.Value}" />
+                    <xctk:ColorPicker Margin="0,0,0,0" Grid.Row="0" Opacity="0.01" SelectedColor="{Binding WaterfallCol2.Value}" />
+                    <xctk:ColorPicker Margin="0,0,0,0" Grid.Row="1" Opacity="0.01" SelectedColor="{Binding WaterfallCol1.Value}" />
                 </Grid>
             </Border>
-            <Button IsCancel="True" FontSize="16" Background="#ff111111" Foreground="#ff999999" Grid.Column="4" Grid.Row="10" HorizontalAlignment="Right" VerticalAlignment="Center" Content="  Close  " Margin="0,0,30,10"/>
+            <Button IsCancel="True" FontSize="16" Background="#ff111111" Foreground="#ff999999" Grid.Column="4" Grid.Row="13" HorizontalAlignment="Right" VerticalAlignment="Center" Content="  Close  " Margin="0,0,30,10"/>
         </Grid>
     </Border>
 </Window>

@@ -98,7 +98,7 @@
             </Grid.RowDefinitions>
             <CheckBox Name="Defocusser" Width="0" Height="0" />
             <TextBlock IsHitTestVisible="False" Grid.ColumnSpan="5" Text="Quansheng Channel Editor" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-            <DataGrid IsEnabled="{Binding EnableChanButtons.Value}" FontSize="{Binding ElementName=Magnify, Path=Value}" Name="ChannelGrid" VerticalGridLinesBrush="{x:Null}" Grid.Row="1" UnloadingRow="ChannelGrid_UnloadingRow" LoadingRow="ChannelGrid_LoadingRow" AutoGeneratingColumn="DataGrid_AutoGeneratingColumn" ItemsSource="{Binding Channels.Value}" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="White">
+            <DataGrid IsEnabled="{Binding EnableChanButtons.Value}" FontSize="{Binding ElementName=Magnify, Path=Value}" Name="ChannelGrid" VerticalGridLinesBrush="{x:Null}" Grid.Row="1" UnloadingRow="ChannelGrid_UnloadingRow" LoadingRow="ChannelGrid_LoadingRow" AutoGeneratingColumn="DataGrid_AutoGeneratingColumn" ItemsSource="{Binding Channels.Value}" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="White" SelectionChanged="ChannelGrid_SelectionChanged">
                 <DataGrid.RowHeaderStyle>
                     <Style>
                         <Setter Property="Canvas.Background" Value="Transparent" />
@@ -138,6 +138,7 @@
                     <ColumnDefinition Width="1*"/>
                     <ColumnDefinition Width="1*"/>
                     <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="1*"/>
                     <ColumnDefinition Width="0.45*"/>
                     <ColumnDefinition Width="1*"/>
                     <ColumnDefinition Width="1*"/>
@@ -156,12 +157,13 @@
                 <Frame IsHitTestVisible="{Binding EnableChanButtons.Value}" Opacity="{Binding ChanButtonsOpacity.Value}" Tag="Group" Grid.Column="8" Style="{StaticResource ControlButton}" Content="Group" />
                 <Frame IsHitTestVisible="{Binding EnableChanButtons.Value}" Opacity="{Binding ChanButtonsOpacity.Value}" Tag="Ungroup" Grid.Column="9" Style="{StaticResource ControlButton}" Content="Ungroup" />
                 <Frame IsHitTestVisible="{Binding EnableChanButtons.Value}" Opacity="{Binding ChanButtonsOpacity.Value}" Tag="RepeaterBook" Grid.Column="10" Style="{StaticResource ControlButton}" Content="Repeater&#10;Book" />
-                <Frame Grid.Column="11" Grid.ColumnSpan="4" Style="{StaticResource ControlButton2}" Content="🔍" />
-                <Slider ValueChanged="Magnify_ValueChanged" Name="Magnify" Grid.Column="12" Grid.ColumnSpan="2" VerticalAlignment="Center" Value="12" Minimum="4" Maximum="25" LargeChange="1" SmallChange="1"/>
-                <Viewbox Grid.Column="15" Margin="0,9,0,9">
+                <Frame IsHitTestVisible="{Binding EnableChanButtons.Value}" Opacity="{Binding ChanButtonsOpacity.Value}" Tag="ChannelsClear" Grid.Column="11" Style="{StaticResource ControlButton}" Content="Clear All" />
+                <Frame Grid.Column="12" Grid.ColumnSpan="4" Style="{StaticResource ControlButton2}" Content="🔍" />
+                <Slider ValueChanged="Magnify_ValueChanged" Name="Magnify" Grid.Column="13" Grid.ColumnSpan="2" VerticalAlignment="Center" Value="12" Minimum="4" Maximum="25" LargeChange="1" SmallChange="1"/>
+                <Viewbox Grid.Column="16" Margin="0,9,0,9">
                     <TextBlock FontFamily="Calibri" Grid.Column="11" Text="{Binding ChEditMessage.Value}" Foreground="#FFC3C3C3"/>
                 </Viewbox>
-                <Frame MouseDown="Frame_MouseDown"  Grid.Column="16" Style="{StaticResource ControlButton}" Content="Close" />
+                <Frame MouseDown="Frame_MouseDown"  Grid.Column="17" Style="{StaticResource ControlButton}" Content="Close" />
             </Grid>
         </Grid>
     </Border>

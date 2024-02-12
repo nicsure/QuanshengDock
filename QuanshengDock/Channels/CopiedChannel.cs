@@ -24,8 +24,8 @@ namespace QuanshengDock.Channels
         {
             byte[] b = Encoding.ASCII.GetBytes(bookname);
             Array.Copy(b, 0, name, 0, b.Length > 10 ? 10 : b.Length);
-            double rxf = double.TryParse(rx, out double f) ? f : 0;
-            double txf = double.TryParse(tx, out f) ? f : 0;
+            double rxf = rx.DoubleParse(out double f) ? f : 0;
+            double txf = tx.DoubleParse(out f) ? f : 0;
             uint rxi = (uint)Math.Round(rxf * 100000.0);
             uint txi = (uint)Math.Round(txf * 100000.0);
             int txd = txi > rxi ? 1 : txi < rxi ? 2 : 0;
