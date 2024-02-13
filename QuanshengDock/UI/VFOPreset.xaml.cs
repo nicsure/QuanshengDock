@@ -295,6 +295,9 @@ namespace QuanshengDock.UI
                     preset.pwr = channel.OutputPower == 0 ? 10 : channel.OutputPower == 1 ? 25 : 99;
                     preset.sql = 25;
                     preset.asql = 1;
+                    string step = Beautifiers.StepStrings[channel.Step].Replace("kHz", "").Trim() + "k";
+                    preset.step = Array.IndexOf(Defines.StepNames, step);
+                    if (preset.step == -1) preset.step = 0;
                     preset.mode = (ushort)channel.Modulation;
                     preset.ctcss = channel.TxCodeType == 1 ? channel.TxCode : 0;
                     preset.dcs = channel.TxCodeType == 2 || channel.TxCodeType == 3 ? channel.TxCode : 0;
@@ -313,7 +316,7 @@ namespace QuanshengDock.UI
         private double rx, tx, pwr, sql;
         private ushort mode;
         private int step, ctcss, dcs, bw, tone, comp, asql, rxctcss, rxdcs, rxtone;
-        private bool tx2rx;
+        private bool tx2rx, isRange;
         private ulong id = 0;
 
         private Brush bg = Brushes.Black;
@@ -323,10 +326,14 @@ namespace QuanshengDock.UI
         public int RxCTCSS => rxctcss;
         public int RxDCS => rxdcs;
         public double Squelch => sql;
+        public double Step => Defines.StepValues[step];
         public double Sql => sql;
         public int Asql => asql;
         public ulong Id => id;
         public double RX => rx;
+        public double TX => tx;
+        public bool IsRange => isRange;
+        public double RangeFreq { get; set; }
         public bool MainVFO { get; private set; } = false;
         public bool Blacklisted { get; set; } = false;
         public bool IsSelected { get; set; } = false;
@@ -402,7 +409,7 @@ namespace QuanshengDock.UI
             tx2rx = txisRX.Value;
         }
 
-        public void Recall()
+        public void Recall(double freqOverride)
         {
             if (MainVFO && this != CurrentVFO)
                 CurrentVFO.Set();
@@ -410,10 +417,13 @@ namespace QuanshengDock.UI
             squelch.Value = sql;
             txisRX.Value = tx2rx;
             string lp = CurrentVFO.LastPreset;
-            rxFreq.Value = rx;
+            if(freqOverride >= 0)
+                rxFreq.Value = freqOverride;
+            else
+                rxFreq.Value = rx;
             CurrentVFO.LastPreset = lp;
             txFreq.Value = tx;
-            if(!lockPower.Value)
+            if (!lockPower.Value)
                 power.Value = pwr;
             vfoMode.Value = mode;
             vfoStep.Value = step;
@@ -441,6 +451,11 @@ namespace QuanshengDock.UI
             BK4819.Modulation();
         }
 
+        public void Recall()
+        {
+            Recall(-1);
+        }
+
         public override string ToString() => PName;
 
         public string PName
@@ -449,9 +464,14 @@ namespace QuanshengDock.UI
             set { SetValue(PNameProperty, value.Replace(',', '_')); }
         }
         public static readonly DependencyProperty PNameProperty =
-            DependencyProperty.Register("PName", typeof(string), typeof(VFOPreset), new PropertyMetadata(string.Empty));
+            DependencyProperty.Register("PName", typeof(string), typeof(VFOPreset), new PropertyMetadata(string.Empty, PNameChanged));
 
-        
+        private static void PNameChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            if (e.NewValue is string s && d is VFOPreset preset)
+                preset.isRange = s.StartsWith("RANGE");
+        }
+
         public string RXFreq
         {
             get { return (string)GetValue(RXFreqProperty); }

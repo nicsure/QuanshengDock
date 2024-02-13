@@ -1027,7 +1027,8 @@ namespace QuanshengDock.ExtendedVFO
                 current.WasRssi = rssipct;
                 if ((force || monitor.Value) && !current.Blacklisted)
                 {
-                    Radio.Invoke(current.Recall);
+                    double crx = currentFreq / 100000.0;
+                    Radio.Invoke(() => current.Recall(crx));
                     scanActive = false;
                     monitoring = true;
                     current.Blacklisted = true;
@@ -1042,8 +1043,21 @@ namespace QuanshengDock.ExtendedVFO
             else
                 current.Blacklisted = false;
             var previous = current;
-            current = current.Next;
-            SetFrequency(current.RX);
+            double rx = -1;
+            if (current.IsRange)
+            {
+                rx = currentFreq / 100000.0;
+                rx += current.Step;
+                if (Math.Round(rx * 100000.0) > Math.Round(current.TX * 100000.0))
+                    rx = -1;
+            }
+            if (rx >= 0)
+                SetFrequency(rx);
+            else
+            {
+                current = current.Next;
+                SetFrequency(current.RX);
+            }
             if (scanSpeed.Value > 1) Thread.Sleep((scanSpeed.Value - 1) * 10);
             SendCommand(Packet.ReadRegisters, (ushort)2, (ushort)0x67, (ushort)0x65);
             watchdog = DateTime.Now.Ticks;
@@ -1052,9 +1066,9 @@ namespace QuanshengDock.ExtendedVFO
             Radio.Invoke(() =>
             {
                 block = true;
-                crnt.IsScanning = true;
                 previous.IsScanning = false;
-                crnt.Recall();
+                crnt.IsScanning = true;
+                crnt.Recall(rx);
                 block = false;
             });
         }

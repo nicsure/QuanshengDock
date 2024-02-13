@@ -136,7 +136,7 @@ namespace QuanshengDock.Channels
             return CtcssOptions[i];
         }
 
-        private static readonly string[] StepStrings = new string[]
+        public static string[] StepStrings { get; } = new string[]
         {
             "2.5 kHz", "5 kHz", "6.25 kHz", "10 kHz", "12.5 kHz", "25 kHz", "8.33 kHz", "0.01 kHz", "0.05 kHz", "0.1 kHz",
             "0.25 kHz", "0.5 kHz", "1 kHz", "1.25 kHz", "15 kHz", "30 kHz", "50 kHz", "100 kHz", "125 kHz", "250 kHz", "500 kHz"
