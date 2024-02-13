@@ -110,6 +110,10 @@ namespace QuanshengDock.Data
         public ViewModel<bool> TXisRX { get; } = new(true, nameof(TXisRX));
         public ViewModel<bool> TXisNotRX { get; } = new(true, nameof(TXisNotRX));
         public ViewModel<Brush> TXisRXBrush { get; } = new(nameof(TXisRXBrush));
+        public ViewModel<bool> RFGainOn { get; } = new(false, nameof(RFGainOn), true);
+        public ViewModel<double> RFGain { get; } = new(0.0, nameof(RFGain), true);
+        public ViewModel<string> RFGainName { get; } = new("AGC", nameof(RFGainName));
+        public ViewModel<Brush> RFGainBrush { get; } = new(nameof(RFGainBrush));
         public ViewModel<XTONETYPE> XVfoToneType { get; } = new(XTONETYPE.NONE, nameof(XVfoToneType));
         public ViewModel<string> XVfoToneTypeName { get; } = new(nameof(XVfoToneTypeName));
         public ViewModel<int> XVfoCTCSS { get; } = new(0, nameof(XVfoCTCSS), true);
@@ -274,6 +278,7 @@ namespace QuanshengDock.Data
             XVfoStepName.SetConverter(() => Defines.StepNames[XVfoStep.Value], XVfoStep);
             XVfoBandwidthName.SetConverter(() => XVfoBandwidth.Value.ToString(), XVfoBandwidth);
             XVfoRxHz.SetConverter(() => ((int)Math.Round(XVfoRxFreq.Value * 100000.0) % 100).ToString("D2"), XVfoRxFreq);
+            RFGainBrush.SetConverter(() => new SolidColorBrush(RFGainOn.Value ? Colors.LimeGreen : Colors.DarkSlateGray), RFGainOn);
             OpenSquelchBrush.SetConverter(() => new SolidColorBrush(OpenSquelch.Value ? Colors.LimeGreen : Colors.DarkSlateGray), OpenSquelch);
             DTMFSendBrush.SetConverter(() => new SolidColorBrush(DTMFSend.Value ? Colors.LimeGreen : Colors.DarkSlateGray), DTMFSend);
             TNCModeBrush.SetConverter(() => new SolidColorBrush(TNCMode.Value ? Colors.LimeGreen : Colors.DarkSlateGray), TNCMode);

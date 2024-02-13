@@ -79,7 +79,8 @@ namespace QuanshengDock.ExtendedVFO
                 BK4819.SetFrequency(d);
                 if (txisRX.Value)
                     txFreq.Value = d;
-                selected.Value = VFOPreset.CurrentVFO.LastPreset = string.Empty;
+                if(!BK4819.Transmitting)
+                    selected.Value = VFOPreset.CurrentVFO.LastPreset = string.Empty;
                 if (quantizing.Value && !qskip)
                 {
                     qskip = true;

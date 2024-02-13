@@ -62,10 +62,25 @@ namespace QuanshengDock.ExtendedVFO
         private static readonly ViewModel<bool> watch = VM.Get<bool>("XWatch");
         private static readonly ViewModel<string> dtmfLog = VM.Get<string>("DTMFLog");
         private static readonly ViewModel<string> scanMonitoring = VM.Get<string>("ScanMonitoring");
+        private static readonly ViewModel<double> rfGain = VM.Get<double>("RFGain");
+        private static readonly ViewModel<string> rfGainName = VM.Get<string>("RFGainName");
+        private static readonly ViewModel<bool> rfGainOn = VM.Get<bool>("RFGainOn");
 
         private static bool TxMute => txMute || vfoMode.Value == 1 || vfoMode.Value >= 100;
 
-        private static ushort reg33, reg30 = 0, rssi, reg7e, reg31, reg69, reg6a, reg65, reg0c;
+        private static ushort reg33;
+        private static ushort reg30 = 0;
+        private static ushort rssi;
+        private static ushort reg7e;
+        private static ushort reg31;
+        private static ushort reg69;
+        private static ushort reg6a;
+        private static ushort reg65;
+        private static ushort reg0c;
+        private static readonly ushort reg10 = 0x7a;
+        private static readonly ushort reg11 = 0x27b;
+        private static readonly ushort reg12 = 0x37b;
+        private static readonly ushort reg13 = 0x3be;
         private static uint currentFreq;
         public static event EventHandler? Aquired;
         private const int hysteresis = 2;
@@ -76,6 +91,8 @@ namespace QuanshengDock.ExtendedVFO
         private static int rxTone = 0;
         private static bool skipDrop = false, skipChange = false, monitoring = false, scanActive = false;
         private static int dtmfA, dtmfB;
+
+        public static bool Transmitting => transmit;
 
         public static bool Ready { get; private set; } = false;
 
@@ -153,6 +170,7 @@ namespace QuanshengDock.ExtendedVFO
             Comms.SendHello();
             Modulation();
             Bandwidth();
+            oldGi = -1;
             SendCommand(Packet.ReadRegisters, (ushort)7, 
                 (ushort)0x38,
                 (ushort)0x39,
@@ -161,6 +179,35 @@ namespace QuanshengDock.ExtendedVFO
                 (ushort)0x30,
                 (ushort)0x31,
                 (ushort)0);
+        }
+
+        private static int oldGi = -1;
+        public static void SetRFGain(bool force)
+        {
+            if(rfGainOn.Value)
+            {
+                int gi = (int)rfGain.Value;
+                if (gi != oldGi || force)
+                {
+                    var (reg, gain) = FixAM.GainTable[gi];
+                    rfGainName.Value = $"{gain}dB";
+                    oldGi = gi;
+                    SendCommand(Packet.WriteRegisters, (ushort)4,
+                        (ushort)0x10, (ushort)reg,
+                        (ushort)0x11, (ushort)reg,
+                        (ushort)0x12, (ushort)reg,
+                        (ushort)0x13, (ushort)reg);
+                }
+            }
+            else
+            {
+                rfGainName.Value = "AGC";
+                SendCommand(Packet.WriteRegisters, (ushort)4,
+                    (ushort)0x10, reg10,
+                    (ushort)0x11, reg11,
+                    (ushort)0x12, reg12,
+                    (ushort)0x13, reg13);
+            }
         }
 
         public static void Bandwidth()
@@ -174,7 +221,8 @@ namespace QuanshengDock.ExtendedVFO
             ushort vfom = (ushort)(vfoMode.Value == 100 ? 2 : vfoMode.Value >= 101 ? 0 : vfoMode.Value);
             SendCommand(0x872, (ushort)1, vfom);
             SendCommand(Packet.WriteRegisters, (ushort)1, (ushort)0x50, (ushort)(vfoMode.Value >= 100 ? 0xbb20 : 0x3b20));
-            SendCommand(Packet.WriteRegisters, (ushort)1, (ushort)0x13, (ushort)0x03BE);
+            //SendCommand(Packet.WriteRegisters, (ushort)1, (ushort)0x13, (ushort)0x03BE);
+            SetRFGain(true);
         }
 
         public static void Release()
@@ -680,6 +728,7 @@ namespace QuanshengDock.ExtendedVFO
                     Mute();
                     SetCompander();
                     Radio.Invoke(VFOPreset.CurrentVFO.Recall);
+                    SetRFGain(true);
                     _ = Loop();
                     break;
                 case 0x02:

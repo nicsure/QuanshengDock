@@ -38,6 +38,8 @@ namespace QuanshengDock.UI
         private static readonly ViewModel<double> mid = VM.Get<double>("SpecMid");
         private static readonly ViewModel<double> step = VM.Get<double>("SpecStep");
         private static readonly ViewModel<double> steps = VM.Get<double>("SpecSteps");
+        //private static readonly ViewModel<double> rfGain = VM.Get<double>("RFGain");
+        private static readonly ViewModel<bool> rfGainOn = VM.Get<bool>("RFGainOn");
         private static readonly ViewModel<string> cursorFreq = VM.Get<string>("CursorFreq");
         private static readonly ViewModel<int> specStyle = VM.Get<int>("SpecStyle");
 
@@ -73,6 +75,9 @@ namespace QuanshengDock.UI
             {
                 switch (cmd)
                 {
+                    case "SetRFGain":
+                        BK4819.SetRFGain(false);
+                        break;
                     case "ApplyFont":
                         Comms.SendCommand(Packet.KeyPress, (ushort)13);
                         Thread.Sleep(10);
@@ -196,6 +201,10 @@ namespace QuanshengDock.UI
                 //case "TNC":
                 //   tncMode.Value = !tncMode.Value;
                 //    break;
+                case "RFGain":
+                    rfGainOn.Value = !rfGainOn.Value;
+                    BK4819.SetRFGain(true);
+                    break;
                 case "Messenger":
                     Messenger.Open();
                     break;

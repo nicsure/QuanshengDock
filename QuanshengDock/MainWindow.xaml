@@ -115,7 +115,7 @@
                 <RowDefinition Height="1*"/>
             </Grid.RowDefinitions>
             <CheckBox Name="Defocusser" Width="0" Height="0"/>
-            <TextBlock IsHitTestVisible="False" FontSize="12" Grid.ColumnSpan="4" Text="Quansheng Dock v0.32.11q" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,11"/>
+            <TextBlock IsHitTestVisible="False" FontSize="12" Grid.ColumnSpan="4" Opacity="0.7" Text="Quansheng Dock v0.32.12q" FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="70,0,0,4"/>
             <Grid Grid.ColumnSpan="4">
                 <Grid.ContextMenu>
                     <ContextMenu>
@@ -344,11 +344,32 @@
                         <RowDefinition Height="0.25*"/>
                         <RowDefinition Height="0.25*"/>
                         <RowDefinition Height="0.25*"/>
+                        <RowDefinition Height="0.25*"/>
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="1*"/>
                         <ColumnDefinition Width="3*"/>
                     </Grid.ColumnDefinitions>
+
+                    <Grid Grid.Column="1" Grid.Row="19">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="0.25*"/>
+                            <ColumnDefinition Width="1*"/>
+                        </Grid.ColumnDefinitions>
+                        <Frame Foreground="{Binding RFGainBrush.Value}" Tag="RFGain" FontSize="5"  Style="{StaticResource ControlButton}" Content="RF Gain" />
+                        <Frame Grid.Column="1" Style="{StaticResource RaisedBorder}" />
+                        <Viewbox Grid.Column="1">
+                            <Slider IsEnabled="{Binding RFGainOn.Value}" Margin="20,0,20,0" Opacity="0.5" Minimum="1" Maximum="42" Value="{Binding RFGain.Value}" Width="400">
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="ValueChanged">
+                                        <i:InvokeCommandAction Command="{Binding MouseCommand}" CommandParameter="SetRFGain"/>
+                                    </i:EventTrigger> 
+                                </i:Interaction.Triggers>
+                            </Slider>
+                        </Viewbox>
+                    </Grid>
+
+
                     <ui:RotaryEncoder x:Name="JogWheel" MouseWheel="JogWheel_MouseWheel" WheelBorderThickness="2" Sensitivity="0.25" Grid.Column="0" Grid.Row="1" Margin="5,5,10,5" WheelColor="#FF3F3F3F" NotchColor="#FF2B2B2B">
                         <ui:RotaryEncoder.NotchBorder>
                             <LinearGradientBrush EndPoint="1,1" StartPoint="0,0">
@@ -473,14 +494,8 @@
                         <Frame Tag="XWatch" FontSize="6" Grid.Column="0" Style="{StaticResource ControlButton}" Content="Watch" />
                         <Frame Tag="TXPowerX" FontSize="6" Grid.Column="1" Style="{StaticResource ControlButton}" Content="Power"/>
                     </Grid>
-                    <Grid Grid.Column="0" Grid.Row="10">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition/>
-                            <ColumnDefinition/>
-                        </Grid.ColumnDefinitions>
-                        <Frame Tag="Settings" FontSize="5" Grid.Column="1" Style="{StaticResource ControlButton}" Content="Settings" />
-                        <Frame Tag="ToggleXvfo" FontSize="5" Grid.Column="0" Style="{StaticResource ControlButton}" Content="Exit" />
-                    </Grid>
+                    <Frame Tag="Settings" FontSize="3.5" Grid.Row="10" Style="{StaticResource ControlButton}" Content="Settings" />
+                    <Frame Tag="ToggleXvfo" FontSize="3.5" Grid.Row="11" Style="{StaticResource ControlButton}" Content="Exit" />
                     <Border Grid.RowSpan="5" CornerRadius="30" Grid.Column="1" Grid.ColumnSpan="2" Background="{Binding LCDBackColor.Value.Brush}" BorderBrush="#FF575757" BorderThickness="1" Grid.Row="0" />
                     <Viewbox Grid.Column="1" Grid.ColumnSpan="2" Stretch="Uniform">
                         <Grid Margin="12,0,12,0">
@@ -522,6 +537,7 @@
                                 <ColumnDefinition Width="40"/>
                                 <ColumnDefinition Width="44"/>
                                 <ColumnDefinition Width="40"/>
+                                <ColumnDefinition Width="40"/>
                             </Grid.ColumnDefinitions>
                             <Grid.Resources>
                                 <Style TargetType="TextBlock">
@@ -536,6 +552,7 @@
                             <TextBlock Grid.Column="5" Opacity="0.6" Text="{Binding RXVfoToneName.Value}" Foreground="{Binding LCDForeColor.Value.Brush}"/>
                             <TextBlock Grid.Column="6" Opacity="0.6" Text="{Binding XMicGainPct.Value}" Foreground="{Binding LCDForeColor.Value.Brush}"/>
                             <TextBlock Grid.Column="7" Opacity="0.6" Text="{Binding XWatchName.Value}" Foreground="{Binding LCDForeColor.Value.Brush}"/>
+                            <TextBlock Grid.Column="8" Opacity="0.6" Text="{Binding RFGainName.Value}" Foreground="{Binding LCDForeColor.Value.Brush}"/>
                         </Grid>
                     </Viewbox>
                     <Viewbox Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2" HorizontalAlignment="Left" VerticalAlignment="Top">

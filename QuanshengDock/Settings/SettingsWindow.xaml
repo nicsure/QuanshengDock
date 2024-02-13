@@ -100,7 +100,7 @@
             <TextBlock Style="{StaticResource Label}" Grid.Column="0" Grid.Row="12" Text="LCD Font Adjust" />
 
             <TextBlock Style="{StaticResource Label}" HorizontalAlignment="Left" Grid.Column="0" Grid.Row="13" Grid.ColumnSpan="4" Margin="20,0,0,0">
-                v0.32.11q by -nicsure- 2024  
+                v0.32.12q by -nicsure- 2024  
                 <Hyperlink NavigateUri="https://www.youtube.com/nicsure" RequestNavigate="Hyperlink_RequestNavigate">
                     https://www.youtube.com/nicsure
                 </Hyperlink>

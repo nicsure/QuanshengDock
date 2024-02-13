@@ -13,6 +13,8 @@ namespace QuanshengDock.ExtendedVFO
         private static uint lastFreq;
         private static int lastRssi = 0, holdCounter = 0, gainTableIndex = 0;
 
+        public static (int reg, int gain)[] GainTable => gainTable;
+
         private static readonly (int reg, int gain)[] gainTable = new (int reg, int gain)[]
         {
             (0x03BE, -7),   //  0 .. 3 5 3 6 ..   0dB  -4dB  0dB  -3dB ..  -7dB original
