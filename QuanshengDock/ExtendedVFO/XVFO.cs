@@ -71,7 +71,7 @@ namespace QuanshengDock.ExtendedVFO
                 rxFreq.Value = qfreq / 100000.0;
         }
 
-        private static bool qskip = false;
+        //private static bool qskip = false;
         public static void SetFrequency(double d)
         {
             if (BK4819.Ready)
@@ -81,12 +81,12 @@ namespace QuanshengDock.ExtendedVFO
                     txFreq.Value = d;
                 if(!BK4819.Transmitting)
                     selected.Value = VFOPreset.CurrentVFO.LastPreset = string.Empty;
-                if (quantizing.Value && !qskip)
-                {
-                    qskip = true;
-                    Quantize();
-                    qskip = false;
-                }
+                //if (quantizing.Value && !qskip)
+                //{
+                //    qskip = true;
+                //    Quantize();
+                //    qskip = false;
+                //}
             }
         }
 
@@ -348,12 +348,14 @@ namespace QuanshengDock.ExtendedVFO
             int i = vfoStep.Value + dir;
             if (i >= Defines.StepValues.Length) i = 0;
             if (i < 0) i = Defines.StepValues.Length - 1;
-            vfoStep.Value = i;
+            SetStep(i);
         }
 
         public static void SetStep(int index)
         {
             vfoStep.Value = index.Clamp(0, Defines.StepValues.Length - 1);
+            if (quantizing.Value)
+                Quantize();
         }
 
         public static void ToggleBandwidth()
