@@ -105,6 +105,7 @@ Please take a look at the [Online Manual (see Wiki)](https://github.com/nicsure/
 * [Connection between radio and PC](https://github.com/nicsure/QuanshengDock/wiki/30-%E2%80%90-Connection-between-radio-and-PC)
 * [QS‐Dock program on PC](https://github.com/nicsure/QuanshengDock/wiki/40-%E2%80%90-QS%E2%80%90Dock-program-on-PC)
 * [Specific Functions explained](https://github.com/nicsure/QuanshengDock/wiki/50-%E2%80%90-Specific-Functions-explained)
+* [Integrating QD with other programs](https://github.com/nicsure/QuanshengDock/wiki/60-%E2%80%90-Integrating-QD-with-other-programs)
 * [Tips & Tricks and Known Issues](https://github.com/nicsure/QuanshengDock/wiki/70-%E2%80%90-Tips-&-Tricks-and-Known-Issues)
 * [Reviews on Youtube](https://github.com/nicsure/QuanshengDock/wiki/80-%E2%80%90-Reviews-on-Youtube)
 
