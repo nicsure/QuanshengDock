@@ -1,4 +1,5 @@
-﻿using System;
+﻿using QuanshengDock.User;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
@@ -16,6 +17,8 @@ namespace QuanshengDock
     {
         protected override void OnStartup(StartupEventArgs e)
         {
+            if (e.Args.Length > 0) 
+                UserFolder.CustomConfig = e.Args[0];
             CultureInfo customCulture = new("en-US");
             CultureInfo.DefaultThreadCurrentCulture = customCulture;
             CultureInfo.DefaultThreadCurrentUICulture = customCulture;

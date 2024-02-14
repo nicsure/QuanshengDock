@@ -14,6 +14,7 @@ namespace QuanshengDock.User
     {
         private static readonly string myDocuments = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
         private static readonly string appFolder = Path.Combine(myDocuments, "QuanshengDock");
+        public static string CustomConfig { get; set; } = string.Empty;
 
         static UserFolder()
         {
@@ -21,7 +22,12 @@ namespace QuanshengDock.User
                 Directory.CreateDirectory(appFolder);
         }
 
-        public static string File(string file) => Path.Combine(appFolder, file);
+        public static string File(string file)
+        {
+            if(CustomConfig.Length > 0 && file.Equals("app.config"))
+                return CustomConfig;
+            return Path.Combine(appFolder, file);
+        }
 
         public static string Dir => appFolder;
     }
