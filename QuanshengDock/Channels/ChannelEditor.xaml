@@ -99,6 +99,13 @@
             <CheckBox Name="Defocusser" Width="0" Height="0" />
             <TextBlock IsHitTestVisible="False" Grid.ColumnSpan="5" Text="Quansheng Channel Editor" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
             <DataGrid IsEnabled="{Binding EnableChanButtons.Value}" FontSize="{Binding ElementName=Magnify, Path=Value}" Name="ChannelGrid" VerticalGridLinesBrush="{x:Null}" Grid.Row="1" UnloadingRow="ChannelGrid_UnloadingRow" LoadingRow="ChannelGrid_LoadingRow" AutoGeneratingColumn="DataGrid_AutoGeneratingColumn" ItemsSource="{Binding Channels.Value}" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="White" SelectionChanged="ChannelGrid_SelectionChanged">
+                <DataGrid.Resources>
+                    <Style TargetType="ScrollBar">
+                        <Setter Property="Background" Value="{x:Null}"/>
+                        <Setter Property="BorderThickness" Value="0"/>
+                        <Setter Property="Opacity" Value="0.5"/>
+                    </Style>
+                </DataGrid.Resources>
                 <DataGrid.RowHeaderStyle>
                     <Style>
                         <Setter Property="Canvas.Background" Value="Transparent" />
