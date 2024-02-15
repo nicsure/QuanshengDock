@@ -1,4 +1,4 @@
-# **Quansheng Dock** V 0.32.13q
+# **Quansheng Dock** V 0.32.14q
 
 # Requires firmware 0.32.8x - No kidding.
 https://github.com/nicsure/quansheng-dock-fw/releases/tag/0.32.8x
@@ -50,7 +50,7 @@ https://github.com/nicsure/quansheng-dock-fw/releases/tag/0.32.8x
 
 **Download**
 : A pre-compiled release is available here
-https://github.com/nicsure/QuanshengDock/releases/tag/0.32.13q  
+https://github.com/nicsure/QuanshengDock/releases/tag/0.32.14q  
 : You also need .NET 6 runtime  
 https://dotnet.microsoft.com/en-us/download/dotnet/thank-you/sdk-6.0.418-windows-x64-installer
 
