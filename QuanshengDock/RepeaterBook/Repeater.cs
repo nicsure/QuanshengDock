@@ -27,6 +27,7 @@ namespace QuanshengDock.RepeaterBook
         private static readonly ViewModel<string> state = VM.Get<string>("BookState");
         private static readonly ViewModel<string> region = VM.Get<string>("BookRegion");
         private static readonly ViewModel<string> freq = VM.Get<string>("BookFrequency");
+        private static readonly ViewModel<string> version = VM.Get<string>("Version");
         private static readonly ViewModel<string> mode = VM.Get<string>("BookMode");
         private static readonly ViewModel<bool> idle = VM.Get<bool>("BookIdle");
         private static readonly ViewModel<string> message = VM.Get<string>("BookMessage");
@@ -104,7 +105,7 @@ namespace QuanshengDock.RepeaterBook
                 ShowMessage("Searching RepeaterBook");
                 try
                 {
-                    httpClient.DefaultRequestHeaders.UserAgent.ParseAdd($"(QuanshengDock {Radio.Version})");
+                    httpClient.DefaultRequestHeaders.UserAgent.ParseAdd($"(QuanshengDock {version.Value})");
                     HttpResponseMessage response = await httpClient.GetAsync((row ? apiUrl : usApiUrl) + get);
                     if (response.IsSuccessStatusCode)
                     {

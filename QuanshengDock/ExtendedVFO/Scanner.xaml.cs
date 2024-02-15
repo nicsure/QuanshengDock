@@ -106,7 +106,14 @@ namespace QuanshengDock.ExtendedVFO
                     Close();
                     break;
                 case Key.Space:
-                    BK4819.StopScan();
+                    if (BK4819.IsScanning)
+                        BK4819.PauseScan();
+                    break;
+                case Key.Enter:
+                    if (BK4819.IsScanning)
+                        BK4819.StopScan();
+                    else
+                        BK4819.StartScan();
                     break;
             }
         }

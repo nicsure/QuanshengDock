@@ -29,6 +29,9 @@ namespace QuanshengDock.Data
         private static readonly Context instance = new();
         private SavedDictionary? fontAdj = null;
 
+        public ViewModel<string> Version { get; } = new("0.32.14q", nameof(Version));
+        public ViewModel<string> Title { get; } = new(string.Empty, nameof(Title), true);
+        public ViewModel<string> TaskBar { get; } = new(string.Empty, nameof(TaskBar));
         public ViewModel<string> MessageInput { get; } = new(string.Empty, nameof(MessageInput));
         public ViewModel<RenderTargetBitmap> LcdImage { get; } = new(new(1024, 512, 96, 96, PixelFormats.Pbgra32), nameof(LcdImage));
         public ViewModel<RenderTargetBitmap> SpectrumImage { get; } = new(new(1024, 512, 96, 96, PixelFormats.Pbgra32), nameof(SpectrumImage));
@@ -52,7 +55,7 @@ namespace QuanshengDock.Data
         public ViewModel<ColorBrushPen> LEDColor { get; } = new(new(Colors.Black, 0), nameof(LEDColor));
         public ViewModel<string> AudioInDevice { get; } = new(string.Empty, nameof(AudioInDevice), true);
         public ViewModel<string> AudioOutDevice { get; } = new(string.Empty, nameof(AudioOutDevice), true);
-        public ViewModel<bool> Passthrough { get; } = new(true, nameof(Passthrough), true);
+        public ViewModel<bool> Passthrough { get; } = new(false, nameof(Passthrough), true);
         public ViewModel<double> SpecMid { get; } = new(144.0, nameof(SpecMid), true);
         public ViewModel<double> SpecStep { get; } = new(25.0, nameof(SpecStep), true);
         public ViewModel<double> SpecSteps { get; } = new(25.0, nameof(SpecSteps), true);
@@ -200,6 +203,7 @@ namespace QuanshengDock.Data
             SpecSteps.ForceUpdate++;
             WaterfallCol1.ForceUpdate++;
 
+            TaskBar.SetConverter(() => Title.Value.Length > 0 ? Title.Value : "QD", Title);
             XWatchName.SetConverter(() => XWatch.Value?" WR":string.Empty, XWatch);
             XScanLCD.SetConverter(() => BusyXVFO.Value ? "SCAN" : string.Empty, BusyXVFO);
             ScanSpeedName.SetConverter(() => $"Scan Speed {11 - ScanSpeed.Value}", ScanSpeed);
@@ -351,7 +355,7 @@ namespace QuanshengDock.Data
             LCDFont.Value = new(LCDFontName.Value);
             LCDBoldFont.Value = new(LCDFont.Value.FontFamily, FontStyles.Normal, FontWeights.Black, FontStretches.Normal);
             fontAdj = new(UserFolder.File($"{LCDFontName.Value}.font"));
-            FStretch.Value = fontAdj.GetValue(nameof(FStretch), "1.17").ToDouble();
+            FStretch.Value = fontAdj.GetValue(nameof(FStretch), "0.23").ToDouble();
             VSize.Value = fontAdj.GetValue(nameof(VSize), "1.0").ToDouble();
             HSize.Value = fontAdj.GetValue(nameof(HSize), "1.0").ToDouble();
             VOffset.Value = fontAdj.GetValue(nameof(VOffset), "0.0").ToDouble();

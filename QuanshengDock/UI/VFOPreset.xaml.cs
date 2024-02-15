@@ -55,8 +55,6 @@ namespace QuanshengDock.UI
         public static Dictionary<ulong, VFOPreset> Store { get; } = new();
         public static VFOPreset? MouseWasOver { get; private set; } = null;
         public static VFOPreset? MenuSelected { get; private set; } = null;
-
-
         public static VFOPreset[] VFOs { get; } = new VFOPreset[4];
         private static readonly SavedList saved = new(UserFolder.File("vfopresets.conf"));
         private static readonly SavedList savedvfos = new(UserFolder.File("vfos.conf"));
@@ -343,6 +341,8 @@ namespace QuanshengDock.UI
         public double WasRssi { get; set; } = 0;
         public int Index { get; set; } = 0;
         public VFOPreset Next { get; set; } = null!;
+        public int RangeCount { get; set; }
+        public int RangeTotal { get; set; }
         public bool IsScanning 
         {
             get => isScanning;
@@ -469,7 +469,9 @@ namespace QuanshengDock.UI
         private static void PNameChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             if (e.NewValue is string s && d is VFOPreset preset)
+            {
                 preset.isRange = s.StartsWith("RANGE");
+            }
         }
 
         public string RXFreq

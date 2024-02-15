@@ -99,12 +99,17 @@
             </TextBlock>
             <TextBlock Style="{StaticResource Label}" Grid.Column="0" Grid.Row="12" Text="LCD Font Adjust" />
 
-            <TextBlock Style="{StaticResource Label}" HorizontalAlignment="Left" Grid.Column="0" Grid.Row="13" Grid.ColumnSpan="4" Margin="20,0,0,0">
-                v0.32.12q by -nicsure- 2024  
+            <StackPanel Orientation="Horizontal" Grid.Column="0" Grid.Row="13" Grid.ColumnSpan="4" Margin="20,0,0,0">
+                <TextBlock Style="{StaticResource Label}" Text="{Binding Version.Value}"/>
+                <TextBlock Style="{StaticResource Label}">                                
+                by -nicsure- 2024  
                 <Hyperlink NavigateUri="https://www.youtube.com/nicsure" RequestNavigate="Hyperlink_RequestNavigate">
                     https://www.youtube.com/nicsure
                 </Hyperlink>
-            </TextBlock>
+                </TextBlock>
+            </StackPanel>
+            
+
 
 
             <ComboBox Grid.Column="1" Grid.Row="1" ItemsSource="{Binding ComPorts}" SelectedItem="{Binding ComPort.Value}"/>
@@ -160,6 +165,7 @@
             <TextBlock Style="{StaticResource Label}" Grid.Column="3" Grid.Row="5" Text="Analyzer Line" />
             <TextBlock Style="{StaticResource Label}" Grid.Column="3" Grid.Row="6" Text="Analyzer Line Thickness" />
             <TextBlock Style="{StaticResource Label}" Grid.Column="3" Grid.Row="7" Text="Analyzer Style" />
+            <TextBlock Style="{StaticResource Label}" Grid.Column="3" Grid.Row="8" Text="Window Title" />
             <TextBlock Style="{StaticResource Label}" Grid.Column="3" Grid.Row="9" Text="DCD PTT Port" />
             <TextBlock Style="{StaticResource Label}" Grid.Column="3" Grid.Row="10" Text="Callsign" />
             <TextBlock Style="{StaticResource Label}" Grid.Column="3" Grid.Row="11" Text="Waterfall/Heat Gradient" />
@@ -182,6 +188,7 @@
                 <ComboBoxItem Content="Line"/>
                 <ComboBoxItem Content="Heat"/>
             </ComboBox>
+            <TextBox KeyDown="TextBox_KeyDown" Grid.Row="8" Grid.Column="4" Text="{Binding Title.Value}"/>
             <TextBox KeyDown="TextBox_KeyDown" Grid.Row="9" Grid.Column="4" Text="{Binding PttComPort.Value}"/>
             <TextBox KeyDown="TextBox_KeyDown" Grid.Row="10" Grid.Column="4" Text="{Binding Callsign.Value}"/>
             <TextBox Visibility="Hidden" Name="RegBox" KeyDown="Register_KeyDown" Grid.Row="8" Grid.Column="4" Text="{Binding Register.Value}"/>

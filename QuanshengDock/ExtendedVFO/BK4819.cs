@@ -956,20 +956,43 @@ namespace QuanshengDock.ExtendedVFO
             monLCD.Value = string.Empty;
         }
 
+        private static bool paused = false;
+        public static void PauseScan()
+        {
+            if (!paused)
+            {
+                scanActive = false;
+                paused = true;
+                Radio.Invoke(() => scanMonitoring.Value = "PAUSED");
+            }
+            else
+            {
+                paused = false;
+                scanActive = true;
+                Radio.Invoke(() => scanMonitoring.Value = string.Empty);
+                _ = ResumeScan();
+            }
+        }
+
         private static bool block = false, startingScan = false;
         private static double rssipct;
         private static long monitorStart, monitorLastRx, watchdog;
         private static VFOPreset current = null!;
+        public static bool IsScanning => scanning.Value;
 
         public static void StartScan()
         {
             if (!scanning.Value)
             {
+                Radio.Invoke(() => scanMonitoring.Value = string.Empty);
+                paused = false;
+                if (selected.Value == null || selected.Value.Count == 0) return;
+                ignoreFreq.Clear();
                 VFOPreset.ScanVFO.Recall();
                 openSquelch.Value = false;
-                if (selected.Value == null || selected.Value.Count == 0) return;
                 scanning.Value = true;
-                scanImage.Value = new(selected.Value.Count * 8, 100, 96, 96, PixelFormats.Pbgra32);
+                //scanImage.Value = new(selected.Value.Count * 8, 100, 96, 96, PixelFormats.Pbgra32);
+                scanImage.Value = new(1008, 100, 96, 96, PixelFormats.Pbgra32);
                 int cnt = 0;
                 VFOPreset prev = selected.Value[^1];
                 foreach (VFOPreset preset in selected.Value)
@@ -984,7 +1007,9 @@ namespace QuanshengDock.ExtendedVFO
                     preset.Blacklisted = false;
                     prev = preset;
                 }
-                current = selected.Value[0];
+                int sidx = current != null ? selected.Value.IndexOf(current) : 0;
+                if (sidx < 0) sidx = 0;
+                current = selected.Value[sidx];
                 current.Recall();
                 _ = ResumeScan();
             }
@@ -1001,6 +1026,8 @@ namespace QuanshengDock.ExtendedVFO
             startingScan = false;
         }
 
+
+        private static readonly List<uint> ignoreFreq = new();
         private static void NextPreset()
         {
             if (!scanActive) return;
@@ -1012,6 +1039,7 @@ namespace QuanshengDock.ExtendedVFO
                 force = true;
                 current = ForceMonitor;
                 ForceMonitor = null;
+                ignoreFreq.Clear();
                 current.Blacklisted = false;
                 sq = true;
             }
@@ -1025,15 +1053,16 @@ namespace QuanshengDock.ExtendedVFO
             if (sq)
             {
                 current.WasRssi = rssipct;
-                if ((force || monitor.Value) && !current.Blacklisted)
+                if ((force || monitor.Value) && !current.Blacklisted && !ignoreFreq.Contains(currentFreq))
                 {
                     double crx = currentFreq / 100000.0;
                     Radio.Invoke(() => current.Recall(crx));
                     scanActive = false;
                     monitoring = true;
                     current.Blacklisted = true;
+                    ignoreFreq.Add(currentFreq);
                     monitorLastRx = monitorStart = DateTime.Now.Ticks;
-                    Radio.Invoke(() => scanMonitoring.Value = $"Monitoring {current.PName} {current.RX:F5}");
+                    Radio.Invoke(() => scanMonitoring.Value = $"Monitoring {current.PName} {(currentFreq / 100000.0):F5}");
                     DrawBar(current);
                     Unmute();
                     monLCD.Value = "MON";
@@ -1041,11 +1070,15 @@ namespace QuanshengDock.ExtendedVFO
                 }
             }
             else
+            {
                 current.Blacklisted = false;
+                ignoreFreq.Remove(currentFreq);
+            }
             var previous = current;
             double rx = -1;
             if (current.IsRange)
             {
+                current.RangeCount++;
                 rx = currentFreq / 100000.0;
                 rx += current.Step;
                 if (Math.Round(rx * 100000.0) > Math.Round(current.TX * 100000.0))
@@ -1056,7 +1089,10 @@ namespace QuanshengDock.ExtendedVFO
             else
             {
                 current = current.Next;
+                current.RangeCount = 0;
                 SetFrequency(current.RX);
+                if (current.IsRange)
+                    current.RangeTotal = 1 + (int)Pinch(Math.Abs(current.TX - current.RX) / current.Step);
             }
             if (scanSpeed.Value > 1) Thread.Sleep((scanSpeed.Value - 1) * 10);
             SendCommand(Packet.ReadRegisters, (ushort)2, (ushort)0x67, (ushort)0x65);
@@ -1073,16 +1109,30 @@ namespace QuanshengDock.ExtendedVFO
             });
         }
 
+        private static double Pinch(double d)
+        {
+            return (d % 1) >= 0.999 ? Math.Ceiling(d) : Math.Floor(d);
+        }
+
         private static void DrawBar(VFOPreset preset)
         {
             Radio.Invoke(() =>
             {
+                double barWidth = 1000.0 / selected.Value.Count;
                 DrawingVisual drawingVisual = new();
                 using (DrawingContext context = drawingVisual.RenderOpen())
                 {
-                    Rect rect = new(preset.Index * 8, 0, 8, 100);
+                    Rect rect;
+                    if (preset.IsRange)
+                    {
+                        double obw = barWidth;
+                        barWidth /= preset.RangeTotal;
+                        rect = new((preset.Index * obw) + (barWidth * preset.RangeCount), 0, barWidth + 0.1, 100);
+                    }
+                    else
+                        rect = new(preset.Index * barWidth, 0, barWidth + 0.1, 100);
                     context.DrawRectangle(bgCol.Value.Brush, null, rect);
-                    rect.Width = 7;
+                    rect.Width = barWidth * 0.9;
                     if (preset.WasRssi > 0)
                     {
                         rect.Y = 100 - preset.WasRssi;
@@ -1100,7 +1150,7 @@ namespace QuanshengDock.ExtendedVFO
             while (Ready)
             {
                 long now = DateTime.Now.Ticks;
-                if (monitoring)
+                if (monitoring && !paused)
                 {
                     double rxs = (now - monitorLastRx) / 10000000.0;
                     double tots = (now - monitorStart) / 10000000.0;

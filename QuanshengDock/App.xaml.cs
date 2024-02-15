@@ -18,7 +18,7 @@ namespace QuanshengDock
         protected override void OnStartup(StartupEventArgs e)
         {
             if (e.Args.Length > 0) 
-                UserFolder.CustomConfig = e.Args[0];
+                Instance.Name = e.Args[0];
             CultureInfo customCulture = new("en-US");
             CultureInfo.DefaultThreadCurrentCulture = customCulture;
             CultureInfo.DefaultThreadCurrentUICulture = customCulture;

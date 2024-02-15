@@ -16,7 +16,7 @@
         mc:Ignorable="d"
         x:Name="MyWindow"
         ResizeMode="CanResizeWithGrip"
-        Title="Quansheng Dock"
+        Title="{Binding TaskBar.Value}"
         Height="442" Width="1138"        
         WindowStyle="None"
         Topmost="{Binding OnTop.Value}"
@@ -115,7 +115,11 @@
                 <RowDefinition Height="1*"/>
             </Grid.RowDefinitions>
             <CheckBox Name="Defocusser" Width="0" Height="0"/>
-            <TextBlock IsHitTestVisible="False" FontSize="12" Grid.ColumnSpan="4" Opacity="0.7" Text="Quansheng Dock v0.32.12q" FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="70,0,0,4"/>
+            <StackPanel HorizontalAlignment="Left" Grid.ColumnSpan="4" Orientation="Horizontal" IsHitTestVisible="False" Opacity="0.7" Margin="60,10,0,0">
+                <TextBlock FontSize="12" Text="{Binding Title.Value}" FontWeight="Bold" VerticalAlignment="Top" />
+                <TextBlock FontSize="12" Text=" QD " FontWeight="Bold" VerticalAlignment="Top" />
+                <TextBlock FontSize="12" Text="{Binding Version.Value}" FontWeight="Bold" VerticalAlignment="Top" />
+            </StackPanel>
             <Grid Grid.ColumnSpan="4">
                 <Grid.ContextMenu>
                     <ContextMenu>
@@ -363,7 +367,7 @@
                                 <i:Interaction.Triggers>
                                     <i:EventTrigger EventName="ValueChanged">
                                         <i:InvokeCommandAction Command="{Binding MouseCommand}" CommandParameter="SetRFGain"/>
-                                    </i:EventTrigger> 
+                                    </i:EventTrigger>
                                 </i:Interaction.Triggers>
                             </Slider>
                         </Viewbox>

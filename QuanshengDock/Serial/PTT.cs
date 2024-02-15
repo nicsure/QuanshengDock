@@ -45,9 +45,9 @@ namespace QuanshengDock.Serial
                 if (Radio.IsXVFO)
                 {
                     if (ptt)
-                        XVFO.Ptt();
+                        Radio.Invoke(XVFO.Ptt);
                     else
-                        XVFO.PttUp();
+                        Radio.Invoke(XVFO.PttUp);
                 }
                 else
                 {

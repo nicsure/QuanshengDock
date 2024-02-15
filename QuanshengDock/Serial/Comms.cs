@@ -68,12 +68,16 @@ namespace QuanshengDock.Serial
         private static async Task OpenPortLoop()
         {
             SerialPort sp;
+            byte[] comtest = new byte[1] { 0 };
             while (true)
             {
                 try
                 {
                     sp = new SerialPort(comPort.Value, 38400, Parity.None, 8, StopBits.One);
                     sp.Open();
+                    sp.WriteTimeout = 100;
+                    sp.Write(comtest, 0, 1);
+                    sp.WriteTimeout = 10000;
                     port = sp;
                     SendHello();
                     await Task.Delay(50);
@@ -415,7 +419,7 @@ namespace QuanshengDock.Serial
             ind -= 8;
             data[2] = ind.Byte(0);
             data[3] = ind.Byte(1);
-            SerialPort? sp = port;
+            SerialPort? sp = port;            
             if (sp != null)
             {
                 lock (sp)

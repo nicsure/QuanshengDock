@@ -16,7 +16,6 @@ namespace QuanshengDock.General
 
     public static class Radio
     {
-        public const string Version = "0.31.1q";
         public static bool Closing { get; set; } = false;
         public static bool SpectrumVisible { get; set; } = false;
         public static bool AnalyzerMode { get; set; } = false;
