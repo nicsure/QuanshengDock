@@ -1,4 +1,4 @@
-# **Quansheng Dock** V 0.32.12q
+# **Quansheng Dock** V 0.32.13q
 
 # Requires firmware 0.32.8x - No kidding.
 https://github.com/nicsure/quansheng-dock-fw/releases/tag/0.32.8x
@@ -50,7 +50,7 @@ https://github.com/nicsure/quansheng-dock-fw/releases/tag/0.32.8x
 
 **Download**
 : A pre-compiled release is available here
-https://github.com/nicsure/QuanshengDock/releases/tag/0.32.12q  
+https://github.com/nicsure/QuanshengDock/releases/tag/0.32.13q  
 : You also need .NET 6 runtime  
 https://dotnet.microsoft.com/en-us/download/dotnet/thank-you/sdk-6.0.418-windows-x64-installer
 
@@ -105,6 +105,7 @@ Please take a look at the [Online Manual (see Wiki)](https://github.com/nicsure/
 * [Connection between radio and PC](https://github.com/nicsure/QuanshengDock/wiki/30-%E2%80%90-Connection-between-radio-and-PC)
 * [QS‐Dock program on PC](https://github.com/nicsure/QuanshengDock/wiki/40-%E2%80%90-QS%E2%80%90Dock-program-on-PC)
 * [Specific Functions explained](https://github.com/nicsure/QuanshengDock/wiki/50-%E2%80%90-Specific-Functions-explained)
+* [Integrating QD with other programs](https://github.com/nicsure/QuanshengDock/wiki/60-%E2%80%90-Integrating-QD-with-other-programs)
 * [Tips & Tricks and Known Issues](https://github.com/nicsure/QuanshengDock/wiki/70-%E2%80%90-Tips-&-Tricks-and-Known-Issues)
 * [Reviews on Youtube](https://github.com/nicsure/QuanshengDock/wiki/80-%E2%80%90-Reviews-on-Youtube)
 
