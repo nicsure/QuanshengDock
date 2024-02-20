@@ -31,6 +31,8 @@ namespace QuanshengDock.General
         public static bool UseCommas { get; } = (0.5).ToString()[1] == ',';
         public static int AudioOutID { get; set; } = -1;
         public static int AudioInID { get; set; } = -1;
+        public static string NowFF => DateTime.Now.ToString("ddMMMyyyy-HH_mm_ss");
+        public static string Now => DateTime.Now.ToString("dd/MMM/yyyy,HH:mm.ss");
 
         public static void Invoke(Action action)
         {

@@ -1,8 +1,10 @@
 ﻿using QuanshengDock.Data;
 using QuanshengDock.Serial;
 using QuanshengDock.UI;
+using QuanshengDock.View;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
@@ -24,11 +26,13 @@ namespace QuanshengDock.Settings
     /// </summary>
     public partial class SettingsWindow : Window
     {
+        private static readonly ViewModel<string> pass = VM.Get<string>("NPass");
         public SettingsWindow()
         {
             GC.Collect();
             DataContext = Context.Instance;
             InitializeComponent();
+            NPass.Password = pass.Value;
         }
 
         protected override void OnMouseLeftButtonDown(MouseButtonEventArgs e)
@@ -38,9 +42,17 @@ namespace QuanshengDock.Settings
                 this.DragMove();
         }
 
+        protected override void OnClosing(CancelEventArgs e)
+        {
+            base.OnClosing(e);
+            pass.Value = NPass.Password;
+        }
+
         private void TextBox_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Enter) Defocusser.Focus();
+            if(sender is PasswordBox pb)
+                pass.Value = pb.Password;
         }
         
         private void Register_KeyDown(object sender, KeyEventArgs e)

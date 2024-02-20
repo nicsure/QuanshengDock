@@ -29,7 +29,7 @@ namespace QuanshengDock.Data
         private static readonly Context instance = new();
         private SavedDictionary? fontAdj = null;
 
-        public ViewModel<string> Version { get; } = new("0.32.14q", nameof(Version));
+        public ViewModel<string> Version { get; } = new("0.32.16q", nameof(Version));
         public ViewModel<string> Title { get; } = new(string.Empty, nameof(Title), true);
         public ViewModel<string> TaskBar { get; } = new(string.Empty, nameof(TaskBar));
         public ViewModel<string> MessageInput { get; } = new(string.Empty, nameof(MessageInput));
@@ -89,7 +89,7 @@ namespace QuanshengDock.Data
         public ViewModel<double> WaterfallSpeed { get; } = new(2.0, nameof(WaterfallSpeed), true);
         public ViewModel<LinearGradientBrush> HeatBG { get; } = new(nameof(HeatBG));
         public ViewModel<LinearGradientBrush> SigXBG { get; } = new(nameof(HeatBG));
-        public ViewModel<double> AudioLatency { get; } = new(40.0, nameof(AudioLatency), true);
+        public ViewModel<double> AudioLatency { get; } = new(100.0, nameof(AudioLatency), true);
         public ViewModel<double> AudioBuffers { get; } = new(15.0, nameof(AudioBuffers), true);
         public ViewModel<bool> OnTop { get; } = new(false, nameof(OnTop));
         public ViewModel<double> XVfoRxFreq { get; } = new(1234.56789, nameof(XVfoRxFreq));
@@ -175,7 +175,7 @@ namespace QuanshengDock.Data
         public ViewModel<string> DTMFLog { get; } = new(string.Empty, nameof(DTMFLog));
         public ViewModel<double> SideTone { get; } = new(800.0, nameof(SideTone), true);
         public ViewModel<bool> Quantizing { get; } = new(true, nameof(Quantizing), true);
-        public static string[] ComPorts => SerialPort.GetPortNames();
+        public static string[] ComPorts => SerialPort.GetPortNames().Append("QDNH").ToArray();
         public static string[] AudioInDevices => AudioDevices.GetAudioInDevices();
         public static string[] AudioOutDevices => AudioDevices.GetAudioOutDevices();
         public ViewModel<string> UserButton1 { get; } = new("SQL", nameof(UserButton1), true);
@@ -184,6 +184,12 @@ namespace QuanshengDock.Data
         public ViewModel<bool> TNCMode { get; } = new(false, nameof(TNCMode));
         public ViewModel<Brush> TNCModeBrush { get; } = new(nameof(TNCModeBrush));
         public ViewModel<string> PttComPort { get; } = new("COM998", nameof(PttComPort), true);
+        public ViewModel<string> CatComPort { get; } = new("COM98", nameof(CatComPort), true);
+        public ViewModel<string> NHost { get; } = new("127.0.0.1", nameof(NHost), true);
+        public ViewModel<double> NPort { get; } = new(18822.0, nameof(NPort), true);
+        public ViewModel<string> NPass { get; } = new(string.Empty, nameof(NPass), true);
+        public ViewModel<bool> ScanLogger { get; } = new(false, nameof(ScanLogger), true);
+        public ViewModel<bool> Dummy { get; } = new(false, nameof(Dummy), true);
         public Context()
         {
             LCDFontName.PropertyChanged += LCDFontName_PropertyChanged;

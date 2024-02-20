@@ -4,14 +4,17 @@ using QuanshengDock.Channels;
 using QuanshengDock.General;
 using QuanshengDock.Serial;
 using QuanshengDock.UI;
+using QuanshengDock.User;
 using QuanshengDock.View;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Security.Cryptography;
 using System.Security.Cryptography.Pkcs;
 using System.Security.RightsManagement;
@@ -65,6 +68,8 @@ namespace QuanshengDock.ExtendedVFO
         private static readonly ViewModel<double> rfGain = VM.Get<double>("RFGain");
         private static readonly ViewModel<string> rfGainName = VM.Get<string>("RFGainName");
         private static readonly ViewModel<bool> rfGainOn = VM.Get<bool>("RFGainOn");
+        private static readonly ViewModel<bool> logger = VM.Get<bool>("ScanLogger");
+        private static readonly ViewModel<string> modeName = VM.Get<string>("XVfoModeName");
 
         private static bool TxMute => txMute || vfoMode.Value == 1 || vfoMode.Value >= 100;
 
@@ -93,6 +98,8 @@ namespace QuanshengDock.ExtendedVFO
         private static int dtmfA, dtmfB;
 
         public static bool Transmitting => transmit;
+
+        public static bool RxBusy => squelchOpen;
 
         public static bool Ready { get; private set; } = false;
 
@@ -642,6 +649,25 @@ namespace QuanshengDock.ExtendedVFO
             transmitPending = false;
         }
 
+        public static async Task Send1750()
+        {
+            if (transmit)
+            {
+                Sound.StartTone(Radio.AudioOutID, 1750);
+                Sound.SetToneVolume(true);
+                SendCommand(Packet.WriteRegisters, (ushort)2,
+                    (ushort)0x70, (ushort)0xbf00,
+                    (ushort)0x71, ScaleFreq(1750)
+                );
+                await Task.Delay(1000);
+                SendCommand(Packet.WriteRegisters, (ushort)1,
+                    (ushort)0x70, (ushort)0
+                );
+                Sound.SetToneVolume(false);
+                Sound.StopTone();
+            }
+        }
+
         private static int lastVfoMode = -1;
         private static bool dtmfOverlap = false;
         public static async Task SendDTMF(int toneIndex)
@@ -954,6 +980,8 @@ namespace QuanshengDock.ExtendedVFO
             scanActive = false;
             monitoring = false;
             monLCD.Value = string.Empty;
+            using(logFile)
+                logFile = null;
         }
 
         private static bool paused = false;
@@ -984,6 +1012,12 @@ namespace QuanshengDock.ExtendedVFO
         {
             if (!scanning.Value)
             {
+                logLine = string.Empty;
+                if (logger.Value)
+                {
+                    try { logFile = new(UserFolder.LogFile($"{Radio.NowFF}.csv"), FileMode.Create); }
+                    catch { logFile?.Dispose(); logFile = null; }
+                }
                 Radio.Invoke(() => scanMonitoring.Value = string.Empty);
                 paused = false;
                 if (selected.Value == null || selected.Value.Count == 0) return;
@@ -1017,6 +1051,13 @@ namespace QuanshengDock.ExtendedVFO
 
         public static async Task ResumeScan()
         {
+            if (logLine.Length > 0 && logFile != null)
+            {
+                var span = DateTime.Now - logTime;
+                logLine += $"{span.TotalSeconds:F1}s\r\n";
+                try { logFile.Write( Encoding.ASCII.GetBytes(logLine)); } catch { }
+                logLine = string.Empty;
+            }
             monitoring = false;
             startingScan = true;
             await Task.Delay(300);
@@ -1026,10 +1067,12 @@ namespace QuanshengDock.ExtendedVFO
             startingScan = false;
         }
 
-
+        private static FileStream? logFile = null;
         private static readonly List<uint> ignoreFreq = new();
+        private static string logLine = string.Empty;
+        private static DateTime logTime = DateTime.Now;
         private static void NextPreset()
-        {
+        {            
             if (!scanActive) return;
             Radio.Invoke(() => scanMonitoring.Value = string.Empty);
             bool sq;
@@ -1052,6 +1095,11 @@ namespace QuanshengDock.ExtendedVFO
             if (current.IsActive = sq) current.WasActive = true;
             if (sq)
             {
+                if(logFile != null)
+                {
+                    logLine = $"{Radio.Now},{(currentFreq / 100000.0):F5},{modeName.Value},{rssipct:F0}%,{current.SafeName},";
+                    logTime = DateTime.Now;
+                }
                 current.WasRssi = rssipct;
                 if ((force || monitor.Value) && !current.Blacklisted && !ignoreFreq.Contains(currentFreq))
                 {

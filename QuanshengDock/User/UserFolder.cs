@@ -12,15 +12,25 @@ namespace QuanshengDock.User
 
     public static class UserFolder
     {
+        private const string scanLogDir = "scanlogs";
+
         static UserFolder()
         {
+            string logdir = Path.Combine(Instance.Name, scanLogDir);
             if (!Directory.Exists(Instance.Name))
                 Directory.CreateDirectory(Instance.Name);
+            if (!Directory.Exists(logdir))
+                Directory.CreateDirectory(logdir);
         }
 
         public static string File(string file)
         {
             return Path.Combine(Instance.Name, file);
+        }
+
+        public static string LogFile(string file)
+        {
+            return Path.Combine(Instance.Name, scanLogDir, file);
         }
 
         public static string Dir => Instance.Name;

@@ -92,23 +92,21 @@
             </Grid.RowDefinitions>
             <TextBlock Foreground="White" Margin="0,0,0,10" IsHitTestVisible="False" Grid.ColumnSpan="3" FontSize="15" FontWeight="Bold" Text="XVFO Scanner" HorizontalAlignment="Center" VerticalAlignment="Center"/>
             <Frame MouseDown="Exit_MouseDown" Width="60" HorizontalAlignment="Right" Grid.Column="3" Style="{StaticResource ControlButton}" Content=" ❌ " />
-            <Border Visibility="{Binding VisibleWhenIdle.Value}" Style="{StaticResource Round}" Grid.Row="1" Grid.Column="0" Grid.RowSpan="2" />
-            <Border Visibility="{Binding VisibleWhenIdle.Value}" Style="{StaticResource Round}" Grid.Row="1" Grid.Column="1" Grid.RowSpan="2" />
-            <Border Style="{StaticResource Round}" Grid.Row="1" Grid.Column="2" Grid.RowSpan="2" />
-            <TextBlock Visibility="{Binding VisibleWhenIdle.Value}" Grid.Column="0" Grid.Row="1" Text="XVFO Presets" FontSize="15" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Bottom"/>
-            <TextBlock Visibility="{Binding VisibleWhenIdle.Value}" Grid.Column="1" Grid.Row="1" Text="Scan Lists" FontSize="15" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Bottom"/>
-            <TextBlock Grid.Column="2" Grid.Row="1" Text="Presets In List" FontSize="15" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Bottom"/>
+            <Border Background="{Binding LCDBackColor.Value.Brush}" Visibility="{Binding VisibleWhenIdle.Value}" Style="{StaticResource Round}" Grid.Row="1" Grid.Column="0" Grid.RowSpan="2" />
+            <Border Background="{Binding LCDBackColor.Value.Brush}" Visibility="{Binding VisibleWhenIdle.Value}" Style="{StaticResource Round}" Grid.Row="1" Grid.Column="1" Grid.RowSpan="2" />
+            <Border Background="{Binding LCDBackColor.Value.Brush}" Style="{StaticResource Round}" Grid.Row="1" Grid.Column="2" Grid.RowSpan="2" />
+            <TextBlock Foreground="{Binding LCDForeColor.Value.Brush}" Visibility="{Binding VisibleWhenIdle.Value}" Grid.Column="0" Grid.Row="1" Text="XVFO Presets" FontSize="15" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Bottom"/>
+            <TextBlock Foreground="{Binding LCDForeColor.Value.Brush}" Visibility="{Binding VisibleWhenIdle.Value}" Grid.Column="1" Grid.Row="1" Text="Scan Lists" FontSize="15" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Bottom"/>
+            <TextBlock Foreground="{Binding LCDForeColor.Value.Brush}" Grid.Column="2" Grid.Row="1" Text="Presets In List" FontSize="15" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Bottom"/>
             <Viewbox Visibility="{Binding VisibleWhenIdle.Value}" Grid.Row="2" Grid.Column="0" Stretch="Fill">
                 <Border Width="300" Height="300" Padding="6,6,6,6">
-                    <ListBox  Name="Presets" ItemsSource="{Binding VFOPresets.Value}" SelectionMode="Extended" SelectionChanged="Presets_SelectionChanged">
+                    <ListBox Foreground="{Binding LCDForeColor.Value.Brush}" Background="{Binding LCDBackColor.Value.Brush}" Name="Presets" ItemsSource="{Binding VFOPresets.Value}" SelectionMode="Extended" SelectionChanged="Presets_SelectionChanged">
                         <ListBox.Resources>
                             <Style TargetType="Border">
-                                <Setter Property="Background" Value="Black"/>
                                 <Setter Property="BorderBrush" Value="{x:Null}"/>
                                 <Setter Property="BorderThickness" Value="0"/>
                             </Style>
                             <Style TargetType="ScrollViewer">
-                                <Setter Property="Background" Value="Black"/>
                                 <Setter Property="BorderBrush" Value="{x:Null}"/>
                                 <Setter Property="IsEnabled" Value="True"/>
                             </Style>
@@ -123,10 +121,9 @@
             </Viewbox>
             <Viewbox Visibility="{Binding VisibleWhenIdle.Value}" Grid.Row="2" Grid.Column="1" Stretch="Fill">
                 <Border Width="300" Height="300" Margin="10,0,10,0" Padding="6,6,6,6">
-                    <ListBox FontSize="17" Name="Lists" ItemsSource="{Binding ScanLists.Value}" SelectionChanged="Lists_SelectionChanged">
+                    <ListBox Foreground="{Binding LCDForeColor.Value.Brush}" Background="{Binding LCDBackColor.Value.Brush}" FontSize="17" Name="Lists" ItemsSource="{Binding ScanLists.Value}" SelectionChanged="Lists_SelectionChanged">
                         <ListBox.Resources>
                             <Style TargetType="ScrollViewer">
-                                <Setter Property="Background" Value="Black"/>
                                 <Setter Property="BorderBrush" Value="{x:Null}"/>
                             </Style>
                         </ListBox.Resources>
@@ -135,7 +132,13 @@
             </Viewbox>
             <Viewbox Grid.Row="2" Grid.Column="2" Stretch="Fill">
                 <Border Padding="6,6,6,6" Width="300" Height="300" >
-                    <ListView Name="InList" ItemsSource="{Binding SelectedScanList.Value}" SelectionMode="Extended" SelectionChanged="InList_SelectionChanged">
+                    <ListView Background="{Binding LCDBackColor.Value.Brush}" Foreground="{Binding LCDForeColor.Value.Brush}" Name="InList" ItemsSource="{Binding SelectedScanList.Value}" SelectionMode="Extended" SelectionChanged="InList_SelectionChanged">
+                        <ListView.ContextMenu>
+                            <ContextMenu>
+                                <MenuItem Header="Move Up" Command="{Binding ScanLists}" CommandParameter="MoveUp"/>
+                                <MenuItem Header="Move Down" Command="{Binding ScanLists}" CommandParameter="MoveDown"/>
+                            </ContextMenu>
+                        </ListView.ContextMenu>
                         <ListView.ItemContainerStyle>
                             <Style TargetType="ListViewItem">
                                 <Setter Property="Background" Value="{Binding BG}" />

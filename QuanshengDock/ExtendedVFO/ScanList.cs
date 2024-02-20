@@ -141,6 +141,40 @@ namespace QuanshengDock.ExtendedVFO
                         }
                         selected.Value = null!;
                         break;
+                    case "MoveListUp":
+                        foreach (var slist in scanlists.Value.ToArray())
+                        {
+                            if (slist.IsSelected)
+                            {
+                                int i = scanlists.Value.IndexOf(slist);
+                                if (i <= 0)
+                                    break;
+                                else
+                                {
+                                    var temp = scanlists.Value[i];
+                                    scanlists.Value[i] = scanlists.Value[i - 1];
+                                    scanlists.Value[i - 1] = temp;
+                                }
+                            }
+                        }
+                        break;
+                    case "MoveListDown":
+                        foreach (var slist in scanlists.Value.Reverse().ToArray())
+                        {
+                            if (slist.IsSelected)
+                            {
+                                int i = scanlists.Value.IndexOf(slist);
+                                if (i >= scanlists.Value.Count - 1 || i < 0)
+                                    break;
+                                else
+                                {
+                                    var temp = scanlists.Value[i];
+                                    scanlists.Value[i] = scanlists.Value[i + 1];
+                                    scanlists.Value[i + 1] = temp;
+                                }
+                            }
+                        }
+                        break;
                     case "New":
                         string? name = Radio.Prompt("Enter name of new scan list.", false);
                         if (name != null)
@@ -168,6 +202,41 @@ namespace QuanshengDock.ExtendedVFO
                             }
                         }
                         break;
+                    case "MoveUp":
+                        foreach (var preset in selected.Value.ToArray())
+                        {
+                            if (preset.IsSelectedInList)
+                            {
+                                int i = selected.Value.IndexOf(preset);
+                                if (i <= 0) 
+                                    break;
+                                else
+                                {
+                                    var temp = selected.Value[i];
+                                    selected.Value[i] = selected.Value[i - 1];
+                                    selected.Value[i - 1] = temp;
+                                }
+                            }
+                        }
+                        break;
+                    case "MoveDown":
+                        foreach (var preset in selected.Value.Reverse().ToArray())
+                        {
+                            if (preset.IsSelectedInList)
+                            {
+                                int i = selected.Value.IndexOf(preset);
+                                if (i >= selected.Value.Count - 1 || i < 0)
+                                    break;
+                                else
+                                {
+                                    var temp = selected.Value[i];
+                                    selected.Value[i] = selected.Value[i + 1];
+                                    selected.Value[i + 1] = temp;
+                                }
+                            }
+                        }
+                        break;
+
                     default:
                         break;
                 }

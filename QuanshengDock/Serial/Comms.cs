@@ -15,6 +15,7 @@ using System.IO.Ports;
 using System.Linq;
 using System.Media;
 using System.Net.NetworkInformation;
+using System.Net.Sockets;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -33,9 +34,14 @@ namespace QuanshengDock.Serial
 
         private static readonly ViewModel<ColorBrushPen> ledColor = VM.Get<ColorBrushPen>("LEDColor");
         private static readonly ViewModel<string> comPort = VM.Get<string>("ComPort");
+        private static readonly ViewModel<string> nhost = VM.Get<string>("NHost");
+        private static readonly ViewModel<double> nport = VM.Get<double>("NPort");
         private static readonly byte[] xor_array = { 0x16, 0x6c, 0x14, 0xe6, 0x2e, 0x91, 0x0d, 0x40, 0x21, 0x35, 0xd5, 0x40, 0x13, 0x03, 0xe9, 0x80 };
         private static uint timeStamp = 0;
         private static SerialPort? port = null;
+        private static TcpClient? client = null;
+
+        public static TcpClient? QDNHClient => client;
 
         static Comms()
         {
@@ -47,6 +53,10 @@ namespace QuanshengDock.Serial
         public static void Close()
         {
             try { port?.Close(); } catch { }
+            using (client)
+            {
+                try { client?.Close(); } catch { }
+            }
         }
 
         private static byte Crypt(int byt, int xori) => (byte)(byt ^ xor_array[xori & 15]);
@@ -65,33 +75,52 @@ namespace QuanshengDock.Serial
             return crc;
         }
 
+
         private static async Task OpenPortLoop()
         {
-            SerialPort sp;
+            SerialPort? sp = null;
+            TcpClient? tcp = null;
             byte[] comtest = new byte[1] { 0 };
             while (true)
             {
+                QDNH.Stop(false);
                 try
                 {
-                    sp = new SerialPort(comPort.Value, 38400, Parity.None, 8, StopBits.One);
-                    sp.Open();
-                    sp.WriteTimeout = 100;
-                    sp.Write(comtest, 0, 1);
-                    sp.WriteTimeout = 10000;
-                    port = sp;
-                    SendHello();
-                    await Task.Delay(50);
-                    SendCommand(Packet.KeyPress, (ushort)13);
-                    await Task.Delay(50);
-                    SendCommand(Packet.KeyPress, (ushort)19);
+                    if (comPort.Value.Equals("QDNH"))
+                    {
+                        int portNum = 1 + (int)nport.Value;
+                        tcp = new TcpClient();
+                        await tcp.ConnectAsync(nhost.Value, portNum);
+                        using var temp = Task.Run(() => QDNH.Authenticate(tcp));
+                        await temp;
+                        client = tcp;
+                        port = null;
+                    }
+                    else
+                    {
+                        sp = new SerialPort(comPort.Value, 38400, Parity.None, 8, StopBits.One);
+                        sp.Open();
+                        sp.WriteTimeout = 100;
+                        sp.Write(comtest, 0, 1);
+                        sp.WriteTimeout = 10000;
+                        port = sp;
+                        tcp = null;
+                    }
                 }
                 catch
                 {
                     await Task.Delay(1000);
                     continue;
                 }
+                if (comPort.Value.Equals("QDNH")) QDNH.Start();
+                SendHello();
+                await Task.Delay(50);
+                SendCommand(Packet.KeyPress, (ushort)13);
+                await Task.Delay(50);
+                SendCommand(Packet.KeyPress, (ushort)19);
                 await Task.Run(ListenLoop);
-                try { sp.Close(); } catch { }
+                try { sp?.Close(); } catch { }
+                try { tcp?.Close(); } catch { }
             }
         }
 
@@ -108,7 +137,11 @@ namespace QuanshengDock.Serial
         private static int NextByte()
         {
             int b;
-            try { b = port?.ReadByte() ?? -1; } catch { b = -1; }
+            try
+            {
+                b = port != null ? port.ReadByte() : client != null ? client.GetStream().ReadByte() : -1;
+            }
+            catch { b = -1; }
             return b;
         }
 
@@ -419,12 +452,29 @@ namespace QuanshengDock.Serial
             ind -= 8;
             data[2] = ind.Byte(0);
             data[3] = ind.Byte(1);
-            SerialPort? sp = port;            
+            TcpClient? tcp = client;
+            SerialPort? sp = port;
             if (sp != null)
             {
                 lock (sp)
                 {
-                    try { sp.Write(data, 0, ind + 8); } catch { }
+                    try
+                    {
+                        sp.Write(data, 0, ind + 8);
+                    }
+                    catch { }
+                }
+            }
+            else if (tcp != null)
+            {
+                lock (tcp)
+                {
+                    try
+                    {
+                        tcp.GetStream().Write(data, 0, ind + 8);
+                        tcp.GetStream().Flush();
+                    }
+                    catch { }
                 }
             }
         }

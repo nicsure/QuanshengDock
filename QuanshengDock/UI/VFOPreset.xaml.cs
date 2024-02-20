@@ -52,6 +52,7 @@ namespace QuanshengDock.UI
         private static readonly ViewModel<string> selected = VM.Get<string>("SelectedPreset");
         private static readonly ViewModel<string> xvfolcd = VM.Get<string>("XVFOLCD");
         private static readonly ViewModel<bool> lockPower = VM.Get<bool>("LockPower");
+        private static readonly ViewModel<ColorBrushPen> lcdBG = VM.Get<ColorBrushPen>("LCDBackColor");
         public static Dictionary<ulong, VFOPreset> Store { get; } = new();
         public static VFOPreset? MouseWasOver { get; private set; } = null;
         public static VFOPreset? MenuSelected { get; private set; } = null;
@@ -317,7 +318,7 @@ namespace QuanshengDock.UI
         private bool tx2rx, isRange;
         private ulong id = 0;
 
-        private Brush bg = Brushes.Black;
+        private Brush bg = lcdBG.Value.Brush;
         private bool isScanning = false, isActive = false, wasActive = false;
 
         public XTONETYPE RxToneType => (XTONETYPE)rxtone;
@@ -343,6 +344,7 @@ namespace QuanshengDock.UI
         public VFOPreset Next { get; set; } = null!;
         public int RangeCount { get; set; }
         public int RangeTotal { get; set; }
+        public string Mode => $"{mode}";
         public bool IsScanning 
         {
             get => isScanning;
@@ -375,7 +377,7 @@ namespace QuanshengDock.UI
 
         protected virtual void OnPropertyChanged()
         {
-            bg = isScanning ? scanBrush : isActive ? Brushes.Maroon : wasActive ? Brushes.DarkBlue : Brushes.Black;
+            bg = isScanning ? scanBrush : isActive ? Brushes.Maroon : wasActive ? Brushes.DarkBlue : lcdBG.Value.Brush;
             (_ = PropertyChanged)?.Invoke(this, args);
         }
 
@@ -457,6 +459,7 @@ namespace QuanshengDock.UI
         }
 
         public override string ToString() => PName;
+        public string SafeName { get; private set; } = string.Empty;
 
         public string PName
         {
@@ -471,6 +474,7 @@ namespace QuanshengDock.UI
             if (e.NewValue is string s && d is VFOPreset preset)
             {
                 preset.isRange = s.StartsWith("RANGE");
+                preset.SafeName = (string)e.NewValue;
             }
         }
 

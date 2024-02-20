@@ -3,6 +3,7 @@ using QuanshengDock.Data;
 using QuanshengDock.ExtendedVFO;
 using QuanshengDock.General;
 using QuanshengDock.UI;
+using QuanshengDock.User;
 using QuanshengDock.View;
 using System;
 using System.Collections.Generic;
@@ -43,6 +44,7 @@ namespace QuanshengDock
         private readonly ViewModel<bool> scanning;
         private readonly ViewModel<double> rxFreq;
         private readonly ViewModel<int> xvfoStep;
+        private readonly ViewModel<bool> openSquelch;
         private Key lastKey = Key.None;
         private double mouseOverDigit = 0;
 
@@ -50,6 +52,7 @@ namespace QuanshengDock
         {
             Instance = this;
             DataContext = Context.Instance;
+            openSquelch = VM.Get<bool>("OpenSquelch");
             command = VM.Get("MouseCommand");
             txLockButtonLocked = VM.Get<bool>("TxLockButtonLocked");
             scanning = VM.Get<bool>("BusyXVFO");
@@ -62,7 +65,7 @@ namespace QuanshengDock
                 ToggleSpectrum();
                 Width = 400;
                 XvfoCol.Width= new(0, GridUnitType.Star);
-            };            
+            };
         }
 
         public static Point MouseRelative()
@@ -329,6 +332,25 @@ namespace QuanshengDock
                                     break;
                                 case Key.Space:
                                     XVFO.Ptt();
+                                    break;
+                                case Key.S:
+                                    XVFO.ToggleAutoSquelch();
+                                    break;
+                                case Key.Q:
+                                    openSquelch.Value = !openSquelch.Value;
+                                    break;
+                                case Key.P:
+                                    XVFO.ToggleTxPower();
+                                    break;
+                                case Key.F:
+                                    XVFO.ToggleMode(0);
+                                    XVFO.ToggleBandwidthWN();
+                                    break;
+                                case Key.G:
+                                    XVFO.ToggleMicGain(0);
+                                    break;
+                                case Key.T:
+                                    _ = BK4819.Send1750();
                                     break;
                             }
                         }

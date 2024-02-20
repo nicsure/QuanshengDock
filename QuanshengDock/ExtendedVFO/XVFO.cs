@@ -328,18 +328,23 @@ namespace QuanshengDock.ExtendedVFO
                 txFreq.Value = rxFreq.Value;
         }
 
-        public static void ToggleMode()
+        public static void ToggleMode(int mode = -1)
         {
-            vfoMode.Value = vfoMode.Value switch
+            if (mode == -1)
             {
-                0 => 1,
-                1 => 2,
-                2 => 3,
-                3 => 4,
-                4 => 100,
-                100 => 101,
-                _ => 0,
-            };
+                vfoMode.Value = vfoMode.Value switch
+                {
+                    0 => 1,
+                    1 => 2,
+                    2 => 3,
+                    3 => 4,
+                    4 => 100,
+                    100 => 101,
+                    _ => 0,
+                };
+            }
+            else
+                vfoMode.Value = (ushort)mode;
             BK4819.Modulation();
         }
 
@@ -366,6 +371,16 @@ namespace QuanshengDock.ExtendedVFO
                 XBANDWIDTH.NRRW => XBANDWIDTH.THIN,
                 XBANDWIDTH.THIN => XBANDWIDTH.UWIDE,
                 XBANDWIDTH.UWIDE => XBANDWIDTH.ULOW,
+                _ => XBANDWIDTH.WIDE
+            };
+            BK4819.Bandwidth();
+        }
+
+        public static void ToggleBandwidthWN()
+        {
+            bandwidth.Value = bandwidth.Value switch
+            {
+                XBANDWIDTH.WIDE => XBANDWIDTH.NRRW,
                 _ => XBANDWIDTH.WIDE
             };
             BK4819.Bandwidth();
