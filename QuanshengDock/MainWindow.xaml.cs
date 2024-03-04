@@ -278,6 +278,9 @@ namespace QuanshengDock
                         {
                             switch (key)
                             {
+                                case Key.V:
+                                    XVFO.ToggleVOX();
+                                    break;
                                 case Key.A:
                                 case Key.B:
                                 case Key.C:

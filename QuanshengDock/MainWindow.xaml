@@ -426,7 +426,14 @@
                             </ContextMenu>
                         </ui:RotaryEncoder.ContextMenu>
                     </ui:RotaryEncoder>
-                    <Frame Tag="ModeX" FontSize="3" Grid.Column="0" Grid.Row="2" Style="{StaticResource ControlButton}" Content="Mode" />
+                    <Grid Grid.Column="0" Grid.Row="2">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <Frame Tag="VOX" Foreground="{Binding VOXBrush.Value}" FontSize="8" Style="{StaticResource ControlButton}" Content="VOX" />
+                        <Frame Tag="ModeX" FontSize="6" Grid.Column="1" Style="{StaticResource ControlButton}" Content="Mode" />
+                    </Grid>
                     <Grid Grid.Column="0" Grid.Row="0">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition />

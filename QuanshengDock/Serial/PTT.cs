@@ -1,10 +1,12 @@
 ﻿using Microsoft.Win32;
 using QuanshengDock.ExtendedVFO;
 using QuanshengDock.General;
+using QuanshengDock.UI;
 using QuanshengDock.View;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Drawing;
 using System.IO.Ports;
 using System.Linq;
 using System.Text;
@@ -23,6 +25,12 @@ namespace QuanshengDock.Serial
         private static readonly ViewModel<bool> txisRX = VM.Get<bool>("TXisRX");
         private static readonly ViewModel<double> txFreq = VM.Get<double>("XVfoTxFreq");
         private static readonly ViewModel<double> rxFreq = VM.Get<double>("XVfoRxFreq");
+        private static readonly ViewModel<int> ctcss = VM.Get<int>("XVfoCTCSS");
+        private static readonly ViewModel<int> dcs = VM.Get<int>("XVfoDCS");
+        private static readonly ViewModel<XTONETYPE> toneType = VM.Get<XTONETYPE>("XVfoToneType");
+        private static readonly ViewModel<int> rxCtcss = VM.Get<int>("RXVfoCTCSS");
+        private static readonly ViewModel<int> rxDcs = VM.Get<int>("RXVfoDCS");
+        private static readonly ViewModel<XTONETYPE> rxToneType = VM.Get<XTONETYPE>("RXVfoToneType");
         //private static readonly ViewModel<XTONETYPE> tonetype = VM.Get<XTONETYPE>("XVfoToneType");
         //private static readonly ViewModel<int> ctcss = VM.Get<int>("XVfoCTCSS");
         //private static readonly ViewModel<int> dcs = VM.Get<int>("XVfoDCS");
@@ -88,19 +96,51 @@ namespace QuanshengDock.Serial
                         }
                         string cmd = s[..2];
                         string prm = s[2..];
+                        int i;
+                        double d;
+                        uint fi;
                         switch (cmd.ToUpper())
                         {
+                            case "AB":
+                                txisRX.Value = false;
+                                break;
+                            case "BA":
+                                rxFreq.Value = txFreq.Value;
+                                txisRX.Value = false;
+                                break;
+                            case "BD":
+                                d = rxFreq.Value;
+                                d /= 100;
+                                d -= 1;
+                                d *= 1000;
+                                rxFreq.Value = d.Clamp(0.1, 1300);
+                                break;
+                            case "BS":
+                                if (uint.TryParse(prm, out  fi))
+                                    rxFreq.Value = (fi * 100.0).Clamp(0.1, 1300);
+                                break;
+                            case "BU":
+                                d = rxFreq.Value;
+                                d /= 100;
+                                d += 1;
+                                d *= 1000;
+                                rxFreq.Value = d.Clamp(0.1, 1300);
+                                break;
+                            case "BY":
+                                if (prm.Length == 0)
+                                    Send($"{cmd}{(BK4819.RxBusy ? 1 : 0)}0;");
+                                break;
                             case "FB":                                
                             case "FA":
                                 {
                                     var vm = cmd.Equals("FA") ? rxFreq : txFreq;
                                     if (prm.Length > 0)
                                     {
-                                        if (uint.TryParse(prm, out uint fi))
+                                        if (uint.TryParse(prm, out fi))
                                         {
                                             if (vm == txFreq)
                                                 txisRX.Value = false;
-                                            double d = fi / 1000000.0;
+                                            d = fi / 1000000.0;
                                             vm.Value = d;
                                         }
                                     }
@@ -112,9 +152,85 @@ namespace QuanshengDock.Serial
                                     }
                                 }
                                 break;
-                            case "BY":
-                                if (prm.Length == 0)
-                                    Send($"{cmd}{(BK4819.RxBusy ? 1 : 0)}0;");
+                            case "CH":
+                                if (uint.TryParse(prm, out fi))
+                                {
+                                    VFOPreset.StepPreset(fi == 0 ? -1 : 1);
+                                }
+                                break;
+                            case "CN":
+                                if (prm.Length == 2)
+                                {
+                                    switch (prm[1])
+                                    {
+                                        case '0':
+                                            Send($"{cmd}00{ctcss.Value:D3};");
+                                            break;
+                                        case '1':
+                                            Send($"{cmd}01{dcs.Value:D3};");
+                                            break;
+                                    }
+                                }
+                                else
+                                if (prm.Length == 5)
+                                {
+                                    if (int.TryParse(prm[2..], out i))
+                                    {
+                                        switch (prm[1])
+                                        {
+                                            case '0':
+                                                ctcss.Value = rxCtcss.Value = i;
+                                                break;
+                                            case '1':
+                                                dcs.Value = rxDcs.Value = i;
+                                                break;
+                                        }
+                                    }
+                                }
+                                break;
+                            case "CT":
+                                if (prm.Length == 1)
+                                {
+                                    if (toneType.Value == XTONETYPE.CTCSS && rxToneType.Value == XTONETYPE.CTCSS)
+                                        i = 1;
+                                    else if (toneType.Value == XTONETYPE.CTCSS)
+                                        i = 2;
+                                    else if (toneType.Value == XTONETYPE.DCS && rxToneType.Value == XTONETYPE.DCS)
+                                        i = 3;
+                                    else if (toneType.Value == XTONETYPE.DCS)
+                                        i = 4;
+                                    else i = 0;
+                                    Send($"{cmd}0{i};");
+                                }
+                                else if (prm.Length == 2)
+                                {
+                                    if (int.TryParse(prm[1..], out i))
+                                    {
+                                        switch (i)
+                                        {
+                                            default:
+                                                toneType.Value = XTONETYPE.NONE;
+                                                rxToneType.Value = XTONETYPE.NONE;
+                                                break;
+                                            case 1:
+                                                toneType.Value = XTONETYPE.CTCSS;
+                                                rxToneType.Value = XTONETYPE.CTCSS;
+                                                break;
+                                            case 2:
+                                                toneType.Value = XTONETYPE.CTCSS;
+                                                rxToneType.Value = XTONETYPE.NONE;
+                                                break;
+                                            case 3:
+                                                toneType.Value = XTONETYPE.DCS;
+                                                rxToneType.Value = XTONETYPE.DCS;
+                                                break;
+                                            case 4:
+                                                toneType.Value = XTONETYPE.DCS;
+                                                rxToneType.Value = XTONETYPE.NONE;
+                                                break;
+                                        }
+                                    }
+                                }
                                 break;
                         }
                     }

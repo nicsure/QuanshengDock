@@ -69,6 +69,7 @@
                 <RowDefinition Height="1*"/>
                 <RowDefinition Height="1*"/>
                 <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
                 <RowDefinition Height="3*"/>
                 <RowDefinition Height="30"/>
             </Grid.RowDefinitions>
@@ -90,20 +91,21 @@
             <TextBlock Style="{StaticResource Label}" Grid.Column="0" Grid.Row="6" Text="CW SideTone (Hz)" />
             <TextBlock Style="{StaticResource Label}" Grid.Column="0" Grid.Row="7" Text="User Button 1" />
             <TextBlock Style="{StaticResource Label}" Grid.Column="0" Grid.Row="8" Text="User Button 2" />
-            <TextBlock Style="{StaticResource Label}" Grid.Column="0" Grid.Row="9" Text="QDNH Host" />
-            <TextBlock Style="{StaticResource Label}" Grid.Column="0" Grid.Row="10" Text="QDNH Port" />
-            <TextBlock Style="{StaticResource Label}" Grid.Column="0" Grid.Row="11" Text="LCD Background" />
-            <TextBlock Style="{StaticResource Label}" Grid.Column="0" Grid.Row="12" Text="LCD Foreground" />
-            <TextBlock Cursor="Hand" TextDecorations="Underline" Style="{StaticResource Label}" Grid.Column="0" Grid.Row="13" Text="LCD Font" Foreground="Cyan">
+            <TextBlock Style="{StaticResource Label}" Grid.Column="0" Grid.Row="9" Text="VOX Sensitivity" />
+            <TextBlock Style="{StaticResource Label}" Grid.Column="0" Grid.Row="10" Text="QDNH Host" />
+            <TextBlock Style="{StaticResource Label}" Grid.Column="0" Grid.Row="11" Text="QDNH Port" />
+            <TextBlock Style="{StaticResource Label}" Grid.Column="0" Grid.Row="12" Text="LCD Background" />
+            <TextBlock Style="{StaticResource Label}" Grid.Column="0" Grid.Row="13" Text="LCD Foreground" />
+            <TextBlock Cursor="Hand" TextDecorations="Underline" Style="{StaticResource Label}" Grid.Column="0" Grid.Row="14" Text="LCD Font" Foreground="Cyan">
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="MouseLeftButtonDown">
                         <i:InvokeCommandAction Command="{Binding MouseCommand}" CommandParameter="FontBrowse"/>
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
             </TextBlock>
-            <TextBlock Style="{StaticResource Label}" Grid.Column="0" Grid.Row="14" Text="LCD Font Adjust" />
+            <TextBlock Style="{StaticResource Label}" Grid.Column="0" Grid.Row="15" Text="LCD Font Adjust" />
 
-            <StackPanel Orientation="Horizontal" Grid.Column="0" Grid.Row="15" Grid.ColumnSpan="4" Margin="20,0,0,0">
+            <StackPanel Orientation="Horizontal" Grid.Column="0" Grid.Row="16" Grid.ColumnSpan="4" Margin="20,0,0,0">
                 <TextBlock Style="{StaticResource Label}" Text="{Binding Version.Value}"/>
                 <TextBlock Style="{StaticResource Label}">                                
                 by -nicsure- 2024  
@@ -134,22 +136,23 @@
             <xctk:SingleUpDown FormatString="F0" Minimum="100" Maximum="4000" Grid.Column="1" Grid.Row="6" Value="{Binding SideTone.Value}"/>
             <TextBox KeyDown="TextBox_KeyDown" Grid.Row="7" Grid.Column="1" Text="{Binding UserButton1.Value}"/>
             <TextBox KeyDown="TextBox_KeyDown" Grid.Row="8" Grid.Column="1" Text="{Binding UserButton2.Value}"/>
-            <TextBox KeyDown="TextBox_KeyDown" Grid.Row="9" Grid.Column="1" Text="{Binding NHost.Value}"/>
-            <xctk:SingleUpDown FormatString="F0" Minimum="1024" Maximum="65500" Grid.Column="1" Grid.Row="10" Value="{Binding NPort.Value}"/>
-            <Border CornerRadius="10" Grid.Row="11" Grid.Column="1" Background="{Binding LCDBackColor.Value.Brush}" Margin="0,2,0,2">
+            <xctk:SingleUpDown Minimum="0.1" Maximum="30" Grid.Column="1" Grid.Row="9" Value="{Binding VOXSensitivity.Value}"/>
+            <TextBox KeyDown="TextBox_KeyDown" Grid.Row="10" Grid.Column="1" Text="{Binding NHost.Value}"/>
+            <xctk:SingleUpDown FormatString="F0" Minimum="1024" Maximum="65500" Grid.Column="1" Grid.Row="11" Value="{Binding NPort.Value}"/>
+            <Border CornerRadius="10" Grid.Row="12" Grid.Column="1" Background="{Binding LCDBackColor.Value.Brush}" Margin="0,2,0,2">
                 <xctk:ColorPicker Margin="0,0,0,0" Opacity="0.01" SelectedColor="{Binding LCDBackColor.Value.Color}" />
             </Border>
-            <Border CornerRadius="10"  Grid.Row="12" Grid.Column="1" Background="{Binding LCDForeColor.Value.Brush}" Margin="0,2,0,2">
+            <Border CornerRadius="10"  Grid.Row="13" Grid.Column="1" Background="{Binding LCDForeColor.Value.Brush}" Margin="0,2,0,2">
                 <xctk:ColorPicker Margin="0,0,0,0" Opacity="0.01" SelectedColor="{Binding LCDForeColor.Value.Color}" />
             </Border>
-            <TextBox KeyDown="TextBox_KeyDown" Grid.Row="13" Grid.Column="1" Text="{Binding LCDFontName.Value}">
+            <TextBox KeyDown="TextBox_KeyDown" Grid.Row="14" Grid.Column="1" Text="{Binding LCDFontName.Value}">
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="MouseDoubleClick">
                         <i:InvokeCommandAction Command="{Binding MouseCommand}" CommandParameter="FontBrowse"/>
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
             </TextBox>
-            <Grid Grid.Row="14" Grid.Column="1">
+            <Grid Grid.Row="15" Grid.Column="1">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="1*"/>
@@ -182,11 +185,11 @@
             <TextBlock Style="{StaticResource Label}" Grid.Column="3" Grid.Row="6" Text="Analyzer Line Thickness" />
             <TextBlock Style="{StaticResource Label}" Grid.Column="3" Grid.Row="7" Text="Analyzer Style" />
             <TextBlock Style="{StaticResource Label}" Grid.Column="3" Grid.Row="8" Text="Window Title" />
-            <TextBlock Style="{StaticResource Label}" Grid.Column="3" Grid.Row="9" Text="QDNH Password" />
-            <TextBlock Style="{StaticResource Label}" Grid.Column="3" Grid.Row="10" Text="CAT Port" />
-            <TextBlock Style="{StaticResource Label}" Grid.Column="3" Grid.Row="11" Text="DCD-PTT Port" />
-            <TextBlock Style="{StaticResource Label}" Grid.Column="3" Grid.Row="12" Text="Callsign" />
-            <TextBlock Style="{StaticResource Label}" Grid.Column="3" Grid.Row="13" Text="Waterfall/Heat Gradient" />
+            <TextBlock Style="{StaticResource Label}" Grid.Column="3" Grid.Row="10" Text="QDNH Password" />
+            <TextBlock Style="{StaticResource Label}" Grid.Column="3" Grid.Row="11" Text="CAT Port" />
+            <TextBlock Style="{StaticResource Label}" Grid.Column="3" Grid.Row="12" Text="DCD-PTT Port" />
+            <TextBlock Style="{StaticResource Label}" Grid.Column="3" Grid.Row="13" Text="Callsign" />
+            <TextBlock Style="{StaticResource Label}" Grid.Column="3" Grid.Row="14" Text="Waterfall/Heat Gradient" />
 
             <xctk:SingleUpDown FormatString="F0" Minimum="1" Maximum="100" Grid.Column="4" Grid.Row="1" Increment="1" Value="{Binding AudioLatency.Value}"/>
             <xctk:SingleUpDown FormatString="F0" Minimum="1" Maximum="100" Grid.Column="4" Grid.Row="2" Increment="1" Value="{Binding AudioBuffers.Value}"/>
@@ -207,15 +210,15 @@
                 <ComboBoxItem Content="Heat"/>
             </ComboBox>
             <TextBox KeyDown="TextBox_KeyDown" Grid.Row="8" Grid.Column="4" Text="{Binding Title.Value}"/>
-            <PasswordBox Name="NPass" KeyDown="TextBox_KeyDown" Grid.Row="9" Grid.Column="4"/>
-            <TextBox KeyDown="TextBox_KeyDown" Grid.Row="10" Grid.Column="4" Text="{Binding CatComPort.Value}"/>
-            <TextBox KeyDown="TextBox_KeyDown" Grid.Row="11" Grid.Column="4" Text="{Binding PttComPort.Value}"/>
-            <TextBox KeyDown="TextBox_KeyDown" Grid.Row="12" Grid.Column="4" Text="{Binding Callsign.Value}"/>
+            <PasswordBox Name="NPass" KeyDown="TextBox_KeyDown" Grid.Row="10" Grid.Column="4"/>
+            <TextBox KeyDown="TextBox_KeyDown" Grid.Row="11" Grid.Column="4" Text="{Binding CatComPort.Value}"/>
+            <TextBox KeyDown="TextBox_KeyDown" Grid.Row="12" Grid.Column="4" Text="{Binding PttComPort.Value}"/>
+            <TextBox KeyDown="TextBox_KeyDown" Grid.Row="13" Grid.Column="4" Text="{Binding Callsign.Value}"/>
             <TextBox Visibility="Hidden" Name="RegBox" KeyDown="Register_KeyDown" Grid.Row="8" Grid.Column="4" Text="{Binding Register.Value}"/>
 
 
 
-            <Border CornerRadius="10" Grid.Row="13" Grid.Column="4" Grid.RowSpan="2" Background="{Binding HeatBG.Value}" Margin="0,5,0,5">
+            <Border CornerRadius="10" Grid.Row="14" Grid.Column="4" Grid.RowSpan="2" Background="{Binding HeatBG.Value}" Margin="0,5,0,5">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="1*"/>
@@ -225,7 +228,7 @@
                     <xctk:ColorPicker Margin="0,0,0,0" Grid.Row="1" Opacity="0.01" SelectedColor="{Binding WaterfallCol1.Value}" />
                 </Grid>
             </Border>
-            <Button IsCancel="True" FontSize="16" Background="#ff111111" Foreground="#ff999999" Grid.Column="4" Grid.Row="15" HorizontalAlignment="Right" VerticalAlignment="Center" Content="  Close  " Margin="0,0,30,0"/>
+            <Button IsCancel="True" FontSize="16" Background="#ff111111" Foreground="#ff999999" Grid.Column="4" Grid.Row="16" HorizontalAlignment="Right" VerticalAlignment="Center" Content="  Close  " Margin="0,0,30,0"/>
         </Grid>
     </Border>
 </Window>

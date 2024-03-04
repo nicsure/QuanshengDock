@@ -1,4 +1,5 @@
 ﻿using NAudio.Dmo;
+using QuanshengDock.Audio;
 using QuanshengDock.Channels;
 using QuanshengDock.General;
 using QuanshengDock.Serial;
@@ -22,6 +23,7 @@ namespace QuanshengDock.ExtendedVFO
         private static readonly ViewModel<int> vfoStep = VM.Get<int>("XVfoStep");
         private static readonly ViewModel<bool> enterMode = VM.Get<bool>("XVfoRxEnter");
         private static readonly ViewModel<bool> txisRX = VM.Get<bool>("TXisRX");
+        private static readonly ViewModel<int> vox = VM.Get<int>("VOX");
         private static readonly ViewModel<XTONETYPE> toneType = VM.Get<XTONETYPE>("XVfoToneType");
         private static readonly ViewModel<int> vfoCtcss = VM.Get<int>("XVfoCTCSS");
         private static readonly ViewModel<int> vfoDcs = VM.Get<int>("XVfoDCS");
@@ -108,6 +110,12 @@ namespace QuanshengDock.ExtendedVFO
             if (i < 0) i = 31;
             if (i > 31) i = 0;
             micGain.Value = i;
+        }
+
+        public static void ToggleVOX()
+        {
+            vox.Value = vox.Value != 0 ? 0 : 1;
+            VOX.Init();
         }
 
         public static void Ptt()

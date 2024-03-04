@@ -201,6 +201,9 @@ namespace QuanshengDock.UI
                 //case "TNC":
                 //   tncMode.Value = !tncMode.Value;
                 //    break;
+                case "VOX":
+                    XVFO.ToggleVOX();
+                    break;
                 case "RFGain":
                     rfGainOn.Value = !rfGainOn.Value;
                     BK4819.SetRFGain(true);

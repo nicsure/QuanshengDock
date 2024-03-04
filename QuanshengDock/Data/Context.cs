@@ -29,7 +29,7 @@ namespace QuanshengDock.Data
         private static readonly Context instance = new();
         private SavedDictionary? fontAdj = null;
 
-        public ViewModel<string> Version { get; } = new("0.32.16q", nameof(Version));
+        public ViewModel<string> Version { get; } = new("0.32.17q", nameof(Version));
         public ViewModel<string> Title { get; } = new(string.Empty, nameof(Title), true);
         public ViewModel<string> TaskBar { get; } = new(string.Empty, nameof(TaskBar));
         public ViewModel<string> MessageInput { get; } = new(string.Empty, nameof(MessageInput));
@@ -113,6 +113,9 @@ namespace QuanshengDock.Data
         public ViewModel<bool> TXisRX { get; } = new(true, nameof(TXisRX));
         public ViewModel<bool> TXisNotRX { get; } = new(true, nameof(TXisNotRX));
         public ViewModel<Brush> TXisRXBrush { get; } = new(nameof(TXisRXBrush));
+        public ViewModel<int> VOX { get; } = new(0, nameof(VOX));
+        public ViewModel<double> VOXSensitivity { get; } = new(28.0, nameof(VOXSensitivity), true);
+        public ViewModel<Brush> VOXBrush { get; } = new(nameof(VOXBrush));
         public ViewModel<bool> RFGainOn { get; } = new(false, nameof(RFGainOn), true);
         public ViewModel<double> RFGain { get; } = new(0.0, nameof(RFGain), true);
         public ViewModel<string> RFGainName { get; } = new("AGC", nameof(RFGainName));
@@ -294,6 +297,7 @@ namespace QuanshengDock.Data
             TNCModeBrush.SetConverter(() => new SolidColorBrush(TNCMode.Value ? Colors.LimeGreen : Colors.DarkSlateGray), TNCMode);
             ShowAllBrush.SetConverter(() => new SolidColorBrush(ShowAll.Value ? Colors.LimeGreen : Colors.DarkSlateGray), ShowAll);
             TXisRXBrush.SetConverter(() => new SolidColorBrush(TXisRX.Value ? Colors.DarkSlateGray : Colors.LimeGreen), TXisRX);
+            VOXBrush.SetConverter(() => VOX.Value == 0 ? Brushes.DarkSlateGray : VOX.Value == 1 ? Brushes.LimeGreen : Brushes.RoyalBlue, VOX);
             ChanButtonsOpacity.SetConverter(() => EnableChanButtons.Value ? 1.0 : 0.3, EnableChanButtons);
             TxLockButtonText.SetConverter(() => $"TX {(TxLockButtonLocked.Value ? "🔒" : "✔")}", TxLockButtonLocked);
             if (ComPort.Value.Length == 0 && ComPorts.Length > 0)
