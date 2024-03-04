@@ -29,7 +29,7 @@ namespace QuanshengDock.Data
         private static readonly Context instance = new();
         private SavedDictionary? fontAdj = null;
 
-        public ViewModel<string> Version { get; } = new("0.32.17q", nameof(Version));
+        public ViewModel<string> Version { get; } = new("0.32.18q", nameof(Version));
         public ViewModel<string> Title { get; } = new(string.Empty, nameof(Title), true);
         public ViewModel<string> TaskBar { get; } = new(string.Empty, nameof(TaskBar));
         public ViewModel<string> MessageInput { get; } = new(string.Empty, nameof(MessageInput));
@@ -55,6 +55,8 @@ namespace QuanshengDock.Data
         public ViewModel<ColorBrushPen> LEDColor { get; } = new(new(Colors.Black, 0), nameof(LEDColor));
         public ViewModel<string> AudioInDevice { get; } = new(string.Empty, nameof(AudioInDevice), true);
         public ViewModel<string> AudioOutDevice { get; } = new(string.Empty, nameof(AudioOutDevice), true);
+        public ViewModel<string> RadioInDevice { get; } = new(string.Empty, nameof(RadioInDevice), true);
+        public ViewModel<string> RadioOutDevice { get; } = new(string.Empty, nameof(RadioOutDevice), true);
         public ViewModel<bool> Passthrough { get; } = new(false, nameof(Passthrough), true);
         public ViewModel<double> SpecMid { get; } = new(144.0, nameof(SpecMid), true);
         public ViewModel<double> SpecStep { get; } = new(25.0, nameof(SpecStep), true);
@@ -203,6 +205,8 @@ namespace QuanshengDock.Data
             FStretch.PropertyChanged += FontAdj_PropertyChanged;
             AudioInDevice.PropertyChanged += AudioDevice_PropertyChanged;
             AudioOutDevice.PropertyChanged += AudioDevice_PropertyChanged;
+            RadioInDevice.PropertyChanged += AudioDevice_PropertyChanged;
+            RadioOutDevice.PropertyChanged += AudioDevice_PropertyChanged;
             Passthrough.PropertyChanged += AudioDevice_PropertyChanged;
             WaterfallCol1.PropertyChanged += WaterfallColour_PropertyChanged;
             WaterfallCol2.PropertyChanged += WaterfallColour_PropertyChanged;
@@ -343,8 +347,11 @@ namespace QuanshengDock.Data
             int outId = Array.IndexOf(AudioOutDevices, AudioOutDevice.Value);
             Radio.AudioOutID = outId;
             Radio.AudioInID = inId;
-            if (inId != -1 && outId != -1)
-                Sound.Start(inId, outId);
+            inId = Array.IndexOf(AudioInDevices, RadioOutDevice.Value);
+            outId = Array.IndexOf(AudioOutDevices, RadioInDevice.Value);
+            Radio.RadioOutID = inId;
+            Radio.RadioInID = outId;
+            Sound.Start();
         }
 
         private void FontAdj_PropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)

@@ -30,17 +30,21 @@ namespace QuanshengDock.Audio
 
         public static string[] GetAudioInDevices()
         {
-            string[] audioInDevices = new string[WaveIn.DeviceCount];
-            for (int i = 0; i < WaveIn.DeviceCount; i++)
+            string[] audioInDevices = new string[WaveIn.DeviceCount+1];
+            int i = 0;
+            for (; i < WaveIn.DeviceCount; i++)
                 audioInDevices[i] = fullDeviceNames.TryGetValue(WaveIn.GetCapabilities(i).ProductName, out string? s) ? s : WaveIn.GetCapabilities(i).ProductName;
+            audioInDevices[i] = "No Device";
             return audioInDevices;
         }
 
         public static string[] GetAudioOutDevices()
         {
-            string[] audioOutDevices = new string[WaveOut.DeviceCount];
-            for (int i = 0; i < WaveOut.DeviceCount; i++)
+            string[] audioOutDevices = new string[WaveOut.DeviceCount+1];
+            int i = 0;
+            for (; i < WaveOut.DeviceCount; i++)
                 audioOutDevices[i] = fullDeviceNames.TryGetValue(WaveOut.GetCapabilities(i).ProductName, out string? s) ? s : WaveOut.GetCapabilities(i).ProductName;
+            audioOutDevices[i] = "No Device";
             return audioOutDevices;
         }
 

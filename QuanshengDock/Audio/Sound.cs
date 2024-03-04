@@ -22,11 +22,12 @@ namespace QuanshengDock.Audio
 
         public static float[] SinTable { get; private set; }
 
-        private static WaveOutEvent? outEvent = null;
         private static WaveOutEvent? toneEvent = null;
         private static WaveOutEvent? toneEvent2 = null;
-        private static WaveIn? input = null;
-        private static WaveInProvider? provider = null;
+        private static WaveIn? radioRxAudio = null, micTxAudio = null;
+        private static WaveOutEvent? radioTxAudio = null, listenRxAudio = null;
+        private static BufferedWaveProvider? rxPassthrough = null, txPassthrough = null;
+
         private static SineStream? sineStream = null;
         private static SineStream? sineStream2 = null;
 
@@ -40,7 +41,7 @@ namespace QuanshengDock.Audio
             SinTable = CalcSinWave();
             volume.PropertyChanged += (object? sender, PropertyChangedEventArgs e) =>
             {
-                if (outEvent is WaveOutEvent waveOutEvent && waveOutEvent != null)
+                if (listenRxAudio is WaveOutEvent waveOutEvent && waveOutEvent != null)
                     waveOutEvent.Volume = (float)volume.Value;
             };
         }
@@ -124,37 +125,79 @@ namespace QuanshengDock.Audio
             }
         }
 
-
-        public static void Start(int inputID, int outputID)
+        public static void Start()
         {
-            try { input?.StopRecording(); } catch { }
-            try { outEvent?.Stop(); } catch { }
-            if (!passthrough.Value || Radio.DesignMode) return;
-            try
+            using (radioRxAudio)
             {
-                using (outEvent)
-                    outEvent = new();
-                using (input)
-                    input = new();
-                provider = null;
-                outEvent.Volume = (float)volume.Value;
-                if (inputID != -1 && outputID != -1)
+                using (radioTxAudio)
                 {
-                    outEvent.DesiredLatency = (int)latency.Value;
-                    outEvent.DeviceNumber = outputID;
-                    outEvent.NumberOfBuffers = (int)buffers.Value;
-                    input.DeviceNumber = inputID;
-                    input.WaveFormat = new(44100, 24, 1);
-                    input.BufferMilliseconds = 50;
-                    provider = new(input);
-                    outEvent.Init(provider);
-                    outEvent.Play();
-                    input.StartRecording();
+                    using (micTxAudio)
+                    {
+                        using (listenRxAudio)
+                        {
+                            try { radioRxAudio?.StopRecording(); } catch { }
+                            try { micTxAudio?.StopRecording(); } catch { }
+                            try { radioTxAudio?.Stop(); } catch { }
+                            try { listenRxAudio?.Stop(); } catch { }
+                        }
+                    }
                 }
             }
-            catch { }
+            rxPassthrough = null;
+            txPassthrough = null;
+            if (!passthrough.Value || Radio.DesignMode) return;
+            if (Radio.AudioOutID != -1 && Radio.RadioOutID != -1)
+            {
+                try
+                {
+                    listenRxAudio = new();
+                    radioRxAudio = new();
+                    listenRxAudio.Volume = (float)volume.Value;
+                    listenRxAudio.DesiredLatency = (int)latency.Value;
+                    listenRxAudio.DeviceNumber = Radio.AudioOutID;
+                    listenRxAudio.NumberOfBuffers = (int)buffers.Value;
+                    radioRxAudio.DeviceNumber = Radio.RadioOutID;
+                    radioRxAudio.WaveFormat = new(22050, 16, 1);
+                    radioRxAudio.BufferMilliseconds = (int)(latency.Value);
+                    rxPassthrough = new(new(22050, 16, 1));
+                    listenRxAudio.Init(rxPassthrough);
+                    radioRxAudio.DataAvailable += (object? sender, WaveInEventArgs e) =>
+                    {
+                        if (rxPassthrough.BufferedDuration.TotalSeconds > latency.Value / 500.0)
+                            rxPassthrough.ClearBuffer();
+                        rxPassthrough.AddSamples(e.Buffer, 0, e.BytesRecorded);
+                    };
+                    listenRxAudio.Play();
+                    radioRxAudio.StartRecording();
+                }
+                catch { }
+            }
+            if (Radio.AudioInID != -1 && Radio.RadioInID != -1)
+            {
+                try
+                {
+                    radioTxAudio = new();
+                    micTxAudio = new();
+                    radioTxAudio.DesiredLatency = (int)latency.Value;
+                    radioTxAudio.DeviceNumber = Radio.RadioInID;
+                    radioTxAudio.NumberOfBuffers = (int)buffers.Value;
+                    micTxAudio.DeviceNumber = Radio.AudioInID;
+                    micTxAudio.WaveFormat = new(22050, 16, 1);
+                    micTxAudio.BufferMilliseconds = (int)(latency.Value);
+                    txPassthrough = new(new(22050, 16, 1));
+                    radioTxAudio.Init(txPassthrough);
+                    micTxAudio.DataAvailable += (object? sender, WaveInEventArgs e) =>
+                    {
+                        if (txPassthrough.BufferedDuration.TotalSeconds > latency.Value / 500.0)
+                            txPassthrough.ClearBuffer();
+                        txPassthrough.AddSamples(e.Buffer, 0, e.BytesRecorded);
+                    };
+                    radioTxAudio.Play();
+                    micTxAudio.StartRecording();
+                }
+                catch { }
+            }
         }
-
     }
 
     public class SineStream : WaveStream

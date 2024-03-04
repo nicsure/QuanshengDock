@@ -1181,7 +1181,7 @@ namespace QuanshengDock.ExtendedVFO
                         rect = new(preset.Index * barWidth, 0, barWidth + 0.1, 100);
                     context.DrawRectangle(bgCol.Value.Brush, null, rect);
                     rect.Width = barWidth * 0.9;
-                    if (preset.WasRssi > 0)
+                    if (!preset.IsRange && preset.WasRssi > 0)
                     {
                         rect.Y = 100 - preset.WasRssi;
                         context.DrawRectangle(Brushes.DarkBlue, null, rect);
