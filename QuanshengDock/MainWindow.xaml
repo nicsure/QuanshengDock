@@ -112,9 +112,20 @@
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition Height="40"/>
+                <RowDefinition Height="{Binding MicBarHeight.Value}"/>
                 <RowDefinition Height="1*"/>
             </Grid.RowDefinitions>
             <CheckBox Name="Defocusser" Width="0" Height="0"/>
+            <Viewbox Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="4" Stretch="Fill">
+                <ui:SMeter MaskColor="#ff202020" Margin="0,0,0,0.5" Width="1" Height="1" Value="{Binding MicLevel.Value}" >
+                    <ui:SMeter.MeterColor>
+                        <LinearGradientBrush EndPoint="1,0.5" StartPoint="0,0.5">
+                            <GradientStop Color="#FF00FF71" Offset="0"/>
+                            <GradientStop Color="Red" Offset="1"/>
+                        </LinearGradientBrush>
+                    </ui:SMeter.MeterColor>
+                </ui:SMeter>
+            </Viewbox>
             <StackPanel HorizontalAlignment="Left" Grid.ColumnSpan="4" Orientation="Horizontal" IsHitTestVisible="False" Opacity="0.7" Margin="60,10,0,0">
                 <TextBlock FontSize="12" Text="{Binding Title.Value}" FontWeight="Bold" VerticalAlignment="Top" />
                 <TextBlock FontSize="12" Text=" QD " FontWeight="Bold" VerticalAlignment="Top" />
@@ -131,7 +142,7 @@
                 <Frame Tag="Minimize" Width="40" Style="{StaticResource ControlButton}" FontSize="19" Content="🗕" HorizontalAlignment="Right" Margin="0,-7,80,5" />
                 <Frame Tag="Maximize" Width="40" Style="{StaticResource ControlButton}" FontSize="13" Content="🗖" HorizontalAlignment="Right" Margin="0,-7,40,5" />
             </Grid>
-            <Grid Name="RadioGrid" Grid.Column="0" Grid.Row="1">
+            <Grid Name="RadioGrid" Grid.Column="0" Grid.Row="2">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="6*"/>
                     <RowDefinition Height="1*"/>
@@ -179,7 +190,7 @@
                 <Frame Tag="15" Grid.Column="4" Grid.Row="4" Style="{StaticResource ControlButton}" Content="F&#10;  # 🔒"/>
 
             </Grid>
-            <Grid Name="SpectrumGrid" Grid.Column="2" Grid.Row="1">
+            <Grid Name="SpectrumGrid" Grid.Column="2" Grid.Row="2">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="1*" />
                     <ColumnDefinition Width="1*" />
@@ -334,7 +345,7 @@
                     <Slider Orientation="Vertical" Value="{Binding WaterfallSpeed.Value}" Minimum="0.1" Maximum="20" Height="140" Margin="10,0,10,0"/>
                 </Viewbox>
             </Grid>
-            <Border IsEnabled="{Binding NotBusyXVFO.Value}" Grid.Column="3" Grid.Row="1" CornerRadius="20" Background="#ff181818" Margin="2,2,2,2">
+            <Border IsEnabled="{Binding NotBusyXVFO.Value}" Grid.Column="3" Grid.Row="2" CornerRadius="20" Background="#ff181818" Margin="2,2,2,2">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="0.25*"/>

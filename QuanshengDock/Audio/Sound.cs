@@ -3,6 +3,7 @@ using NAudio.Wave;
 using QuanshengDock.General;
 using QuanshengDock.View;
 using System;
+using System.CodeDom;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
@@ -32,6 +33,8 @@ namespace QuanshengDock.Audio
         private static SineStream? sineStream2 = null;
 
         private static readonly ViewModel<double> volume = VM.Get<double>("Volume");
+        private static readonly ViewModel<double> boost = VM.Get<double>("Boost");
+        private static readonly ViewModel<double> micLevel = VM.Get<double>("MicLevel");
         private static readonly ViewModel<bool> passthrough = VM.Get<bool>("Passthrough");
         private static readonly ViewModel<double> latency = VM.Get<double>("AudioLatency");
         private static readonly ViewModel<double> buffers = VM.Get<double>("AudioBuffers");
@@ -125,6 +128,30 @@ namespace QuanshengDock.Audio
             }
         }
 
+        private static double AmplifyPCM16(byte[] buffer, int len, double amp)
+        {
+            double lev = 0.0;
+            unsafe
+            {
+                fixed(byte* bptr = buffer)
+                {
+                    short* shorts = (short*)bptr;
+                    len >>= 1;
+                    for (int i = 0; i < len; i++)
+                    {
+                        double d = (shorts[i] * amp).Clamp(short.MinValue, short.MaxValue);
+                        if (d > 0)
+                        {
+                            d /= 327.68;
+                            if (d > lev) lev = d;
+                        }
+                        shorts[i] = (short)d;
+                    }
+                }
+            }
+            return lev;
+        }
+
         public static void Start()
         {
             using (radioRxAudio)
@@ -190,6 +217,8 @@ namespace QuanshengDock.Audio
                     {
                         if (txPassthrough.BufferedDuration.TotalSeconds > latency.Value / 500.0)
                             txPassthrough.ClearBuffer();
+                        micFilter[micCnt++ % micFilter.Length] = AmplifyPCM16(e.Buffer, e.BytesRecorded, boost.Value);
+                        micLevel.Value = micFilter.Average();
                         txPassthrough.AddSamples(e.Buffer, 0, e.BytesRecorded);
                     };
                     radioTxAudio.Play();
@@ -198,7 +227,10 @@ namespace QuanshengDock.Audio
                 catch { }
             }
         }
+        private static double[] micFilter = new double[3];
+        private static int micCnt = 0;
     }
+
 
     public class SineStream : WaveStream
     {

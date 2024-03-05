@@ -15,7 +15,7 @@ namespace QuanshengDock.ExtendedVFO
 {
     public enum PttMode
     {
-        None=0, Normal = 1, VOX = 2, External = 4
+        None = 0, Normal = 1, VOX = 2, External = 4
     }
 
     public static class XVFO
@@ -118,9 +118,12 @@ namespace QuanshengDock.ExtendedVFO
             micGain.Value = i;
         }
 
-        public static void ToggleVOX()
+        public static void ToggleVOX(int newVal = -1)
         {
-            vox.Value = vox.Value != 0 ? 0 : 1;
+            if (newVal == -1)
+                vox.Value = vox.Value != 0 ? 0 : 1;
+            else
+                vox.Value = newVal;
             VOX.Init();
         }
 

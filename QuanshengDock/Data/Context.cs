@@ -47,6 +47,10 @@ namespace QuanshengDock.Data
         public ViewModel<double> VSize { get; } = new(1.0, nameof(VSize));
         public ViewModel<double> FStretch { get; } = new(0.23, nameof(FStretch));
         public ViewModel<double> Volume { get; } = new(0.75, nameof(Volume), true);
+        public ViewModel<double> Boost { get; } = new(1.0, nameof(Boost), true);
+        public ViewModel<double> MicLevel { get; } = new(1.0, nameof(MicLevel));
+        public ViewModel<double> MicBarHeight { get; } = new(20.0, nameof(MicBarHeight));
+        public ViewModel<bool> MicBarShown { get; } = new(true, nameof(MicBarHeight), true);
         public ViewModel<Typeface> LCDFont { get; } = new(nameof(LCDFont));
         public ViewModel<Typeface> LCDBoldFont { get; } = new(nameof(LCDBoldFont));
         public ViewModel<string> LCDFontName { get; } = new("Consolas", nameof(LCDFontName), true);
@@ -216,6 +220,7 @@ namespace QuanshengDock.Data
             SpecSteps.ForceUpdate++;
             WaterfallCol1.ForceUpdate++;
 
+            MicBarHeight.SetConverter(() => MicBarShown.Value ? 20.0 : 0.0, MicBarShown);
             TaskBar.SetConverter(() => Title.Value.Length > 0 ? Title.Value : "QD", Title);
             XWatchName.SetConverter(() => XWatch.Value?" WR":string.Empty, XWatch);
             XScanLCD.SetConverter(() => BusyXVFO.Value ? "SCAN" : string.Empty, BusyXVFO);
