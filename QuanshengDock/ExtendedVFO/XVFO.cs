@@ -13,6 +13,11 @@ using System.Threading.Tasks;
 
 namespace QuanshengDock.ExtendedVFO
 {
+    public enum PttMode
+    {
+        None=0, Normal = 1, VOX = 2, External = 4
+    }
+
     public static class XVFO
     {
         private static readonly ViewModel<double> rxFreq = VM.Get<double>("XVfoRxFreq");
@@ -40,6 +45,7 @@ namespace QuanshengDock.ExtendedVFO
         private static readonly ViewModel<bool> quantizing = VM.Get<bool>("Quantizing");
         private static readonly ViewModel<bool> dtmfSend = VM.Get<bool>("DTMFSend");
         private static readonly ViewModel<string> dtmfLog = VM.Get<string>("DTMFLog");
+
 
 
         static XVFO()
@@ -118,15 +124,33 @@ namespace QuanshengDock.ExtendedVFO
             VOX.Init();
         }
 
-        public static void Ptt()
+        private static PttMode pttMode = PttMode.None;
+
+        public static void Ptt(PttMode mode)
         {
-            if(!txLock.Value)
-                _ = BK4819.Transmit();
+            bool clear;
+            lock (vox)
+            {
+                clear = pttMode == PttMode.None;
+                pttMode |= mode;
+            }
+            if (clear)
+            {
+                if (!txLock.Value)
+                    _ = BK4819.Transmit();
+            }
         }
 
-        public static void PttUp()
+        public static void PttUp(PttMode mode)
         {
-            _ = BK4819.TransmitOff();
+            bool clear;
+            lock (vox)
+            {
+                pttMode &= ~mode;
+                clear = pttMode == PttMode.None;
+            }
+            if (clear)
+                _ = BK4819.TransmitOff();
         }
 
         public static void AppendDTMF(string b)

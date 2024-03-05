@@ -84,7 +84,7 @@ namespace QuanshengDock.Audio
             {
                 vox.Value = 2;
                 active = true;
-                XVFO.Ptt();
+                XVFO.Ptt(PttMode.VOX);
             }
         }
 
@@ -95,7 +95,7 @@ namespace QuanshengDock.Audio
             if (active)
             {
                 active = false;
-                XVFO.PttUp();
+                XVFO.PttUp(PttMode.VOX);
             }
         }
 

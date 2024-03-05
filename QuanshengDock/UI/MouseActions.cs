@@ -107,7 +107,7 @@ namespace QuanshengDock.UI
                         {
                             if (currentButton?.Equals("XPTT") ?? false)
                             {
-                                XVFO.PttUp();
+                                XVFO.PttUp(PttMode.Normal);
                             }
                             else
                             {
@@ -228,7 +228,7 @@ namespace QuanshengDock.UI
                     break;
                 case "XPTT":
                     if(CheckTxAllowed())
-                        XVFO.Ptt();
+                        XVFO.Ptt(PttMode.Normal);
                     break;
                 case "CompanderX":
                     XVFO.ToggleCompander();

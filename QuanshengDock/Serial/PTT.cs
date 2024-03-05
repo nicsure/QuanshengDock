@@ -252,9 +252,9 @@ namespace QuanshengDock.Serial
                 if (Radio.IsXVFO)
                 {
                     if (ptt)
-                        Radio.Invoke(XVFO.Ptt);
+                        Radio.Invoke(() => XVFO.Ptt(PttMode.External));
                     else
-                        Radio.Invoke(XVFO.PttUp);
+                        Radio.Invoke(() => XVFO.PttUp(PttMode.External));
                 }
                 else
                 {

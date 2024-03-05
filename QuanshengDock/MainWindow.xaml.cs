@@ -334,7 +334,7 @@ namespace QuanshengDock
                                     XVFO.ToggleStep(1);
                                     break;
                                 case Key.Space:
-                                    XVFO.Ptt();
+                                    XVFO.Ptt(PttMode.Normal);
                                     break;
                                 case Key.S:
                                     XVFO.ToggleAutoSquelch();
@@ -384,7 +384,7 @@ namespace QuanshengDock
                 else
                 {
                     if (e.Key == Key.Space)
-                        XVFO.PttUp();
+                        XVFO.PttUp(PttMode.Normal);
                 }
                 lastKey = Key.None;
             }
