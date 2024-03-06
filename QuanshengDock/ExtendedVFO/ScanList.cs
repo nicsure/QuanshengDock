@@ -151,9 +151,7 @@ namespace QuanshengDock.ExtendedVFO
                                     break;
                                 else
                                 {
-                                    var temp = scanlists.Value[i];
-                                    scanlists.Value[i] = scanlists.Value[i - 1];
-                                    scanlists.Value[i - 1] = temp;
+                                    (scanlists.Value[i - 1], scanlists.Value[i]) = (scanlists.Value[i], scanlists.Value[i - 1]);
                                 }
                             }
                         }
@@ -168,9 +166,7 @@ namespace QuanshengDock.ExtendedVFO
                                     break;
                                 else
                                 {
-                                    var temp = scanlists.Value[i];
-                                    scanlists.Value[i] = scanlists.Value[i + 1];
-                                    scanlists.Value[i + 1] = temp;
+                                    (scanlists.Value[i + 1], scanlists.Value[i]) = (scanlists.Value[i], scanlists.Value[i + 1]);
                                 }
                             }
                         }
@@ -212,9 +208,7 @@ namespace QuanshengDock.ExtendedVFO
                                     break;
                                 else
                                 {
-                                    var temp = selected.Value[i];
-                                    selected.Value[i] = selected.Value[i - 1];
-                                    selected.Value[i - 1] = temp;
+                                    (selected.Value[i - 1], selected.Value[i]) = (selected.Value[i], selected.Value[i - 1]);
                                 }
                             }
                         }
@@ -229,9 +223,7 @@ namespace QuanshengDock.ExtendedVFO
                                     break;
                                 else
                                 {
-                                    var temp = selected.Value[i];
-                                    selected.Value[i] = selected.Value[i + 1];
-                                    selected.Value[i + 1] = temp;
+                                    (selected.Value[i + 1], selected.Value[i]) = (selected.Value[i], selected.Value[i + 1]);
                                 }
                             }
                         }

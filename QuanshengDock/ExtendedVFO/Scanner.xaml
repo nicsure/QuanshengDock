@@ -122,6 +122,12 @@
             <Viewbox Visibility="{Binding VisibleWhenIdle.Value}" Grid.Row="2" Grid.Column="1" Stretch="Fill">
                 <Border Width="300" Height="300" Margin="10,0,10,0" Padding="6,6,6,6">
                     <ListBox Foreground="{Binding LCDForeColor.Value.Brush}" Background="{Binding LCDBackColor.Value.Brush}" FontSize="17" Name="Lists" ItemsSource="{Binding ScanLists.Value}" SelectionChanged="Lists_SelectionChanged">
+                        <ListBox.ContextMenu>
+                            <ContextMenu>
+                                <MenuItem Header="Move Up" Command="{Binding ScanLists}" CommandParameter="MoveListUp"/>
+                                <MenuItem Header="Move Down" Command="{Binding ScanLists}" CommandParameter="MoveListDown"/>
+                            </ContextMenu>
+                        </ListBox.ContextMenu>
                         <ListBox.Resources>
                             <Style TargetType="ScrollViewer">
                                 <Setter Property="BorderBrush" Value="{x:Null}"/>

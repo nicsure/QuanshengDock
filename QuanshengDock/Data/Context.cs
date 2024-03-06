@@ -29,7 +29,7 @@ namespace QuanshengDock.Data
         private static readonly Context instance = new();
         private SavedDictionary? fontAdj = null;
 
-        public ViewModel<string> Version { get; } = new("0.32.19q", nameof(Version));
+        public ViewModel<string> Version { get; } = new("0.32.20q", nameof(Version));
         public ViewModel<string> Title { get; } = new(string.Empty, nameof(Title), true);
         public ViewModel<string> TaskBar { get; } = new(string.Empty, nameof(TaskBar));
         public ViewModel<string> MessageInput { get; } = new(string.Empty, nameof(MessageInput));
@@ -51,6 +51,7 @@ namespace QuanshengDock.Data
         public ViewModel<double> MicLevel { get; } = new(1.0, nameof(MicLevel));
         public ViewModel<double> MicBarHeight { get; } = new(20.0, nameof(MicBarHeight));
         public ViewModel<bool> MicBarShown { get; } = new(true, nameof(MicBarHeight), true);
+        public ViewModel<bool> FMOnlyTX { get; } = new(true, nameof(FMOnlyTX), true);
         public ViewModel<Typeface> LCDFont { get; } = new(nameof(LCDFont));
         public ViewModel<Typeface> LCDBoldFont { get; } = new(nameof(LCDBoldFont));
         public ViewModel<string> LCDFontName { get; } = new("Consolas", nameof(LCDFontName), true);
@@ -220,7 +221,7 @@ namespace QuanshengDock.Data
             SpecSteps.ForceUpdate++;
             WaterfallCol1.ForceUpdate++;
 
-            MicBarHeight.SetConverter(() => MicBarShown.Value ? 20.0 : 0.0, MicBarShown);
+            MicBarHeight.SetConverter(() => MicBarShown.Value ? 50.0 : 0.0, MicBarShown);
             TaskBar.SetConverter(() => Title.Value.Length > 0 ? Title.Value : "QD", Title);
             XWatchName.SetConverter(() => XWatch.Value?" WR":string.Empty, XWatch);
             XScanLCD.SetConverter(() => BusyXVFO.Value ? "SCAN" : string.Empty, BusyXVFO);

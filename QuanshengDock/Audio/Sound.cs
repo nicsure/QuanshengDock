@@ -142,8 +142,8 @@ namespace QuanshengDock.Audio
                         double d = (shorts[i] * amp).Clamp(short.MinValue, short.MaxValue);
                         if (d > 0)
                         {
-                            d /= 327.68;
-                            if (d > lev) lev = d;
+                            double pct = d / 327.68;
+                            if (pct > lev) lev = pct;
                         }
                         shorts[i] = (short)d;
                     }
@@ -217,7 +217,7 @@ namespace QuanshengDock.Audio
                     {
                         if (txPassthrough.BufferedDuration.TotalSeconds > latency.Value / 500.0)
                             txPassthrough.ClearBuffer();
-                        micFilter[micCnt++ % micFilter.Length] = AmplifyPCM16(e.Buffer, e.BytesRecorded, boost.Value);
+                        micFilter[micCnt++ % micFilter.Length] = AmplifyPCM16(e.Buffer, e.BytesRecorded, boost.Value > 1 ? 1 + ((boost.Value - 1) * 10.0) : boost.Value);
                         micLevel.Value = micFilter.Average();
                         txPassthrough.AddSamples(e.Buffer, 0, e.BytesRecorded);
                     };
@@ -227,7 +227,7 @@ namespace QuanshengDock.Audio
                 catch { }
             }
         }
-        private static double[] micFilter = new double[3];
+        private static readonly double[] micFilter = new double[3];
         private static int micCnt = 0;
     }
 

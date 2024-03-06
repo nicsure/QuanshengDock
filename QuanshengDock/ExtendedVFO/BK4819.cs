@@ -70,6 +70,7 @@ namespace QuanshengDock.ExtendedVFO
         private static readonly ViewModel<bool> rfGainOn = VM.Get<bool>("RFGainOn");
         private static readonly ViewModel<bool> logger = VM.Get<bool>("ScanLogger");
         private static readonly ViewModel<string> modeName = VM.Get<string>("XVfoModeName");
+        private static readonly ViewModel<bool> fmOnly = VM.Get<bool>("FMOnlyTX");
 
         private static bool TxMute => txMute || vfoMode.Value == 1 || vfoMode.Value >= 100;
 
@@ -424,6 +425,7 @@ namespace QuanshengDock.ExtendedVFO
 
         public static async Task Transmit()
         {
+            if (fmOnly.Value && vfoMode.Value != 0 && vfoMode.Value < 100) return;
             dtmfLog.Value = string.Empty;
             transmitComplete = false;
             TransmitStart();
