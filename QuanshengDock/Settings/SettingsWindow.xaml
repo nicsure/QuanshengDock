@@ -107,7 +107,7 @@
                 </TextBlock.ToolTip>
             </TextBlock>
             <TextBlock Style="{StaticResource Label}" Grid.Column="0" Grid.Row="7" Text="XVFO TX on FM Only" />
-            <TextBlock Style="{StaticResource Label}" Grid.Column="0" Grid.Row="8" Text="XVFO Scaner Logging" />
+            <TextBlock Style="{StaticResource Label}" Grid.Column="0" Grid.Row="8" Text="XVFO Scanner Logging" />
             <TextBlock Style="{StaticResource Label}" Grid.Column="0" Grid.Row="5" Text="AF Gain" />
             <TextBlock Style="{StaticResource Label}" Grid.Column="0" Grid.Row="6" Text="Passthrough Bar" />
             <TextBlock Style="{StaticResource Label}" Grid.Column="0" Grid.Row="9" Text="CW SideTone (Hz)" />
