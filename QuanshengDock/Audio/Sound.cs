@@ -140,16 +140,13 @@ namespace QuanshengDock.Audio
                     for (int i = 0; i < len; i++)
                     {
                         double d = (shorts[i] * amp).Clamp(short.MinValue, short.MaxValue);
-                        if (d > 0)
-                        {
-                            double pct = d / 327.68;
-                            if (pct > lev) lev = pct;
-                        }
+                        if (d > lev)
+                            lev = d;
                         shorts[i] = (short)d;
                     }
                 }
             }
-            return lev;
+            return lev / 327.68;
         }
 
         public static void Start()

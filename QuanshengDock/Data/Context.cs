@@ -29,7 +29,7 @@ namespace QuanshengDock.Data
         private static readonly Context instance = new();
         private SavedDictionary? fontAdj = null;
 
-        public ViewModel<string> Version { get; } = new("0.32.20q", nameof(Version));
+        public ViewModel<string> Version { get; } = new("0.32.21q", nameof(Version));
         public ViewModel<string> Title { get; } = new(string.Empty, nameof(Title), true);
         public ViewModel<string> TaskBar { get; } = new(string.Empty, nameof(TaskBar));
         public ViewModel<string> MessageInput { get; } = new(string.Empty, nameof(MessageInput));
