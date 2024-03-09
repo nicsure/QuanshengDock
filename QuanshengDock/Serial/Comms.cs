@@ -113,8 +113,8 @@ namespace QuanshengDock.Serial
                     continue;
                 }
                 if (comPort.Value.Equals("QDNH")) QDNH.Start();
-                SendHello();
-                await Task.Delay(50);
+                //SendHello();
+                //await Task.Delay(50);
                 SendCommand(Packet.KeyPress, (ushort)13);
                 await Task.Delay(50);
                 SendCommand(Packet.KeyPress, (ushort)19);

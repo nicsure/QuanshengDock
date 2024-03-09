@@ -8,6 +8,7 @@
     <UseWindowsForms>True</UseWindowsForms>
     <ApplicationIcon>quansheng.ico</ApplicationIcon>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <Platforms>AnyCPU;x64</Platforms>
   </PropertyGroup>
 
   <ItemGroup>

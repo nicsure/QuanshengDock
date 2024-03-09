@@ -50,7 +50,7 @@ namespace QuanshengDock.Data
         public ViewModel<double> Boost { get; } = new(1.0, nameof(Boost), true);
         public ViewModel<double> MicLevel { get; } = new(1.0, nameof(MicLevel));
         public ViewModel<double> MicBarHeight { get; } = new(20.0, nameof(MicBarHeight));
-        public ViewModel<bool> MicBarShown { get; } = new(true, nameof(MicBarHeight), true);
+        public ViewModel<bool> MicBarShown { get; } = new(true, nameof(MicBarShown), true);
         public ViewModel<bool> FMOnlyTX { get; } = new(true, nameof(FMOnlyTX), true);
         public ViewModel<Typeface> LCDFont { get; } = new(nameof(LCDFont));
         public ViewModel<Typeface> LCDBoldFont { get; } = new(nameof(LCDBoldFont));

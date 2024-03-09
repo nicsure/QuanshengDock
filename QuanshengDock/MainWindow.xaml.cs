@@ -45,6 +45,7 @@ namespace QuanshengDock
         private readonly ViewModel<double> rxFreq;
         private readonly ViewModel<int> xvfoStep;
         private readonly ViewModel<bool> openSquelch;
+        private readonly ViewModel<bool> micBar;
         private Key lastKey = Key.None;
         private double mouseOverDigit = 0;
 
@@ -58,6 +59,7 @@ namespace QuanshengDock
             scanning = VM.Get<bool>("BusyXVFO");
             rxFreq = VM.Get<double>("XVfoRxFreq");
             xvfoStep = VM.Get<int>("XVfoStep");
+            micBar = VM.Get<bool>("MicBarShown");
             InitializeComponent();
             presetRelative = PresetScroller;
             if (!Radio.DesignMode)
@@ -241,7 +243,6 @@ namespace QuanshengDock
                                 case Key.Space:
                                     if (!txLockButtonLocked.Value)
                                     {
-
                                         command.Execute("16");
                                     }
                                     break;
@@ -262,6 +263,9 @@ namespace QuanshengDock
                                 case Key.W:
                                     command.Execute("17");
                                     break;
+                                case Key.F12:
+                                    micBar.Value = !micBar.Value;
+                                    break;
                             }
                         }
                     }
@@ -278,6 +282,9 @@ namespace QuanshengDock
                         {
                             switch (key)
                             {
+                                case Key.F12:
+                                    micBar.Value = !micBar.Value;
+                                    break;
                                 case Key.V:
                                     XVFO.ToggleVOX();
                                     break;
