@@ -28,6 +28,7 @@ namespace QuanshengDock.Audio
         private static WaveIn? radioRxAudio = null, micTxAudio = null;
         private static WaveOutEvent? radioTxAudio = null, listenRxAudio = null;
         private static BufferedWaveProvider? rxPassthrough = null, txPassthrough = null;
+        private static bool muted = false;
 
         private static SineStream? sineStream = null;
         private static SineStream? sineStream2 = null;
@@ -44,8 +45,10 @@ namespace QuanshengDock.Audio
             SinTable = CalcSinWave();
             volume.PropertyChanged += (object? sender, PropertyChangedEventArgs e) =>
             {
-                if (listenRxAudio is WaveOutEvent waveOutEvent && waveOutEvent != null)
+                if (!muted && listenRxAudio is WaveOutEvent waveOutEvent && waveOutEvent != null)
+                {                    
                     waveOutEvent.Volume = (float)volume.Value;
+                }
             };
         }
 
@@ -147,6 +150,31 @@ namespace QuanshengDock.Audio
                 }
             }
             return lev / 327.68;
+        }
+
+        public static void MuteRX(bool mute)
+        {
+            if (listenRxAudio != null) 
+            {
+                switch (mute)
+                {
+                    case true:
+                        if (!muted)
+                        {
+                            listenRxAudio.Volume = 0;
+                            muted = true;
+                        }
+                        break;
+                    default:
+                    case false:
+                        if (muted)
+                        {
+                            muted = false;
+                            listenRxAudio.Volume = (float)volume.Value;
+                        }
+                        break;
+                } 
+            }
         }
 
         public static void Start()

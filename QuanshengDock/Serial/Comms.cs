@@ -261,6 +261,8 @@ namespace QuanshengDock.Serial
                     default: return;
                 }
             }
+            else
+                Sound.MuteRX(false);
             switch (type)
             {
                 case 0:

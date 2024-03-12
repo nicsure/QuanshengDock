@@ -966,6 +966,7 @@ namespace QuanshengDock.ExtendedVFO
             GPIO.EnableAudio(false);
             status.Value = string.Empty;
             led.Value.Color = Colors.Black;
+            Sound.MuteRX(true);
         }
 
         private static void Unmute()
@@ -974,6 +975,7 @@ namespace QuanshengDock.ExtendedVFO
             GPIO.EnableAudio(true);
             status.Value = "RX";
             led.Value.Color = Colors.LimeGreen;
+            Sound.MuteRX(false);
         }
 
         public static void StopScan()

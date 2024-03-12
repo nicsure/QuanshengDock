@@ -66,9 +66,9 @@ namespace QuanshengDock.UI
             var v = Mouse.DirectlyOver;
             if (ushort.TryParse(cmd, out ushort key))
             {
-                if (key == 16)
-                    _ = TxPulser();
-                else
+                //if (key == 16)
+                //    _ = TxPulser();
+                //else
                     Comms.SendCommand(Packet.KeyPress, key);
             }
             else
@@ -391,7 +391,8 @@ namespace QuanshengDock.UI
                     break;
                 case "16":
                     if (CheckTxAllowed() && CheckScope())
-                        _ = TxPulser();
+                        Comms.SendCommand(Packet.KeyPress, ushort.Parse(func));
+                        //_ = TxPulser();
                     break;
             }
 
@@ -415,7 +416,7 @@ namespace QuanshengDock.UI
             }
         }
 
-        private static async Task TxPulser()
+        public static async Task TxPulser_DISABLE()
         {
             if (Radio.PulseTX) return;
             Radio.PulseTX = true;
