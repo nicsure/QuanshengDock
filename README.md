@@ -1,5 +1,5 @@
 # **Quansheng Dock** V 0.32.21q
-
+# This project is now being abandoned. If you want to know who to blame, look no further than CHIRP. I'm SICK of people moaning the latest version doesn't work. My god people this is a $15 radio. Get some perspective.
 # Requires firmware 0.32.21q - I mean it.
 https://github.com/nicsure/quansheng-dock-fw/releases/tag/0.32.21q
 
