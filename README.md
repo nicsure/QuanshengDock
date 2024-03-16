@@ -1,5 +1,5 @@
 # **Quansheng Dock** V 0.32.21q
-# This project does **NOT** I repeat not work with CHIRP and it's likely it never will. That's just the way it is either accept it or move on.
+# This project does **NOT** I repeat not work with CHIRP and it's likely it never will. That's just the way it is, either accept it or move on. I don't want to constantly chase after other projects every time they update and break compatibility. I have had to disable Issues due to this. They won't be re-enabled until everybody gets this through their skulls and quits moaning about it.
 # Requires firmware 0.32.21q - I mean it.
 https://github.com/nicsure/quansheng-dock-fw/releases/tag/0.32.21q
 
