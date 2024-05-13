@@ -65,7 +65,8 @@ namespace QuanshengDock.Serial
         private static void Send(string s)
         {
             byte[] b = Encoding.ASCII.GetBytes(s);
-            try { pttport?.Write(b, 0, b.Length); } catch { }
+//            try { pttport?.Write(b, 0, b.Length); } catch { } // mod/om1atb bugfix
+            try { catport?.Write(b, 0, b.Length); } catch { } // mod/om1atb bugfix
         }
 
         private static void CAT()
@@ -232,6 +233,45 @@ namespace QuanshengDock.Serial
                                     }
                                 }
                                 break;
+							// mod/om1atb more FT-991 CAT commands BEGIN
+							case "PS": // power switch, 1: power on
+                                Send($"{cmd}1;");
+                                break;
+							case "AI": // auto information, 0: AI sending is off
+                                Send($"{cmd}0;");
+                                break;
+							case "ID": // identification, 0570: FT-991
+                                Send($"{cmd}0570;");
+                                break;
+							case "SH": // width, 0:fixed + 00: 1500 Hz (default), full table in manual, we just fake default
+                                Send($"{cmd}00;");
+                                break;
+							case "NA": // narrow, 0:fixed + 0: off
+                                Send($"{cmd}00;");
+                                break;
+							case "MD": // operating mode, 0:main (VFO-A)? + 4: FM
+                                Send($"{cmd}04;");
+                                break;
+							case "FT": // function tx, 1: VFO-B Transmitter: TX
+                                Send($"{cmd}1;");
+                                break;
+							case "EX": // menu
+								if (prm == "032") Send($"{cmd}0321;"); // menu 032: CAT TOT + 1: 100 msec
+                                break;
+                            case "TX": // tx set, 0: ALL TX OFF, 1: CAT TX ON, 2: RADIO TX ON
+                                if (prm.Length == 0)
+                                    Send($"{cmd}{(BK4819.Transmitting ? 2 : 0)};");
+                                break;
+                            case "OI":                                
+                            case "IF":
+								{
+									var vm = cmd.Equals("IF") ? rxFreq : txFreq;
+									uint u = (uint)Math.Round(vm.Value * 1000000.0);
+									if (u > 999999999) u = 999999999;
+									Send($"{cmd}000{u:D9}0000000400000;");
+								}
+                                break;
+							// mod/om1atb more FT-991 CAT commands END
                         }
                     }
                     s = string.Empty;
