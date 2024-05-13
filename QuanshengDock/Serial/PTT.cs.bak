@@ -262,8 +262,8 @@ namespace QuanshengDock.Serial
                                 if (prm.Length == 0)
                                     Send($"{cmd}{(BK4819.Transmitting ? 2 : 0)};");
                                 break;
-                            case "OI": // opposite band information; VFO-B freuency + mode (4: FM), others we just fake
-                            case "IF": // information; VFO-A freuency + mode (4: FM), others we just fake
+                            case "OI":                                
+                            case "IF":
 								{
 									var vm = cmd.Equals("IF") ? rxFreq : txFreq;
 									uint u = (uint)Math.Round(vm.Value * 1000000.0);
