@@ -234,36 +234,36 @@ namespace QuanshengDock.Serial
                                 }
                                 break;
 							// mod/om1atb more FT-991 CAT commands BEGIN
-							case "PS": // power switch, 1: power on
+							case "PS": // power switch, 1: power on (we are always on)
                                 Send($"{cmd}1;");
                                 break;
-							case "AI": // auto information, 0: AI sending is off
+							case "AI": // auto information, 0: AI sending is off (and always is)
                                 Send($"{cmd}0;");
                                 break;
 							case "ID": // identification, 0570: FT-991
                                 Send($"{cmd}0570;");
                                 break;
-							case "SH": // width, 0:fixed + 00: 1500 Hz (default), full table in manual, we just fake default
+							case "SH": // width, 0: fixed + 00: 1500 Hz (default), full table in manual, we just fake default
                                 Send($"{cmd}00;");
                                 break;
-							case "NA": // narrow, 0:fixed + 0: off
+							case "NA": // narrow, 0: fixed + 0: off (FIXME?: perhaps we coould tell the truth)
                                 Send($"{cmd}00;");
                                 break;
-							case "MD": // operating mode, 0:main (VFO-A)? + 4: FM
+							case "MD": // operating mode, 0: main (VFO-A) + 4: FM (FIXME: we should tell the truth)
                                 Send($"{cmd}04;");
                                 break;
-							case "FT": // function tx, 1: VFO-B Transmitter: TX
+							case "FT": // function tx, 1: VFO-B Transmitter: TX (FIXME: VFO-B is TX only in split mode)
                                 Send($"{cmd}1;");
                                 break;
 							case "EX": // menu
-								if (prm == "032") Send($"{cmd}0321;"); // menu 032: CAT TOT + 1: 100 msec
+								if (prm == "032") Send($"{cmd}{prm}1;"); // menu 032: CAT TOT + 1: 100 msec
                                 break;
                             case "TX": // tx set, 0: ALL TX OFF, 1: CAT TX ON, 2: RADIO TX ON
                                 if (prm.Length == 0)
                                     Send($"{cmd}{(BK4819.Transmitting ? 2 : 0)};");
                                 break;
-                            case "OI": // opposite band information; VFO-B freuency + mode (4: FM), others we just fake
-                            case "IF": // information; VFO-A freuency + mode (4: FM), others we just fake
+                            case "OI": // opposite band information; VFO-B freuency + mode (4: FM), others we just fake (FIXME: we should tell the truth about the mode)
+                            case "IF": // information; VFO-A freuency + mode (4: FM), others we just fake (FIXME: we should tell the truth about the mode)
 								{
 									var vm = cmd.Equals("IF") ? rxFreq : txFreq;
 									uint u = (uint)Math.Round(vm.Value * 1000000.0);
