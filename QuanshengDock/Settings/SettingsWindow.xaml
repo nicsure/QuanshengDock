@@ -130,7 +130,7 @@
             <StackPanel Orientation="Horizontal" Grid.Column="0" Grid.Row="19" Grid.ColumnSpan="4" Margin="20,0,0,0">
                 <TextBlock Style="{StaticResource Label}" Text="{Binding Version.Value}"/>
                 <TextBlock Style="{StaticResource Label}">                                
-                by -nicsure- 2024  
+                by nicsure 2024  
                 <Hyperlink NavigateUri="https://www.youtube.com/nicsure" RequestNavigate="Hyperlink_RequestNavigate">
                     https://www.youtube.com/nicsure
                 </Hyperlink>

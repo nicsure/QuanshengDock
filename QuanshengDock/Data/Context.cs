@@ -29,8 +29,10 @@ namespace QuanshengDock.Data
         private static readonly Context instance = new();
         private SavedDictionary? fontAdj = null;
 
-        public ViewModel<string> Version { get; } = new("0.32.21q (mod/om1atb/1.0)", nameof(Version)); // OM1ATB modification for rigctld+gpredict compatibility + CAT COM bugfix
-        public ViewModel<string> Title { get; } = new(string.Empty, nameof(Title), true);
+        // 0.32.22q : OM1ATB modification for rigctld+gpredict compatibility + CAT COM bugfix
+        public ViewModel<string> Version { get; } = new("0.32.22q", nameof(Version));
+        public ViewModel<string> DefaultVersionTitle { get; } = new("(mod/om1atb/1.0)", nameof(DefaultVersionTitle));
+        public ViewModel<string> Title { get; } = new(string.Empty, nameof(Title), true);        
         public ViewModel<string> TaskBar { get; } = new(string.Empty, nameof(TaskBar));
         public ViewModel<string> MessageInput { get; } = new(string.Empty, nameof(MessageInput));
         public ViewModel<RenderTargetBitmap> LcdImage { get; } = new(new(1024, 512, 96, 96, PixelFormats.Pbgra32), nameof(LcdImage));
@@ -202,6 +204,8 @@ namespace QuanshengDock.Data
         public ViewModel<bool> Dummy { get; } = new(false, nameof(Dummy), true);
         public Context()
         {
+            if (string.Empty.Equals(Title.Value))
+                Title.Value = DefaultVersionTitle.Value;
             LCDFontName.PropertyChanged += LCDFontName_PropertyChanged;
             HOffset.PropertyChanged += FontAdj_PropertyChanged;
             VOffset.PropertyChanged += FontAdj_PropertyChanged;
