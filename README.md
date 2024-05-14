@@ -1,4 +1,4 @@
-# **Quansheng Dock** V 0.32.21q
+# **Quansheng Dock** V 0.32.22q
 # This project does **NOT** I repeat not work with CHIRP and it's likely it never will. That's just the way it is, either accept it or move on. I don't want to constantly chase after other projects every time they update and break compatibility.
 # Requires firmware 0.32.21q - I mean it.
 https://github.com/nicsure/quansheng-dock-fw/releases/tag/0.32.21q
@@ -50,7 +50,7 @@ https://github.com/nicsure/quansheng-dock-fw/releases/tag/0.32.21q
 
 **Download**
 : A pre-compiled release is available here
-https://github.com/nicsure/QuanshengDock/releases/tag/0.32.21q  
+https://github.com/nicsure/QuanshengDock/releases/tag/0.32.22q  
 : You also need .NET 6 runtime  
 https://dotnet.microsoft.com/en-us/download/dotnet/thank-you/sdk-6.0.418-windows-x64-installer
 
