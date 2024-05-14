@@ -361,3 +361,12 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+
+# Ignore dev temp files
+*.log
+*.bak
+
+# Ignore vim files:
+*~
+*.swp
+*.swo
